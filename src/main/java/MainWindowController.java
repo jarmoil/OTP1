@@ -13,6 +13,8 @@ public class MainWindowController{
     @FXML private ImageView btnMinimize, btnClose;
     @FXML private Pane btnStats;
     @FXML private Label btnStatsLabel;
+    @FXML private Pane btnStudentSets;
+    @FXML private Pane btnTeacherSets;
 
 
     private double x, y;
@@ -29,6 +31,31 @@ public class MainWindowController{
 
         btnClose.setOnMouseClicked(mouseEvent -> stage.close());
         btnMinimize.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
+        btnStudentSets.setOnMouseClicked(mouseEvent -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/studentSets.fxml"));
+                Parent studentSetsRoot = loader.load();
+                MainWindowController studentSetsController = loader.getController();
+                stage.getScene().setRoot(studentSetsRoot);
+                studentSetsController.init(stage);
+                studentSetsController.setbtnStatsLabel("Main");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        btnTeacherSets.setOnMouseClicked(mouseEvent -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/teacherSets.fxml"));
+                Parent teacherSetsRoot = loader.load();
+                MainWindowController teacherSetsController = loader.getController();
+                stage.getScene().setRoot(teacherSetsRoot);
+                teacherSetsController.init(stage);
+                teacherSetsController.setbtnStatsLabel("Main");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
         btnStats.setOnMouseClicked(mouseEvent -> {
             if (btnStatsLabel != null && "Main".equals(btnStatsLabel.getText())) {
                 try {

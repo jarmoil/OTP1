@@ -53,7 +53,7 @@
                     <children>
                         <TextFlow layoutX="14.0" layoutY="14.0" prefHeight="140.0" prefWidth="349.0">
                             <children>
-                                <Text fx:id="mainQuestionText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Kuinka paljon norsu painaa?" wrappingWidth="230.47149658203125">
+                                <Text fx:id="mainQuestionText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Student" wrappingWidth="230.47149658203125">
                                     <font>
                                         <Font size="25.0" />
                                     </font>
