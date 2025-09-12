@@ -6,10 +6,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="753.0" prefWidth="757.0" stylesheets="@../css/MainWindowStyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindowController">
+<AnchorPane prefHeight="753.0" prefWidth="757.0" stylesheets="@../css/MainWindowStyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainWindowController">
     <children>
         <Pane layoutX="12.0" layoutY="52.0" prefHeight="689.0" prefWidth="734.0" styleClass="mainPane">
             <children>
@@ -49,72 +47,37 @@
                             </children></Pane>
                     </children>
                 </Pane>
-                <Pane layoutX="282.0" layoutY="96.0" prefHeight="498.0" prefWidth="377.0" styleClass="highlightCard">
+                <Pane fx:id="btnEnglishSet" layoutX="227.0" layoutY="110.0" prefHeight="200.0" prefWidth="140.0" styleClass="highlightCard">
                     <children>
-                        <TextFlow layoutX="14.0" layoutY="14.0" prefHeight="140.0" prefWidth="349.0">
-                            <children>
-                                <Text fx:id="mainQuestionText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Teacher" wrappingWidth="230.47149658203125">
-                                    <font>
-                                        <Font size="25.0" />
-                                    </font>
-                                </Text>
-                            </children>
-                        </TextFlow>
-                        <Pane fx:id="btnAnswA" layoutX="18.0" layoutY="310.0" prefHeight="39.0" prefWidth="39.0" styleClass="highlightCard">
-                            <children>
-                                <Label layoutX="13.0" layoutY="5.0" text="A" textFill="WHITE">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </Pane>
-                        <Pane fx:id="btnAnswB" layoutX="18.0" layoutY="378.0" prefHeight="39.0" prefWidth="39.0" styleClass="highlightCard">
-                            <children>
-                                <Label layoutX="14.0" layoutY="5.0" prefHeight="0.0" prefWidth="11.0" text="B" textFill="WHITE">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </Pane>
-                        <Pane fx:id="btnAnswC" layoutX="18.0" layoutY="445.0" prefHeight="39.0" prefWidth="39.0" styleClass="highlightCard">
-                            <children>
-                                <Label layoutX="12.0" layoutY="4.0" prefHeight="0.0" prefWidth="11.0" text="C" textFill="WHITE">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </Pane>
-                        <Pane fx:id="btnAnswA" layoutX="80.0" layoutY="310.0" prefHeight="39.0" prefWidth="98.0" styleClass="highlightCard">
-                            <children>
-                                <Label fx:id="answALabel" layoutX="22.0" layoutY="5.0" text="125kg" textFill="WHITE">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </Pane>
-                        <Pane fx:id="btnAnswB" layoutX="80.0" layoutY="378.0" prefHeight="39.0" prefWidth="98.0" styleClass="highlightCard">
-                            <children>
-                                <Label fx:id="answBLabel" layoutX="21.0" layoutY="5.0" text="200kg" textFill="WHITE">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </Pane>
-                        <Pane fx:id="btnAnswC" layoutX="80.0" layoutY="445.0" prefHeight="39.0" prefWidth="98.0" styleClass="highlightCard">
-                            <children>
-                                <Label fx:id="answCLabel" layoutX="21.0" layoutY="5.0" text="400kg" textFill="WHITE">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </Pane>
+                        <Label layoutX="32.0" layoutY="83.0" text="English" textFill="WHITE">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Label>
                     </children></Pane>
+                <Label layoutX="367.0" layoutY="14.0" text="Teacher Sets" textFill="WHITE">
+                    <font>
+                        <Font size="36.0" />
+                    </font>
+                </Label>
+                <Pane fx:id="btnMathSet" layoutX="397.0" layoutY="110.0" prefHeight="200.0" prefWidth="140.0" styleClass="highlightCard">
+                    <children>
+                        <Label layoutX="42.0" layoutY="83.0" text="Math" textFill="WHITE">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+                <Pane fx:id="btnHistorySet" layoutX="567.0" layoutY="110.0" prefHeight="200.0" prefWidth="140.0" styleClass="highlightCard">
+                    <children>
+                        <Label fx:id="btnHisSet" layoutX="32.0" layoutY="83.0" text="History" textFill="WHITE">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
             </children>
         </Pane>
         <Pane fx:id="titlePane" layoutX="-1.0" layoutY="2.0" prefHeight="51.0" prefWidth="757.0">
