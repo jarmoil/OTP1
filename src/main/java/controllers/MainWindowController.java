@@ -14,6 +14,23 @@ import utils.SessionManager;
 
 public class MainWindowController {
 
+    // MAKE IT POSSIBLE TO DRAG THE WINDOW AROUND1?!?!!?!?
+    private double xOffset;
+    private double yOffset;
+
+    private void initializeDragListeners() {
+        titlePane.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        titlePane.setOnMouseDragged(event -> {
+            mainStage.setX(event.getScreenX() - xOffset);
+            mainStage.setY(event.getScreenY() - yOffset);
+        });
+    }
+
+
     // Sidebar buttons
     @FXML private Pane btnStudentSets;
     @FXML private Pane btnTeacherSets;
@@ -27,7 +44,7 @@ public class MainWindowController {
     @FXML private ImageView btnMinimize;
 
 
-    // Content area
+    // Content area (Flashcard sets, stats, etc.)
     @FXML private AnchorPane contentArea;
 
     private Stage mainStage;
@@ -35,15 +52,17 @@ public class MainWindowController {
     public void init(Stage stage) {
         this.mainStage = stage;
 
+        // Navigation handlers
         btnStudentSets.setOnMouseClicked(e -> loadContent("/views/studentSets.fxml"));
         btnTeacherSets.setOnMouseClicked(e -> loadContent("/views/teacherSets.fxml"));
         btnStats.setOnMouseClicked(e -> loadContent("/views/stats.fxml"));
-
         btnLogin.setOnMouseClicked(this::handleLoginLogout);
 
+        // Window control handlers
         btnClose.setOnMouseClicked(e -> mainStage.close());
         btnMinimize.setOnMouseClicked(e -> mainStage.setIconified(true));
 
+        initializeDragListeners();
         updateLoginUI();
     }
 

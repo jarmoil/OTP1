@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="689.0" prefWidth="520.0"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.FlashcardSetController"
+            stylesheets="@../css/flashcard.css">
+    <children>
+        <Label fx:id="setDescriptionLabel" layoutX="20.0" layoutY="14.0"
+               text="Set Description" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" />
+        <HBox spacing="10" layoutX="20.0" layoutY="40.0">
+            <Button fx:id="createFlashcardButton" text="Create Flashcard"
+                    onAction="#handleCreateFlashcard" />
+            <Button fx:id="startQuizButton" text="Start Quiz"
+                    onAction="#handleStartQuiz" styleClass="quiz-button" />
+        </HBox>
+        <ScrollPane layoutX="20.0" layoutY="80.0" prefWidth="480.0" prefHeight="580.0"
+                    style="-fx-background: transparent; -fx-background-color: transparent;">
+            <content>
+                <VBox fx:id="flashcardsContainer" spacing="15" style="-fx-background-color: transparent;">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

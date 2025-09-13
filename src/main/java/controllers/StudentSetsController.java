@@ -1,16 +1,114 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import models.FlashcardSet;
+import services.FlashcardSetService;
+import utils.SessionManager;
+import java.util.List;
+import java.util.Optional;
 
 public class StudentSetsController {
-    // TODO: Implement student sets view logic
-    @FXML private Pane btnEnglishSet, btnMathSet, btnHistorySet;
+    @FXML private FlowPane setsContainer;
+    @FXML private Button createSetButton;
+    @FXML private AnchorPane contentArea;
+
+    private FlashcardSetService flashcardSetService = new FlashcardSetService();
 
     @FXML
     public void initialize() {
-        btnEnglishSet.setOnMouseClicked(e -> System.out.println("English set clicked"));
-        btnMathSet.setOnMouseClicked(e -> System.out.println("Math set clicked"));
-        btnHistorySet.setOnMouseClicked(e -> System.out.println("History set clicked"));
+        loadSets();
+        updateUI();
     }
+
+    private void loadSets() {
+        try {
+            List<FlashcardSet> sets = flashcardSetService.getAllSets();
+            setsContainer.getChildren().clear();
+
+            for (FlashcardSet set : sets) {
+                Pane setPane = createSetPane(set);
+                setsContainer.getChildren().add(setPane);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateUI() {
+        if (SessionManager.getCurrentUser() != null &&
+                "student".equals(SessionManager.getCurrentUser().getRole())) {
+            createSetButton.setVisible(true);
+        } else {
+            createSetButton.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void handleCreateSet() {
+        if (SessionManager.getCurrentUser() == null ||
+                !"student".equals(SessionManager.getCurrentUser().getRole())) {
+            return;
+        }
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Create New Set");
+        dialog.setHeaderText("Enter set description");
+        dialog.setContentText("Description:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(description -> {
+            try {
+                flashcardSetService.createSet(
+                        SessionManager.getCurrentUser().getId(),
+                        description
+                );
+                loadSets();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private Pane createSetPane(FlashcardSet set) {
+        Pane setPane = new Pane();
+        setPane.setPrefSize(140, 200);
+        setPane.getStyleClass().add("highlightCard");
+
+        Label descLabel = new Label(set.getDescription());
+        descLabel.setWrapText(true);
+        descLabel.setLayoutX(10);
+        descLabel.setLayoutY(10);
+        descLabel.setPrefWidth(120);
+
+        setPane.getChildren().add(descLabel);
+
+        // Add click handler to open set details
+        setPane.setOnMouseClicked(e -> openSetDetails(set));
+
+        return setPane;
+    }
+
+    private void openSetDetails(FlashcardSet set) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/flashcardSet.fxml"));
+            Parent root = loader.load();
+            FlashcardSetController controller = loader.getController();
+            controller.initData(set);
+
+            setsContainer.getChildren().clear();
+            setsContainer.getChildren().add(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

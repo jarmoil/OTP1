@@ -1,0 +1,44 @@
+.flashcard {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 1;
+    -fx-min-width: 440;
+}
+
+.flashcard:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 4);
+    -fx-cursor: hand;
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+
+.flashcard-question {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.flashcard-answer {
+    -fx-font-size: 14;
+    -fx-text-fill: #98FB98;
+}
+
+.flashcard-choices {
+    -fx-font-size: 14;
+    -fx-text-fill: #E0E0E0;
+}
+
+.quiz-button {
+    -fx-background-color: #6A5ACD;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.quiz-button:hover {
+    -fx-background-color: #5A4ABD;
+    -fx-cursor: hand;
+}
