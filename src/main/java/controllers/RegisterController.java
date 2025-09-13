@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import services.UserService;
 
 public class RegisterController {
-    // TODO: Add documentation
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
@@ -24,6 +23,7 @@ public class RegisterController {
         this.stage = stage;
     }
 
+    // Handle registration button click and create new user
     @FXML
     private void handleRegister() {
         String username = usernameField.getText();
@@ -52,6 +52,7 @@ public class RegisterController {
         showLogin();
     }
 
+    // Load and display the login view after successful registration or when navigating back
     private void showLogin() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));

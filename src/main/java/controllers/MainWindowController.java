@@ -12,7 +12,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import utils.SessionManager;
 
+// Controller for the main application window, handling navigation and stuff
 public class MainWindowController {
+    // TODO: Make window scalable and fullscreen ???
 
     // MAKE IT POSSIBLE TO DRAG THE WINDOW AROUND1?!?!!?!?
     private double xOffset;
@@ -66,6 +68,7 @@ public class MainWindowController {
         updateLoginUI();
     }
 
+    // Load FXML content into the content area of the main window
     private void loadContent(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -106,6 +109,7 @@ public class MainWindowController {
         }
     }
 
+    // Update login button text based on session state (Display username if logged in)
     private void updateLoginUI() {
         if (SessionManager.getCurrentUser() != null) {
             btnLoginLabel.setText(SessionManager.getCurrentUser().getName() + " (Logout)");

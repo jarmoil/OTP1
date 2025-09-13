@@ -6,9 +6,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// DAO class for managing flashcards in the database
 public class FlashcardDao {
+    // TODO: Implement update and delete methods for flashcards
+    // Retrieve all flashcards for a given flashcard set ID
     public List<Flashcard> getFlashcardsBySetId(int setId) throws Exception {
         String sql = "SELECT * FROM flashcards WHERE sets_id = ?";
+
+        // Store flashcards in a list
         List<Flashcard> flashcards = new ArrayList<>();
 
         try (Connection conn = ConnectDB.getConnection();
@@ -33,6 +38,7 @@ public class FlashcardDao {
         return flashcards;
     }
 
+    // Create a new flashcard in the database
     public boolean createFlashcard(int setId, String question, String answer,
                                    String choiceA, String choiceB, String choiceC) throws Exception {
         String sql = "INSERT INTO flashcards (sets_id, times_answered, times_correct, question, answer, choice_a, choice_b, choice_c) " +

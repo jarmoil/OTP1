@@ -4,7 +4,9 @@ import database.ConnectDB;
 import models.User;
 import java.sql.*;
 
+// DAO class for managing user accounts in the database
 public class UserDao {
+    // Find a user by username
     public User findByUsername(String username) throws Exception {
         String sql = "SELECT user_id, user_name, user_password, role FROM user_accounts WHERE user_name = ?";
         try (Connection conn = ConnectDB.getConnection();
@@ -26,6 +28,7 @@ public class UserDao {
 
     // TODO: Implement user creation for teachers, only students possible now.
     //  Quick fix: manually hash passwords and add teachers in the DB for testing role logic.
+    // Create a new user with 'student' role
     public boolean createUser(String username, String hashedPassword) throws Exception {
         String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'student')";
         try (Connection conn = ConnectDB.getConnection();

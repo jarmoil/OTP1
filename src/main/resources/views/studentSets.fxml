@@ -3,10 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Font?>
 <AnchorPane fx:id="contentArea" prefHeight="689.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/24.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StudentSetsController">
     <children>
-        <Label layoutX="180.0" layoutY="14.0" text="Student Sets" />
+        <Label layoutX="180.0" layoutY="14.0" text="Student Sets" textFill="WHITE">
+            <font>
+                <Font size="36.0"/>
+            </font>
+        </Label>
         <Button fx:id="createSetButton" layoutX="20.0" layoutY="20.0"
                 text="Create Set" onAction="#handleCreateSet" />
         <FlowPane fx:id="setsContainer" layoutX="20.0" layoutY="60.0"

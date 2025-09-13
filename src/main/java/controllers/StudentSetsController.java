@@ -15,6 +15,7 @@ import utils.SessionManager;
 import java.util.List;
 import java.util.Optional;
 
+// Controller for displaying and managing flashcard sets made by students
 public class StudentSetsController {
     @FXML private FlowPane setsContainer;
     @FXML private Button createSetButton;
@@ -28,6 +29,7 @@ public class StudentSetsController {
         updateUI();
     }
 
+    // Load flashcard sets from the service and display them
     private void loadSets() {
         try {
             List<FlashcardSet> sets = flashcardSetService.getAllSets();
@@ -42,6 +44,7 @@ public class StudentSetsController {
         }
     }
 
+    // Show create set button only for logged-in students
     private void updateUI() {
         if (SessionManager.getCurrentUser() != null &&
                 "student".equals(SessionManager.getCurrentUser().getRole())) {
@@ -51,6 +54,7 @@ public class StudentSetsController {
         }
     }
 
+    // Handle creating a new flashcard set, showing a dialog to input description and using the service to save it to the database
     @FXML
     private void handleCreateSet() {
         if (SessionManager.getCurrentUser() == null ||
@@ -77,6 +81,7 @@ public class StudentSetsController {
         });
     }
 
+    // Create a pane representing a flashcard set with description and click handler to open details (show the flashcards in that set)
     private Pane createSetPane(FlashcardSet set) {
         Pane setPane = new Pane();
         setPane.setPrefSize(140, 200);
@@ -96,6 +101,7 @@ public class StudentSetsController {
         return setPane;
     }
 
+    // Load the flashcard set details view into the content area to view flashcards in that set
     private void openSetDetails(FlashcardSet set) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/flashcardSet.fxml"));

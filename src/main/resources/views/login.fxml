@@ -9,10 +9,8 @@
             xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controllers.LoginController">
     <children>
-        <!-- Background pane for modal -->
         <Pane prefWidth="400.0" prefHeight="300.0" styleClass="mainPane">
             <children>
-                <!-- Centered login card -->
                 <Pane layoutX="100.0" layoutY="50.0" prefWidth="200.0" prefHeight="200.0" styleClass="highlightCard">
                     <children>
                         <Label layoutX="60.0" layoutY="10.0" text="Login" textFill="WHITE">

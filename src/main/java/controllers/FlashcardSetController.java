@@ -10,6 +10,8 @@ import utils.SessionManager;
 import java.util.List;
 import java.util.Optional;
 
+// Controller for managing and displaying flashcards within a flashcard set
+
 public class FlashcardSetController {
     @FXML private Label setDescriptionLabel;
     @FXML private Button createFlashcardButton;
@@ -20,6 +22,7 @@ public class FlashcardSetController {
     private FlashcardService flashcardService = new FlashcardService();
     private FlashcardSet currentSet;
 
+    // Initialize the controller with the given flashcard set
     public void initData(FlashcardSet set) {
         this.currentSet = set;
         setDescriptionLabel.setText(set.getDescription());
@@ -27,12 +30,14 @@ public class FlashcardSetController {
         loadFlashcards();
     }
 
+    // If owner of the set, show create flashcard button
     private void updateUI() {
         boolean isOwner = SessionManager.getCurrentUser() != null &&
                 SessionManager.getCurrentUser().getId() == currentSet.getUser_id();
         createFlashcardButton.setVisible(isOwner);
     }
 
+    // Load flashcards from the service and display them
     private void loadFlashcards() {
         try {
             List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSets_id());
@@ -46,6 +51,7 @@ public class FlashcardSetController {
         }
     }
 
+    // Handle creating a new flashcard, showing a dialog to input details and using the service to save it to the database
     @FXML
     private void handleCreateFlashcard() {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -97,6 +103,7 @@ public class FlashcardSetController {
         }
     }
 
+    // Create a pane representing a single flashcard with question and choices
     private Pane createFlashcardPane(Flashcard flashcard) {
         VBox cardPane = new VBox(10);
         cardPane.getStyleClass().add("flashcard");
@@ -116,13 +123,14 @@ public class FlashcardSetController {
         return cardPane;
     }
 
+    // Placeholder for starting a quiz based on the flashcards in the set
     @FXML
     private void handleStartQuiz() {
         // TODO: Implement quiz functionality
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Quiz");
         alert.setHeaderText("Starting Quiz");
-        alert.setContentText("Quiz functionality will be implemented soon!");
+        alert.setContentText("Quiz functionality is not yet ready");
         alert.showAndWait();
     }
 

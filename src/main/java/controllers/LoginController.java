@@ -12,8 +12,8 @@ import models.User;
 import services.UserService;
 import utils.SessionManager;
 
+// Controller for the login modal and logic
 public class LoginController {
-    // TODO: Add documentation
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
@@ -27,6 +27,7 @@ public class LoginController {
         this.modalStage = stage;
     }
 
+    // Handle login button click and authenticate user
     @FXML
     private void handleLogin() {
         String username = usernameField.getText();
@@ -51,6 +52,7 @@ public class LoginController {
         }
     }
 
+    // Switch to registration view by loading registration FXML with hyperlink directing to that
     @FXML
     private void handleShowRegister() {
         try {
