@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FlashcardSetController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QuizzyCards</a> &gt; <a href="index.source.html" class="el_package">controllers</a> &gt; <span class="el_source">FlashcardSetController.java</span></div><h1>FlashcardSetController.java</h1><pre class="source lang-java linenums">package controllers;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import models.Flashcard;
+import models.FlashcardSet;
+import services.FlashcardService;
+import utils.SessionManager;
+import java.util.List;
+import java.util.Optional;
+
+// Controller for managing and displaying flashcards within a flashcard set
+
+<span class="nc" id="L17">public class FlashcardSetController {</span>
+    @FXML private Label setDescriptionLabel;
+    @FXML private Button createFlashcardButton;
+    @FXML private VBox flashcardsContainer;
+    @FXML private Button startQuizButton;
+
+
+<span class="nc" id="L24">    private FlashcardService flashcardService = new FlashcardService();</span>
+    private FlashcardSet currentSet;
+
+    // Initialize the controller with the given flashcard set
+    public void initData(FlashcardSet set) {
+<span class="nc" id="L29">        this.currentSet = set;</span>
+<span class="nc" id="L30">        setDescriptionLabel.setText(set.getDescription());</span>
+<span class="nc" id="L31">        updateUI();</span>
+<span class="nc" id="L32">        loadFlashcards();</span>
+<span class="nc" id="L33">    }</span>
+
+    // If owner of the set, show create flashcard button
+    private void updateUI() {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        boolean isOwner = SessionManager.getCurrentUser() != null &amp;&amp;</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">                SessionManager.getCurrentUser().getId() == currentSet.getUser_id();</span>
+<span class="nc" id="L39">        createFlashcardButton.setVisible(isOwner);</span>
+<span class="nc" id="L40">    }</span>
+
+    // Load flashcards from the service and display them
+    private void loadFlashcards() {
+        try {
+<span class="nc" id="L45">            List&lt;Flashcard&gt; flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSets_id());</span>
+<span class="nc" id="L46">            flashcardsContainer.getChildren().clear();</span>
+
+<span class="nc bnc" id="L48" title="All 2 branches missed.">            for (Flashcard flashcard : flashcards) {</span>
+<span class="nc" id="L49">                flashcardsContainer.getChildren().add(createFlashcardPane(flashcard));</span>
+<span class="nc" id="L50">            }</span>
+<span class="nc" id="L51">        } catch (Exception e) {</span>
+<span class="nc" id="L52">            e.printStackTrace();</span>
+<span class="nc" id="L53">        }</span>
+<span class="nc" id="L54">    }</span>
+
+    // Handle creating a new flashcard, showing a dialog to input details and using the service to save it to the database
+    @FXML
+    private void handleCreateFlashcard() {
+<span class="nc" id="L59">        Dialog&lt;ButtonType&gt; dialog = new Dialog&lt;&gt;();</span>
+<span class="nc" id="L60">        dialog.setTitle(&quot;Create New Flashcard&quot;);</span>
+<span class="nc" id="L61">        dialog.setHeaderText(&quot;Enter flashcard details&quot;);</span>
+
+<span class="nc" id="L63">        ButtonType createButton = new ButtonType(&quot;Create&quot;, ButtonBar.ButtonData.OK_DONE);</span>
+<span class="nc" id="L64">        dialog.getDialogPane().getButtonTypes().addAll(createButton, ButtonType.CANCEL);</span>
+
+<span class="nc" id="L66">        GridPane grid = new GridPane();</span>
+<span class="nc" id="L67">        grid.setHgap(10);</span>
+<span class="nc" id="L68">        grid.setVgap(10);</span>
+<span class="nc" id="L69">        grid.setPadding(new javafx.geometry.Insets(20, 150, 10, 10));</span>
+
+<span class="nc" id="L71">        TextField questionField = new TextField();</span>
+<span class="nc" id="L72">        TextField choiceAField = new TextField();</span>
+<span class="nc" id="L73">        TextField choiceBField = new TextField();</span>
+<span class="nc" id="L74">        TextField choiceCField = new TextField();</span>
+<span class="nc" id="L75">        ComboBox&lt;String&gt; answerBox = new ComboBox&lt;&gt;();</span>
+<span class="nc" id="L76">        answerBox.setEditable(false);</span>
+<span class="nc" id="L77">        answerBox.setPromptText(&quot;Select correct answer&quot;);</span>
+
+        // Update answer choices when any choice field changes
+<span class="nc" id="L80">        choiceAField.textProperty().addListener((obs, old, newVal) -&gt;</span>
+<span class="nc" id="L81">                updateAnswerChoices(answerBox, choiceAField, choiceBField, choiceCField));</span>
+<span class="nc" id="L82">        choiceBField.textProperty().addListener((obs, old, newVal) -&gt;</span>
+<span class="nc" id="L83">                updateAnswerChoices(answerBox, choiceAField, choiceBField, choiceCField));</span>
+<span class="nc" id="L84">        choiceCField.textProperty().addListener((obs, old, newVal) -&gt;</span>
+<span class="nc" id="L85">                updateAnswerChoices(answerBox, choiceAField, choiceBField, choiceCField));</span>
+
+<span class="nc" id="L87">        grid.add(new Label(&quot;Question:&quot;), 0, 0);</span>
+<span class="nc" id="L88">        grid.add(questionField, 1, 0);</span>
+<span class="nc" id="L89">        grid.add(new Label(&quot;Choice A:&quot;), 0, 1);</span>
+<span class="nc" id="L90">        grid.add(choiceAField, 1, 1);</span>
+<span class="nc" id="L91">        grid.add(new Label(&quot;Choice B:&quot;), 0, 2);</span>
+<span class="nc" id="L92">        grid.add(choiceBField, 1, 2);</span>
+<span class="nc" id="L93">        grid.add(new Label(&quot;Choice C:&quot;), 0, 3);</span>
+<span class="nc" id="L94">        grid.add(choiceCField, 1, 3);</span>
+<span class="nc" id="L95">        grid.add(new Label(&quot;Correct Answer:&quot;), 0, 4);</span>
+<span class="nc" id="L96">        grid.add(answerBox, 1, 4);</span>
+
+<span class="nc" id="L98">        dialog.getDialogPane().setContent(grid);</span>
+
+<span class="nc" id="L100">        Optional&lt;ButtonType&gt; result = dialog.showAndWait();</span>
+<span class="nc bnc" id="L101" title="All 4 branches missed.">        if (result.isPresent() &amp;&amp; result.get() == createButton) {</span>
+            try {
+<span class="nc" id="L103">                flashcardService.createFlashcard(</span>
+<span class="nc" id="L104">                        currentSet.getSets_id(),</span>
+<span class="nc" id="L105">                        questionField.getText(),</span>
+<span class="nc" id="L106">                        answerBox.getValue(),</span>
+<span class="nc" id="L107">                        choiceAField.getText(),</span>
+<span class="nc" id="L108">                        choiceBField.getText(),</span>
+<span class="nc" id="L109">                        choiceCField.getText()</span>
+                );
+<span class="nc" id="L111">                loadFlashcards();</span>
+<span class="nc" id="L112">            } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L113">                Alert alert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L114">                alert.setTitle(&quot;Error&quot;);</span>
+<span class="nc" id="L115">                alert.setHeaderText(&quot;Invalid Flashcard&quot;);</span>
+<span class="nc" id="L116">                alert.setContentText(e.getMessage());</span>
+<span class="nc" id="L117">                alert.showAndWait();</span>
+<span class="nc" id="L118">            } catch (Exception e) {</span>
+<span class="nc" id="L119">                e.printStackTrace();</span>
+<span class="nc" id="L120">            }</span>
+        }
+<span class="nc" id="L122">    }</span>
+
+    // Update the answer choices in the ComboBox with the text in the choice fields, for validation purposes (answer is always one of the choices)
+    private void updateAnswerChoices(ComboBox&lt;String&gt; answerBox,
+                                     TextField choiceA,
+                                     TextField choiceB,
+                                     TextField choiceC) {
+<span class="nc" id="L129">        answerBox.getItems().clear();</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (!choiceA.getText().trim().isEmpty()) answerBox.getItems().add(choiceA.getText());</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        if (!choiceB.getText().trim().isEmpty()) answerBox.getItems().add(choiceB.getText());</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if (!choiceC.getText().trim().isEmpty()) answerBox.getItems().add(choiceC.getText());</span>
+<span class="nc" id="L133">    }</span>
+
+
+    // Create a pane representing a single flashcard with question and choices
+    private Pane createFlashcardPane(Flashcard flashcard) {
+<span class="nc" id="L138">        VBox cardPane = new VBox(10);</span>
+<span class="nc" id="L139">        cardPane.getStyleClass().add(&quot;flashcard&quot;);</span>
+<span class="nc" id="L140">        cardPane.setPadding(new javafx.geometry.Insets(15));</span>
+
+<span class="nc" id="L142">        Label questionLabel = new Label(flashcard.getQuestion());</span>
+<span class="nc" id="L143">        questionLabel.getStyleClass().add(&quot;flashcard-question&quot;);</span>
+<span class="nc" id="L144">        questionLabel.setWrapText(true);</span>
+
+
+<span class="nc" id="L147">        Label choicesLabel = new Label(String.format(&quot;Choices:\nA) %s\nB) %s\nC) %s&quot;,</span>
+<span class="nc" id="L148">                flashcard.getChoice_a(), flashcard.getChoice_b(), flashcard.getChoice_c()));</span>
+<span class="nc" id="L149">        choicesLabel.getStyleClass().add(&quot;flashcard-choices&quot;);</span>
+<span class="nc" id="L150">        choicesLabel.setWrapText(true);</span>
+
+<span class="nc" id="L152">        cardPane.getChildren().addAll(questionLabel, choicesLabel);</span>
+<span class="nc" id="L153">        return cardPane;</span>
+    }
+
+    // Placeholder for starting a quiz based on the flashcards in the set
+    @FXML
+    private void handleStartQuiz() {
+        try {
+<span class="nc" id="L160">            List&lt;Flashcard&gt; flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSets_id());</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            if (flashcards.isEmpty()) {</span>
+<span class="nc" id="L162">                Alert alert = new Alert(Alert.AlertType.WARNING);</span>
+<span class="nc" id="L163">                alert.setTitle(&quot;Quiz&quot;);</span>
+<span class="nc" id="L164">                alert.setHeaderText(&quot;Cannot Start Quiz&quot;);</span>
+<span class="nc" id="L165">                alert.setContentText(&quot;This set has no flashcards!&quot;);</span>
+<span class="nc" id="L166">                alert.showAndWait();</span>
+<span class="nc" id="L167">                return;</span>
+            }
+
+<span class="nc" id="L170">            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/views/quiz.fxml&quot;));</span>
+<span class="nc" id="L171">            Parent root = loader.load();</span>
+<span class="nc" id="L172">            QuizController controller = loader.getController();</span>
+<span class="nc" id="L173">            controller.initQuiz(flashcards);</span>
+
+<span class="nc" id="L175">            flashcardsContainer.getChildren().clear();</span>
+<span class="nc" id="L176">            flashcardsContainer.getChildren().add(root);</span>
+<span class="nc" id="L177">        } catch (Exception e) {</span>
+<span class="nc" id="L178">            e.printStackTrace();</span>
+<span class="nc" id="L179">        }</span>
+<span class="nc" id="L180">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

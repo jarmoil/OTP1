@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FlashcardSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QuizzyCards</a> &gt; <a href="index.source.html" class="el_package">models</a> &gt; <span class="el_source">FlashcardSet.java</span></div><h1>FlashcardSet.java</h1><pre class="source lang-java linenums">package models;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class FlashcardSet {
+    private int sets_id;
+    private int user_id;
+    private String description;
+    private int sets_correct_percentage;
+
+    private List&lt;Flashcard&gt; flashcards;
+
+<span class="fc" id="L14">    public FlashcardSet(int sets_id, int user_id, String description, int sets_correct_percentage) {</span>
+<span class="fc" id="L15">        this.sets_id = sets_id;</span>
+<span class="fc" id="L16">        this.user_id = user_id;</span>
+<span class="fc" id="L17">        this.description = description;</span>
+<span class="fc" id="L18">        this.sets_correct_percentage = sets_correct_percentage;</span>
+<span class="fc" id="L19">        this.flashcards = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">    }</span>
+
+    // getters
+    public int getSets_id() {
+<span class="fc" id="L24">        return sets_id;</span>
+    }
+    public int getUser_id() {
+<span class="fc" id="L27">        return user_id;</span>
+    }
+    public String getDescription() {
+<span class="fc" id="L30">        return description;</span>
+    }
+    public int getSets_correct_percentage() {
+<span class="fc" id="L33">        return sets_correct_percentage;</span>
+    }
+    public List&lt;Flashcard&gt; getFlashcards() {
+<span class="fc" id="L36">        return flashcards;</span>
+    }
+
+    // setters
+    public void setFlashcards(List&lt;Flashcard&gt; flashcards) {
+<span class="fc" id="L41">        this.flashcards = flashcards;</span>
+<span class="fc" id="L42">    }</span>
+    public void setSets_id(int sets_id) {
+<span class="fc" id="L44">        this.sets_id = sets_id;</span>
+<span class="fc" id="L45">    }</span>
+    public void setUser_id(int user_id) {
+<span class="fc" id="L47">        this.user_id = user_id;</span>
+<span class="fc" id="L48">    }</span>
+    public void setDescription(String description) {
+<span class="fc" id="L50">        this.description = description;</span>
+<span class="fc" id="L51">    }</span>
+    public void setSets_correct_percentage(int sets_correct_percentage) {
+<span class="fc" id="L53">        this.sets_correct_percentage = sets_correct_percentage;</span>
+<span class="fc" id="L54">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

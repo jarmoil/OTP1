@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Flashcard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QuizzyCards</a> &gt; <a href="index.source.html" class="el_package">models</a> &gt; <span class="el_source">Flashcard.java</span></div><h1>Flashcard.java</h1><pre class="source lang-java linenums">package models;
+
+public class Flashcard {
+    private int flashcard_id;
+    private int sets_id;
+    private int times_answered;
+    private int times_correct;
+    private String question;
+    private String answer;
+    private String choice_a;
+    private String choice_b;
+    private String choice_c;
+
+<span class="fc" id="L14">    public Flashcard(int flashcard_id, int sets_id, int times_answered, int times_correct, String question, String answer, String choice_a, String choice_b, String choice_c) {</span>
+<span class="fc" id="L15">        this.flashcard_id = flashcard_id;</span>
+<span class="fc" id="L16">        this.sets_id = sets_id;</span>
+<span class="fc" id="L17">        this.times_answered = times_answered;</span>
+<span class="fc" id="L18">        this.times_correct = times_correct;</span>
+<span class="fc" id="L19">        this.question = question;</span>
+<span class="fc" id="L20">        this.answer = answer;</span>
+<span class="fc" id="L21">        this.choice_a = choice_a;</span>
+<span class="fc" id="L22">        this.choice_b = choice_b;</span>
+<span class="fc" id="L23">        this.choice_c = choice_c;</span>
+<span class="fc" id="L24">    }</span>
+
+  // getters
+    public int getFlashcard_id() {
+<span class="fc" id="L28">        return flashcard_id;</span>
+    }
+
+    public int getSets_id() {
+<span class="fc" id="L32">        return sets_id;</span>
+    }
+
+    public int getTimes_answered() {
+<span class="fc" id="L36">        return times_answered;</span>
+    }
+
+    public int getTimes_correct() {
+<span class="fc" id="L40">        return times_correct;</span>
+    }
+
+    public String getQuestion() {
+<span class="fc" id="L44">        return question;</span>
+    }
+
+    public String getAnswer() {
+<span class="fc" id="L48">        return answer;</span>
+    }
+
+    public String getChoice_a() {
+<span class="fc" id="L52">        return choice_a;</span>
+    }
+
+    public String getChoice_b() {
+<span class="fc" id="L56">        return choice_b;</span>
+    }
+
+    public String getChoice_c() {
+<span class="fc" id="L60">        return choice_c;</span>
+    }
+
+    // setters
+    public void setFlashcard_id(int flashcard_id) {
+<span class="fc" id="L65">        this.flashcard_id = flashcard_id;</span>
+<span class="fc" id="L66">    }</span>
+    public void setSets_id(int sets_id) {
+<span class="fc" id="L68">        this.sets_id = sets_id;</span>
+<span class="fc" id="L69">    }</span>
+    public void setTimes_answered(int times_answered) {
+<span class="fc" id="L71">        this.times_answered = times_answered;</span>
+<span class="fc" id="L72">    }</span>
+    public void setTimes_correct(int times_correct) {
+<span class="fc" id="L74">        this.times_correct = times_correct;</span>
+<span class="fc" id="L75">    }</span>
+    public void setQuestion(String question) {
+<span class="fc" id="L77">        this.question = question;</span>
+<span class="fc" id="L78">    }</span>
+    public void setAnswer(String answer) {
+<span class="fc" id="L80">        this.answer = answer;</span>
+<span class="fc" id="L81">    }</span>
+    public void setChoice_a(String choice_a) {
+<span class="fc" id="L83">        this.choice_a = choice_a;</span>
+<span class="fc" id="L84">    }</span>
+    public void setChoice_b(String choice_b) {
+<span class="fc" id="L86">        this.choice_b = choice_b;</span>
+<span class="fc" id="L87">    }</span>
+    public void setChoice_c(String choice_c) {
+<span class="fc" id="L89">        this.choice_c = choice_c;</span>
+<span class="fc" id="L90">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

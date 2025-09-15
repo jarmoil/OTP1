@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FlashcardService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QuizzyCards</a> &gt; <a href="index.source.html" class="el_package">services</a> &gt; <span class="el_source">FlashcardService.java</span></div><h1>FlashcardService.java</h1><pre class="source lang-java linenums">package services;
+
+import dao.FlashcardDao;
+import models.Flashcard;
+import java.util.List;
+
+// Service class for flashcard-related operations
+<span class="nc" id="L8">public class FlashcardService {</span>
+    // TODO: Implement update and delete methods for flashcards
+<span class="nc" id="L10">    private FlashcardDao flashcardDao = new FlashcardDao();</span>
+
+    // Retrieve all flashcards for a given flashcard set ID
+    public List&lt;Flashcard&gt; getFlashcardsBySetId(int setId) throws Exception {
+<span class="nc" id="L14">        return flashcardDao.getFlashcardsBySetId(setId);</span>
+    }
+
+    // Create a new flashcard in the database using the DAO
+    public boolean createFlashcard(int setId, String question, String answer,
+                                   String choiceA, String choiceB, String choiceC) throws Exception {
+        // Validate that answer matches one of the choices
+<span class="nc bnc" id="L21" title="All 6 branches missed.">        if (!answer.equals(choiceA) &amp;&amp; !answer.equals(choiceB) &amp;&amp; !answer.equals(choiceC)) {</span>
+<span class="nc" id="L22">            throw new IllegalArgumentException(&quot;The answer must match one of the choices&quot;);</span>
+        }
+
+<span class="nc bnc" id="L25" title="All 4 branches missed.">        if (question.trim().isEmpty() || answer.trim().isEmpty() ||</span>
+<span class="nc bnc" id="L26" title="All 6 branches missed.">                choiceA.trim().isEmpty() || choiceB.trim().isEmpty() || choiceC.trim().isEmpty()) {</span>
+<span class="nc" id="L27">            throw new IllegalArgumentException(&quot;All fields must be filled out&quot;);</span>
+        }
+
+<span class="nc" id="L30">        return flashcardDao.createFlashcard(setId, question, answer, choiceA, choiceB, choiceC);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

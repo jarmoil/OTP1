@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuizController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QuizzyCards</a> &gt; <a href="index.source.html" class="el_package">controllers</a> &gt; <span class="el_source">QuizController.java</span></div><h1>QuizController.java</h1><pre class="source lang-java linenums">package controllers;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import models.Flashcard;
+import java.util.*;
+
+<span class="nc" id="L9">public class QuizController {</span>
+    @FXML private Label questionLabel;
+    @FXML private RadioButton choiceA;
+    @FXML private RadioButton choiceB;
+    @FXML private RadioButton choiceC;
+    @FXML private Button submitButton;
+    @FXML private Button nextButton;
+    @FXML private Label feedbackLabel;
+    @FXML private Label scoreLabel;
+    @FXML private VBox choicesBox;
+
+    private List&lt;Flashcard&gt; flashcards;
+<span class="nc" id="L21">    private int currentIndex = 0;</span>
+<span class="nc" id="L22">    private int correctAnswers = 0;</span>
+    private ToggleGroup choicesGroup;
+    private Flashcard currentCard;
+
+    @FXML
+    public void initialize() {
+<span class="nc" id="L28">        choicesGroup = new ToggleGroup();</span>
+<span class="nc" id="L29">        choiceA.setToggleGroup(choicesGroup);</span>
+<span class="nc" id="L30">        choiceB.setToggleGroup(choicesGroup);</span>
+<span class="nc" id="L31">        choiceC.setToggleGroup(choicesGroup);</span>
+<span class="nc" id="L32">    }</span>
+
+    public void initQuiz(List&lt;Flashcard&gt; cards) {
+<span class="nc" id="L35">        this.flashcards = new ArrayList&lt;&gt;(cards);</span>
+<span class="nc" id="L36">        Collections.shuffle(this.flashcards);</span>
+<span class="nc" id="L37">        currentIndex = 0;</span>
+<span class="nc" id="L38">        correctAnswers = 0;</span>
+<span class="nc" id="L39">        updateScore();</span>
+<span class="nc" id="L40">        showNextQuestion();</span>
+<span class="nc" id="L41">    }</span>
+
+    private void showNextQuestion() {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (currentIndex &lt; flashcards.size()) {</span>
+<span class="nc" id="L45">            currentCard = flashcards.get(currentIndex);</span>
+<span class="nc" id="L46">            questionLabel.setText(currentCard.getQuestion());</span>
+<span class="nc" id="L47">            choiceA.setText(&quot;A) &quot; + currentCard.getChoice_a());</span>
+<span class="nc" id="L48">            choiceB.setText(&quot;B) &quot; + currentCard.getChoice_b());</span>
+<span class="nc" id="L49">            choiceC.setText(&quot;C) &quot; + currentCard.getChoice_c());</span>
+
+<span class="nc" id="L51">            choicesGroup.selectToggle(null);</span>
+<span class="nc" id="L52">            submitButton.setVisible(true);</span>
+<span class="nc" id="L53">            nextButton.setVisible(false);</span>
+<span class="nc" id="L54">            feedbackLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L55">            enableChoices(true);</span>
+        } else {
+<span class="nc" id="L57">            showQuizComplete();</span>
+        }
+<span class="nc" id="L59">    }</span>
+
+    @FXML
+    private void handleSubmit() {
+<span class="nc" id="L63">        RadioButton selectedButton = (RadioButton) choicesGroup.getSelectedToggle();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (selectedButton == null) {</span>
+<span class="nc" id="L65">            feedbackLabel.setText(&quot;Please select an answer!&quot;);</span>
+<span class="nc" id="L66">            return;</span>
+        }
+
+        String userAnswer;
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (selectedButton == choiceA) userAnswer = currentCard.getChoice_a();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        else if (selectedButton == choiceB) userAnswer = currentCard.getChoice_b();</span>
+<span class="nc" id="L72">        else userAnswer = currentCard.getChoice_c();</span>
+
+<span class="nc" id="L74">        boolean isCorrect = userAnswer.equals(currentCard.getAnswer());</span>
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (isCorrect) {</span>
+<span class="nc" id="L77">            correctAnswers++;</span>
+<span class="nc" id="L78">            feedbackLabel.setText(&quot;Correct!&quot;);</span>
+<span class="nc" id="L79">            feedbackLabel.setStyle(&quot;-fx-text-fill: green;&quot;);</span>
+        } else {
+<span class="nc" id="L81">            String correctChoice = &quot;?&quot;;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            if (currentCard.getAnswer().equals(currentCard.getChoice_a())) correctChoice = &quot;A&quot;;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            else if (currentCard.getAnswer().equals(currentCard.getChoice_b())) correctChoice = &quot;B&quot;;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            else if (currentCard.getAnswer().equals(currentCard.getChoice_c())) correctChoice = &quot;C&quot;;</span>
+
+<span class="nc" id="L86">            feedbackLabel.setText(&quot;Incorrect! The correct answer was: &quot; + correctChoice);</span>
+<span class="nc" id="L87">            feedbackLabel.setStyle(&quot;-fx-text-fill: red;&quot;);</span>
+        }
+
+<span class="nc" id="L90">        updateScore();</span>
+<span class="nc" id="L91">        submitButton.setVisible(false);</span>
+<span class="nc" id="L92">        nextButton.setVisible(true);</span>
+<span class="nc" id="L93">        enableChoices(false);</span>
+<span class="nc" id="L94">    }</span>
+
+
+
+    @FXML
+    private void handleNext() {
+<span class="nc" id="L100">        currentIndex++;</span>
+<span class="nc" id="L101">        showNextQuestion();</span>
+<span class="nc" id="L102">    }</span>
+
+    private void showQuizComplete() {
+<span class="nc" id="L105">        questionLabel.setText(&quot;Quiz Complete!&quot;);</span>
+<span class="nc" id="L106">        choicesBox.setVisible(false);</span>
+<span class="nc" id="L107">        submitButton.setVisible(false);</span>
+<span class="nc" id="L108">        nextButton.setVisible(false);</span>
+<span class="nc" id="L109">        feedbackLabel.setText(String.format(&quot;You got %d out of %d questions correct!&quot;,</span>
+<span class="nc" id="L110">                correctAnswers, flashcards.size()));</span>
+<span class="nc" id="L111">    }</span>
+
+    private void updateScore() {
+<span class="nc" id="L114">        scoreLabel.setText(String.format(&quot;Score: %d/%d&quot;, correctAnswers, flashcards.size()));</span>
+<span class="nc" id="L115">    }</span>
+
+    private void enableChoices(boolean enable) {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        choiceA.setDisable(!enable);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        choiceB.setDisable(!enable);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        choiceC.setDisable(!enable);</span>
+<span class="nc" id="L121">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
