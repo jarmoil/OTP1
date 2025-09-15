@@ -17,6 +17,17 @@ public class FlashcardService {
     // Create a new flashcard in the database using the DAO
     public boolean createFlashcard(int setId, String question, String answer,
                                    String choiceA, String choiceB, String choiceC) throws Exception {
+        // Validate that answer matches one of the choices
+        if (!answer.equals(choiceA) && !answer.equals(choiceB) && !answer.equals(choiceC)) {
+            throw new IllegalArgumentException("The answer must match one of the choices");
+        }
+
+        if (question.trim().isEmpty() || answer.trim().isEmpty() ||
+                choiceA.trim().isEmpty() || choiceB.trim().isEmpty() || choiceC.trim().isEmpty()) {
+            throw new IllegalArgumentException("All fields must be filled out");
+        }
+
         return flashcardDao.createFlashcard(setId, question, answer, choiceA, choiceB, choiceC);
     }
+
 }

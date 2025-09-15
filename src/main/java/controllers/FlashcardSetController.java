@@ -1,6 +1,8 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import models.Flashcard;
@@ -67,21 +69,31 @@ public class FlashcardSetController {
         grid.setPadding(new javafx.geometry.Insets(20, 150, 10, 10));
 
         TextField questionField = new TextField();
-        TextField answerField = new TextField();
         TextField choiceAField = new TextField();
         TextField choiceBField = new TextField();
         TextField choiceCField = new TextField();
+        ComboBox<String> answerBox = new ComboBox<>();
+        answerBox.setEditable(false);
+        answerBox.setPromptText("Select correct answer");
+
+        // Update answer choices when any choice field changes
+        choiceAField.textProperty().addListener((obs, old, newVal) ->
+                updateAnswerChoices(answerBox, choiceAField, choiceBField, choiceCField));
+        choiceBField.textProperty().addListener((obs, old, newVal) ->
+                updateAnswerChoices(answerBox, choiceAField, choiceBField, choiceCField));
+        choiceCField.textProperty().addListener((obs, old, newVal) ->
+                updateAnswerChoices(answerBox, choiceAField, choiceBField, choiceCField));
 
         grid.add(new Label("Question:"), 0, 0);
         grid.add(questionField, 1, 0);
-        grid.add(new Label("Answer:"), 0, 1);
-        grid.add(answerField, 1, 1);
-        grid.add(new Label("Choice A:"), 0, 2);
-        grid.add(choiceAField, 1, 2);
-        grid.add(new Label("Choice B:"), 0, 3);
-        grid.add(choiceBField, 1, 3);
-        grid.add(new Label("Choice C:"), 0, 4);
-        grid.add(choiceCField, 1, 4);
+        grid.add(new Label("Choice A:"), 0, 1);
+        grid.add(choiceAField, 1, 1);
+        grid.add(new Label("Choice B:"), 0, 2);
+        grid.add(choiceBField, 1, 2);
+        grid.add(new Label("Choice C:"), 0, 3);
+        grid.add(choiceCField, 1, 3);
+        grid.add(new Label("Correct Answer:"), 0, 4);
+        grid.add(answerBox, 1, 4);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -91,17 +103,35 @@ public class FlashcardSetController {
                 flashcardService.createFlashcard(
                         currentSet.getSets_id(),
                         questionField.getText(),
-                        answerField.getText(),
+                        answerBox.getValue(),
                         choiceAField.getText(),
                         choiceBField.getText(),
                         choiceCField.getText()
                 );
                 loadFlashcards();
+            } catch (IllegalArgumentException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid Flashcard");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
+    // Update the answer choices in the ComboBox with the text in the choice fields, for validation purposes (answer is always one of the choices)
+    private void updateAnswerChoices(ComboBox<String> answerBox,
+                                     TextField choiceA,
+                                     TextField choiceB,
+                                     TextField choiceC) {
+        answerBox.getItems().clear();
+        if (!choiceA.getText().trim().isEmpty()) answerBox.getItems().add(choiceA.getText());
+        if (!choiceB.getText().trim().isEmpty()) answerBox.getItems().add(choiceB.getText());
+        if (!choiceC.getText().trim().isEmpty()) answerBox.getItems().add(choiceC.getText());
+    }
+
 
     // Create a pane representing a single flashcard with question and choices
     private Pane createFlashcardPane(Flashcard flashcard) {
@@ -126,12 +156,28 @@ public class FlashcardSetController {
     // Placeholder for starting a quiz based on the flashcards in the set
     @FXML
     private void handleStartQuiz() {
-        // TODO: Implement quiz functionality
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Quiz");
-        alert.setHeaderText("Starting Quiz");
-        alert.setContentText("Quiz functionality is not yet ready");
-        alert.showAndWait();
+        try {
+            List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSets_id());
+            if (flashcards.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Quiz");
+                alert.setHeaderText("Cannot Start Quiz");
+                alert.setContentText("This set has no flashcards!");
+                alert.showAndWait();
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/quiz.fxml"));
+            Parent root = loader.load();
+            QuizController controller = loader.getController();
+            controller.initQuiz(flashcards);
+
+            flashcardsContainer.getChildren().clear();
+            flashcardsContainer.getChildren().add(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
 }
