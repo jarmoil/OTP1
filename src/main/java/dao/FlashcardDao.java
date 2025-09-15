@@ -16,8 +16,9 @@ public class FlashcardDao {
         // Store flashcards in a list
         List<Flashcard> flashcards = new ArrayList<>();
 
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, setId);
             ResultSet rs = stmt.executeQuery();
 
@@ -34,7 +35,10 @@ public class FlashcardDao {
                         rs.getString("choice_c")
                 ));
             }
+        } finally {
+            if (closeConn) conn.close();
         }
+
         return flashcards;
     }
 
@@ -43,8 +47,10 @@ public class FlashcardDao {
                                    String choiceA, String choiceB, String choiceC) throws Exception {
         String sql = "INSERT INTO flashcards (sets_id, times_answered, times_correct, question, answer, choice_a, choice_b, choice_c) " +
                 "VALUES (?, 0, 0, ?, ?, ?, ?, ?)";
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, setId);
             stmt.setString(2, question);
             stmt.setString(3, answer);
@@ -52,6 +58,8 @@ public class FlashcardDao {
             stmt.setString(5, choiceB);
             stmt.setString(6, choiceC);
             return stmt.executeUpdate() > 0;
+        } finally {
+            if (closeConn) conn.close();
         }
     }
 }

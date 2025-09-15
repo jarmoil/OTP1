@@ -7,6 +7,7 @@ import java.util.Properties;
 
 public class ConnectDB {
     private static final Properties props = new Properties();
+    private static Connection testConn;
 
     static {
         try (InputStream input = ConnectDB.class.getClassLoader().getResourceAsStream("db.properties")) {
@@ -20,11 +21,21 @@ public class ConnectDB {
     }
 
     public static Connection getConnection() throws Exception {
+        if (testConn != null) {
+            return testConn;
+        }
         String url = "jdbc:mariadb://" + props.getProperty("DB_HOST") + ":" +
                 props.getProperty("DB_PORT") + "/" + props.getProperty("DB_NAME");
         String user = props.getProperty("DB_USER");
         String password = props.getProperty("DB_PASSWORD");
 
         return DriverManager.getConnection(url, user, password);
+    }
+
+    public static void settestConn(Connection con) {
+        testConn = con;
+    }
+    public static Connection gettestConn() {
+        return testConn;
     }
 }

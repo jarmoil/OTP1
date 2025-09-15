@@ -9,8 +9,9 @@ public class UserDao {
     // Find a user by username
     public User findByUsername(String username) throws Exception {
         String sql = "SELECT user_id, user_name, user_password, role FROM user_accounts WHERE user_name = ?";
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
@@ -22,6 +23,8 @@ public class UserDao {
                         rs.getString("role")
                 );
             }
+        } finally {
+            if (closeConn) conn.close();
         }
         return null;
     }
@@ -31,11 +34,15 @@ public class UserDao {
     // Create a new user with 'student' role
     public boolean createUser(String username, String hashedPassword) throws Exception {
         String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'student')";
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.setString(2, hashedPassword);
             return stmt.executeUpdate() > 0;
+        }
+        finally {
+            if (closeConn) conn.close();
         }
     }
 }

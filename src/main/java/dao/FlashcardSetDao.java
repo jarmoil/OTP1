@@ -15,8 +15,9 @@ public class FlashcardSetDao {
         String sql = "SELECT * FROM sets";
         List<FlashcardSet> sets = new ArrayList<>();
 
-        try (Connection conn = ConnectDB.getConnection();
-             Statement stmt = conn.createStatement();
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -27,6 +28,8 @@ public class FlashcardSetDao {
                         rs.getInt("sets_correct_percentage")
                 ));
             }
+        } finally {
+            if (closeConn) conn.close();
         }
         return sets;
     }
@@ -38,8 +41,9 @@ public class FlashcardSetDao {
                 "WHERE u.role = ?";
         List<FlashcardSet> sets = new ArrayList<>();
 
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, role);
             ResultSet rs = stmt.executeQuery();
 
@@ -51,6 +55,8 @@ public class FlashcardSetDao {
                         rs.getInt("sets_correct_percentage")
                 ));
             }
+        } finally {
+            if (closeConn) conn.close();
         }
         return sets;
     }
@@ -58,11 +64,15 @@ public class FlashcardSetDao {
     // Create a new flashcard set in the database
     public boolean createSet(int userId, String description) throws Exception {
         String sql = "INSERT INTO sets (user_id, description, sets_correct_percentage) VALUES (?, ?, 0)";
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             stmt.setString(2, description);
             return stmt.executeUpdate() > 0;
+        } finally {
+            if (closeConn) conn.close();
         }
     }
 }
