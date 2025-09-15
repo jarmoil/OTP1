@@ -29,10 +29,10 @@ public class StudentSetsController {
         updateUI();
     }
 
-    // Load flashcard sets from the service and display them
+    // Load student flashcard sets from the service and display them
     private void loadSets() {
         try {
-            List<FlashcardSet> sets = flashcardSetService.getAllSets();
+            List<FlashcardSet> sets = flashcardSetService.getSetsByRole("student");
             setsContainer.getChildren().clear();
 
             for (FlashcardSet set : sets) {
@@ -43,6 +43,7 @@ public class StudentSetsController {
             e.printStackTrace();
         }
     }
+
 
     // Show create set button only for logged-in students
     private void updateUI() {

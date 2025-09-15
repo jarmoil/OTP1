@@ -10,7 +10,6 @@ import java.util.List;
 public class FlashcardSetDao {
     // TODO: Implement update and delete methods for flashcard sets
 
-    // TODO: Implement method to get sets by role (student/teacher)
     // Retrieve all flashcard sets from the database
     public List<FlashcardSet> getAllSets() throws Exception {
         String sql = "SELECT * FROM sets";
@@ -19,6 +18,30 @@ public class FlashcardSetDao {
         try (Connection conn = ConnectDB.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                sets.add(new FlashcardSet(
+                        rs.getInt("sets_id"),
+                        rs.getInt("user_id"),
+                        rs.getString("description"),
+                        rs.getInt("sets_correct_percentage")
+                ));
+            }
+        }
+        return sets;
+    }
+
+    // Retrieve flashcard sets based on user role (student or teacher)
+    public List<FlashcardSet> getSetsByRole(String role) throws Exception {
+        String sql = "SELECT s.* FROM sets s " +
+                "INNER JOIN user_accounts u ON s.user_id = u.user_id " +
+                "WHERE u.role = ?";
+        List<FlashcardSet> sets = new ArrayList<>();
+
+        try (Connection conn = ConnectDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, role);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 sets.add(new FlashcardSet(

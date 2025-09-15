@@ -1,49 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="689.0" prefWidth="520.0" stylesheets="@../css/MainWindowStyle.css"
-            xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.TeacherSetsController">
-
+<AnchorPane fx:id="contentArea" prefHeight="689.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TeacherSetsController">
     <children>
         <Label layoutX="180.0" layoutY="14.0" text="Teacher Sets" textFill="WHITE">
             <font>
                 <Font size="36.0"/>
             </font>
         </Label>
-
-        <Pane fx:id="btnEnglishSet" layoutX="20.0" layoutY="50.0" prefHeight="200.0" prefWidth="140.0" styleClass="highlightCard">
-            <children>
-                <Label layoutX="32.0" layoutY="83.0" text="English" textFill="WHITE">
-                    <font>
-                        <Font size="24.0"/>
-                    </font>
-                </Label>
-            </children>
-        </Pane>
-
-        <Pane fx:id="btnMathSet" layoutX="180.0" layoutY="50.0" prefHeight="200.0" prefWidth="140.0" styleClass="highlightCard">
-            <children>
-                <Label layoutX="42.0" layoutY="83.0" text="Math" textFill="WHITE">
-                    <font>
-                        <Font size="24.0"/>
-                    </font>
-                </Label>
-            </children>
-        </Pane>
-
-        <Pane fx:id="btnHistorySet" layoutX="340.0" layoutY="50.0" prefHeight="200.0" prefWidth="140.0" styleClass="highlightCard">
-            <children>
-                <Label fx:id="btnHisSet" layoutX="32.0" layoutY="83.0" text="History" textFill="WHITE">
-                    <font>
-                        <Font size="24.0"/>
-                    </font>
-                </Label>
-            </children>
-        </Pane>
+        <Button fx:id="createSetButton" layoutX="20.0" layoutY="20.0"
+                text="Create Set" onAction="#handleCreateSet" />
+        <FlowPane fx:id="setsContainer" layoutX="20.0" layoutY="60.0"
+                  prefWidth="480.0" prefHeight="600.0" hgap="20" vgap="20" />
     </children>
 </AnchorPane>

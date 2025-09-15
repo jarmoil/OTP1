@@ -14,6 +14,11 @@ public class FlashcardSetService {
         return flashcardSetDao.getAllSets();
     }
 
+    // Retrieve flashcard sets based on user role (student or teacher) using the DAO
+    public List<FlashcardSet> getSetsByRole(String role) throws Exception {
+        return flashcardSetDao.getSetsByRole(role);
+    }
+
     // Create a new flashcard set in the database using the DAO
     public boolean createSet(int userId, String description) throws Exception {
         return flashcardSetDao.createSet(userId, description);
