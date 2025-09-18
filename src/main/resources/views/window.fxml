@@ -7,9 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="753.0" prefWidth="757.0" stylesheets="@../css/MainWindowStyle.css"
-            xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.MainWindowController">
+<AnchorPane prefHeight="753.0" prefWidth="757.0" stylesheets="@../css/MainWindowStyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainWindowController">
 
     <!-- Sidebar -->
     <Pane layoutX="12.0" layoutY="52.0" prefHeight="689.0" prefWidth="200.0" styleClass="highlight">
@@ -18,7 +16,7 @@
                 <children>
                     <Label layoutX="20.0" layoutY="32.0" text="Student sets" textFill="WHITE">
                         <font>
-                            <Font size="18.0"/>
+                            <Font size="18.0" />
                         </font>
                     </Label>
                 </children>
@@ -26,9 +24,9 @@
 
             <Pane fx:id="btnTeacherSets" layoutX="31.0" layoutY="114.0" prefHeight="90.0" prefWidth="139.0" styleClass="highlightCard">
                 <children>
-                    <Label layoutX="15.0" layoutY="31.0" text="Teacher sets" textFill="WHITE">
+                    <Label layoutX="21.0" layoutY="32.0" text="Teacher sets" textFill="WHITE">
                         <font>
-                            <Font size="18.0"/>
+                            <Font size="18.0" />
                         </font>
                     </Label>
                 </children>
@@ -38,7 +36,7 @@
                 <children>
                     <Label fx:id="btnStatsLabel" layoutX="50.0" layoutY="32.0" text="Stats" textFill="WHITE">
                         <font>
-                            <Font size="18.0"/>
+                            <Font size="18.0" />
                         </font>
                     </Label>
                 </children>
@@ -46,9 +44,9 @@
 
             <Pane fx:id="btnLogin" layoutX="31.0" layoutY="580.0" prefHeight="90.0" prefWidth="139.0" styleClass="highlightCard">
                 <children>
-                    <Label fx:id="btnLoginLabel" layoutX="20.0" layoutY="32.0" text="Login" textFill="WHITE">
+                    <Label fx:id="btnLoginLabel" layoutX="47.0" layoutY="32.0" text="Login" textFill="WHITE">
                         <font>
-                            <Font size="18.0"/>
+                            <Font size="18.0" />
                         </font>
                     </Label>
                 </children>
@@ -57,14 +55,26 @@
     </Pane>
 
     <!-- Dynamic Content Area -->
-    <AnchorPane fx:id="contentArea" layoutX="227.0" layoutY="52.0" prefWidth="520.0" prefHeight="689.0" styleClass="mainPane"/>
+    <AnchorPane fx:id="contentArea" layoutX="227.0" layoutY="52.0" prefHeight="689.0" prefWidth="520.0" styleClass="mainPane">
+      <children>
+         <Label layoutX="40.0" layoutY="147.0" text="Welcome To Quizzy Words!" textFill="WHITE">
+            <font>
+               <Font size="36.0" />
+            </font>
+         </Label>
+         <Label layoutX="143.0" layoutY="322.0" text="Select set to play!" textFill="WHITE">
+            <font>
+               <Font size="30.0" />
+            </font>
+         </Label>
+      </children></AnchorPane>
 
     <!-- Title Bar -->
     <Pane fx:id="titlePane" layoutX="-1.0" layoutY="2.0" prefHeight="51.0" prefWidth="757.0">
         <children>
             <Label layoutX="324.0" layoutY="12.0" text="Quizzy Words" textFill="WHITE">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
             </Label>
         </children>
@@ -73,12 +83,12 @@
     <!-- Close/Minimize Buttons -->
     <ImageView fx:id="btnClose" fitHeight="25.0" fitWidth="25.0" layoutX="720.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../images/icons8-cancel-48.png"/>
+            <Image url="@../images/icons8-cancel-48.png" />
         </image>
     </ImageView>
     <ImageView fx:id="btnMinimize" fitHeight="25.0" fitWidth="25.0" layoutX="686.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../images/icons8-minimize-48.png"/>
+            <Image url="@../images/icons8-minimize-48.png" />
         </image>
     </ImageView>
 

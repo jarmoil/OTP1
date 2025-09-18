@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane fx:id="contentArea" prefHeight="689.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/24.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StudentSetsController">
+
+<AnchorPane fx:id="contentArea" prefHeight="689.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StudentSetsController">
     <children>
-        <Label layoutX="180.0" layoutY="14.0" text="Student Sets" textFill="WHITE">
+        <Label layoutX="160.0" layoutY="14.0" text="Student Sets" textFill="WHITE">
             <font>
-                <Font size="36.0"/>
+                <Font size="36.0" />
             </font>
         </Label>
-        <Button fx:id="createSetButton" layoutX="20.0" layoutY="20.0"
-                text="Create Set" onAction="#handleCreateSet" />
-        <FlowPane fx:id="setsContainer" layoutX="20.0" layoutY="60.0"
-                  prefWidth="480.0" prefHeight="600.0" hgap="20" vgap="20" />
+        <Button fx:id="createSetButton" layoutX="225.0" layoutY="66.0" onAction="#handleCreateSet" text="Create Set" />
+        <FlowPane fx:id="setsContainer" hgap="20" layoutX="10.0" layoutY="103.0" prefHeight="575.0" prefWidth="500.0" vgap="20" />
     </children>
 </AnchorPane>

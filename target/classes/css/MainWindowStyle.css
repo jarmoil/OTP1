@@ -10,7 +10,7 @@
 
 .highlight {
     -fx-background-color: #00000025;
-    -fx-background-radius: 15 0 0 15;
+    -fx-background-radius: 15 15 15 15;
 }
 
 .highlightCard {

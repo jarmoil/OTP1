@@ -5,49 +5,47 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="689.0" prefWidth="520.0" stylesheets="@../css/MainWindowStyle.css"
-            xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.StatsController">
+<AnchorPane prefHeight="689.0" prefWidth="520.0" stylesheets="@../css/MainWindowStyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StatsController">
 
     <children>
-        <Label layoutX="180.0" layoutY="14.0" text="Stats" textFill="WHITE">
+        <Label layoutX="221.0" layoutY="14.0" text="Stats" textFill="WHITE">
             <font>
-                <Font size="36.0"/>
+                <Font size="36.0" />
             </font>
         </Label>
 
-        <Pane layoutX="20.0" layoutY="50.0" prefWidth="480.0" prefHeight="400.0" styleClass="highlightCard">
+        <Pane layoutX="20.0" layoutY="88.0" prefHeight="586.0" prefWidth="480.0" styleClass="highlightCard">
             <children>
                 <Label layoutX="28.0" layoutY="20.0" text="English" textFill="WHITE">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                 </Label>
                 <Label fx:id="avgLabel" layoutX="155.0" layoutY="20.0" text="10%" textFill="WHITE">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                 </Label>
 
                 <Label layoutX="28.0" layoutY="70.0" text="Math" textFill="WHITE">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                 </Label>
                 <Label fx:id="correctLabel" layoutX="155.0" layoutY="70.0" text="20%" textFill="WHITE">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                 </Label>
 
                 <Label layoutX="28.0" layoutY="120.0" text="History" textFill="WHITE">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                 </Label>
                 <Label fx:id="historyLabel" layoutX="155.0" layoutY="120.0" text="10%" textFill="WHITE">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                 </Label>
             </children>

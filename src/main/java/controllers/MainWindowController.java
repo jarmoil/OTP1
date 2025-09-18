@@ -109,10 +109,10 @@ public class MainWindowController {
         }
     }
 
-    // Update login button text based on session state (Display username if logged in)
+    // Update login button text based on session state
     private void updateLoginUI() {
         if (SessionManager.getCurrentUser() != null) {
-            btnLoginLabel.setText(SessionManager.getCurrentUser().getName() + " (Logout)");
+            btnLoginLabel.setText("Logout");
         } else {
             btnLoginLabel.setText("Login");
         }
