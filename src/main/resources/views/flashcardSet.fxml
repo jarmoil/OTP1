@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="689.0" prefWidth="520.0" stylesheets="@../css/flashcard.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FlashcardSetController">
     <children>
-        <Label fx:id="setDescriptionLabel" layoutX="195.0" layoutY="14.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Set Description" />
+        <Label fx:id="setDescriptionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="195.0" layoutY="14.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Set Description" />
         <HBox layoutX="166.0" layoutY="47.0" spacing="10">
             <Button fx:id="createFlashcardButton" onAction="#handleCreateFlashcard" text="Create Flashcard" />
             <Button fx:id="startQuizButton" onAction="#handleStartQuiz" styleClass="quiz-button" text="Start Quiz" />

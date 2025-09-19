@@ -78,20 +78,18 @@ public class TeacherSetsController {
     }
 
     private Pane createSetPane(FlashcardSet set) {
-        Pane setPane = new Pane();
-        setPane.setPrefSize(140, 200);
-        setPane.getStyleClass().add("highlightCard");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/setCard.fxml"));
+            Pane setPane = loader.load();
+            SetCardController controller = loader.getController();
+            controller.setDescription(set.getDescription());
 
-        Label descLabel = new Label(set.getDescription());
-        descLabel.setWrapText(true);
-        descLabel.setLayoutX(10);
-        descLabel.setLayoutY(10);
-        descLabel.setPrefWidth(120);
-
-        setPane.getChildren().add(descLabel);
-        setPane.setOnMouseClicked(e -> openSetDetails(set));
-
-        return setPane;
+            setPane.setOnMouseClicked(e -> openSetDetails(set));
+            return setPane;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Pane();
+        }
     }
 
     private void openSetDetails(FlashcardSet set) {

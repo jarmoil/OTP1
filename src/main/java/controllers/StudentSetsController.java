@@ -84,23 +84,20 @@ public class StudentSetsController {
 
     // Create a pane representing a flashcard set with description and click handler to open details (show the flashcards in that set)
     private Pane createSetPane(FlashcardSet set) {
-        Pane setPane = new Pane();
-        setPane.setPrefSize(140, 200);
-        setPane.getStyleClass().add("highlightCard");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/setCard.fxml"));
+            Pane setPane = loader.load();
+            SetCardController controller = loader.getController();
+            controller.setDescription(set.getDescription());
 
-        Label descLabel = new Label(set.getDescription());
-        descLabel.setWrapText(true);
-        descLabel.setLayoutX(10);
-        descLabel.setLayoutY(10);
-        descLabel.setPrefWidth(120);
-
-        setPane.getChildren().add(descLabel);
-
-        // Add click handler to open set details
-        setPane.setOnMouseClicked(e -> openSetDetails(set));
-
-        return setPane;
+            setPane.setOnMouseClicked(e -> openSetDetails(set));
+            return setPane;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Pane();
+        }
     }
+
 
     // Load the flashcard set details view into the content area to view flashcards in that set
     private void openSetDetails(FlashcardSet set) {
@@ -110,8 +107,9 @@ public class StudentSetsController {
             FlashcardSetController controller = loader.getController();
             controller.initData(set);
 
-            setsContainer.getChildren().clear();
-            setsContainer.getChildren().add(root);
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
