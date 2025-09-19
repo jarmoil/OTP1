@@ -13,7 +13,7 @@
                 <Font size="36.0" />
             </font>
         </Label>
-        <Button fx:id="createSetButton" layoutX="225.0" layoutY="66.0" onAction="#handleCreateSet" text="Create Set" />
+        <Button fx:id="createSetButton" layoutX="14.0" layoutY="28.0" onAction="#handleCreateSet" text="Create Set" />
         <FlowPane fx:id="setsContainer" hgap="20" layoutX="10.0" layoutY="103.0" prefHeight="575.0" prefWidth="500.0" vgap="20" />
     </children>
 </AnchorPane>

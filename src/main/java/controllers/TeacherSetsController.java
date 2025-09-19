@@ -99,8 +99,9 @@ public class TeacherSetsController {
             FlashcardSetController controller = loader.getController();
             controller.initData(set);
 
-            setsContainer.getChildren().clear();
-            setsContainer.getChildren().add(root);
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
