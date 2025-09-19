@@ -55,9 +55,18 @@ public class MainWindowController {
         this.mainStage = stage;
 
         // Navigation handlers
-        btnStudentSets.setOnMouseClicked(e -> loadContent("/views/studentSets.fxml"));
-        btnTeacherSets.setOnMouseClicked(e -> loadContent("/views/teacherSets.fxml"));
-        btnStats.setOnMouseClicked(e -> loadContent("/views/stats.fxml"));
+        btnStudentSets.setOnMouseClicked(e -> {
+            setActiveSidebarButton(btnStudentSets);
+            loadContent("/views/studentSets.fxml");
+        });
+        btnTeacherSets.setOnMouseClicked(e -> {
+            setActiveSidebarButton(btnTeacherSets);
+            loadContent("/views/teacherSets.fxml");
+        });
+        btnStats.setOnMouseClicked(e -> {
+            setActiveSidebarButton(btnStats);
+            loadContent("/views/stats.fxml");
+        });
         btnLogin.setOnMouseClicked(this::handleLoginLogout);
 
         // Window control handlers
@@ -116,5 +125,16 @@ public class MainWindowController {
         } else {
             btnLoginLabel.setText("Login");
         }
+    }
+
+    private Pane activateSidebarButton;
+
+    private void setActiveSidebarButton(Pane selectedButton) {
+        if (activateSidebarButton != null) {
+            activateSidebarButton.setStyle(""); // Remove highlight from previous button
+        }
+
+        activateSidebarButton = selectedButton;
+        activateSidebarButton.setStyle("-fx-background-color: #9e9e9e;");
     }
 }

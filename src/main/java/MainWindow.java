@@ -18,7 +18,7 @@ public class MainWindow extends Application {
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.setResizable(true);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Quizzy - Quiz Application");
         ((MainWindowController)loader.getController()).init(primaryStage);
         // primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
