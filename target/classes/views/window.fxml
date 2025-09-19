@@ -44,11 +44,12 @@
 
             <Pane fx:id="btnLogin" layoutX="31.0" layoutY="580.0" prefHeight="90.0" prefWidth="139.0" styleClass="highlightCard">
                 <children>
-                    <Label fx:id="btnLoginLabel" layoutX="47.0" layoutY="32.0" text="Login" textFill="WHITE">
+                    <Label fx:id="btnLoginLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="32.0" text="Login" textFill="WHITE">
                         <font>
                             <Font size="18.0" />
                         </font>
                     </Label>
+               <Label fx:id="btnLoginLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="58.0" text="User" textAlignment="CENTER" textFill="WHITE" />
                 </children>
             </Pane>
         </children>

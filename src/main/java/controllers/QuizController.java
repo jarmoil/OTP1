@@ -5,6 +5,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import models.Flashcard;
 import java.util.*;
+import javafx.animation.RotateTransition;
+import javafx.util.Duration;
+import javafx.scene.Node;
 
 public class QuizController {
     @FXML private Label questionLabel;
@@ -16,12 +19,42 @@ public class QuizController {
     @FXML private Label feedbackLabel;
     @FXML private Label scoreLabel;
     @FXML private VBox choicesBox;
+    @FXML private AnchorPane quizPane;
+
 
     private List<Flashcard> flashcards;
     private int currentIndex = 0;
     private int correctAnswers = 0;
     private ToggleGroup choicesGroup;
     private Flashcard currentCard;
+
+    // Flip animation for question card
+    private void flipCard(Node cardNode, Flashcard nextCard) {
+        RotateTransition flipOut = new RotateTransition(Duration.millis(200), cardNode);
+        flipOut.setFromAngle(0);
+        flipOut.setToAngle(70);
+        flipOut.setOnFinished(e -> {
+            // Update all quiz elements here
+            questionLabel.setText(nextCard.getQuestion());
+            choiceA.setText("A) " + nextCard.getChoice_a());
+            choiceB.setText("B) " + nextCard.getChoice_b());
+            choiceC.setText("C) " + nextCard.getChoice_c());
+            choicesGroup.selectToggle(null);
+            submitButton.setVisible(true);
+            nextButton.setVisible(false);
+            feedbackLabel.setText("");
+            enableChoices(true);
+            currentCard = nextCard;
+            updateScore();
+
+            RotateTransition flipIn = new RotateTransition(Duration.millis(200), cardNode);
+            flipIn.setFromAngle(70);
+            flipIn.setToAngle(0);
+            flipIn.play();
+        });
+        flipOut.play();
+    }
+
 
     @FXML
     public void initialize() {
@@ -98,8 +131,24 @@ public class QuizController {
     @FXML
     private void handleNext() {
         currentIndex++;
-        showNextQuestion();
+        if (currentIndex < flashcards.size()) {
+            Flashcard nextCard = flashcards.get(currentIndex);
+            flipCard(quizPane, nextCard);
+            choiceA.setText("A) " + nextCard.getChoice_a());
+            choiceB.setText("B) " + nextCard.getChoice_b());
+            choiceC.setText("C) " + nextCard.getChoice_c());
+            choicesGroup.selectToggle(null);
+            submitButton.setVisible(true);
+            nextButton.setVisible(false);
+            feedbackLabel.setText("");
+            enableChoices(true);
+            currentCard = nextCard;
+            updateScore();
+        } else {
+            showQuizComplete();
+        }
     }
+
 
     private void showQuizComplete() {
         questionLabel.setText("Quiz Complete!");

@@ -39,6 +39,7 @@ public class MainWindowController {
     @FXML private Pane btnStats;
     @FXML private Pane btnLogin;
     @FXML private Label btnLoginLabel;
+    @FXML private Label btnLoginLabel1; // For showing username when logged in
 
     //  minimize, close
     @FXML private Pane titlePane;
@@ -122,8 +123,11 @@ public class MainWindowController {
     private void updateLoginUI() {
         if (SessionManager.getCurrentUser() != null) {
             btnLoginLabel.setText("Logout");
+            btnLoginLabel1.setText(SessionManager.getCurrentUser().getName());
+            btnLoginLabel1.setVisible(true);
         } else {
             btnLoginLabel.setText("Login");
+            btnLoginLabel1.setVisible(false);
         }
     }
 
