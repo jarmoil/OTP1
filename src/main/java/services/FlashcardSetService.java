@@ -23,4 +23,17 @@ public class FlashcardSetService {
     public boolean createSet(int userId, String description) throws Exception {
         return flashcardSetDao.createSet(userId, description);
     }
+
+    // Update flashcard set information
+    public boolean updateSet(int setId, String newDescription) throws Exception {
+        if (newDescription.trim().isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be empty");
+        }
+        return flashcardSetDao.updateSet(setId, newDescription);
+    }
+
+    // Delete a flashcard set by ID
+    public boolean deleteSet(int setId) throws Exception {
+        return flashcardSetDao.deleteSet(setId);
+    }
 }

@@ -14,6 +14,8 @@ import java.util.Optional;
 
 // Controller for managing and displaying flashcards within a flashcard set
 
+// TODO: Implement the update and delete methods from the backend to the UI
+
 public class FlashcardSetController {
     @FXML private Label setDescriptionLabel;
     @FXML private Button createFlashcardButton;

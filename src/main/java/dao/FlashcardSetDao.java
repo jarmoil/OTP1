@@ -8,8 +8,6 @@ import java.util.List;
 
 // DAO class for managing flashcard sets in the database
 public class FlashcardSetDao {
-    // TODO: Implement update and delete methods for flashcard sets
-
     // Retrieve all flashcard sets from the database
     public List<FlashcardSet> getAllSets() throws Exception {
         String sql = "SELECT * FROM sets";
@@ -70,6 +68,35 @@ public class FlashcardSetDao {
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             stmt.setString(2, description);
+            return stmt.executeUpdate() > 0;
+        } finally {
+            if (closeConn) conn.close();
+        }
+    }
+
+    // Update flashcard set information in the database with the given ID
+    public boolean updateSet(int setId, String description) throws Exception {
+        String sql = "UPDATE sets SET description = ? WHERE sets_id = ?";
+
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, description);
+            stmt.setInt(2, setId);
+            return stmt.executeUpdate() > 0;
+        } finally {
+            if (closeConn) conn.close();
+        }
+    }
+
+    // Delete flashcard set from the database with the given ID
+    public boolean deleteSet(int setId) throws Exception {
+        String sql = "DELETE FROM sets WHERE sets_id = ?";
+
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, setId);
             return stmt.executeUpdate() > 0;
         } finally {
             if (closeConn) conn.close();
