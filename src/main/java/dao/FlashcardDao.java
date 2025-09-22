@@ -8,7 +8,6 @@ import java.util.List;
 
 // DAO class for managing flashcards in the database
 public class FlashcardDao {
-    // TODO: Implement update and delete methods for flashcards
     // Retrieve all flashcards for a given flashcard set ID
     public List<Flashcard> getFlashcardsBySetId(int setId) throws Exception {
         String sql = "SELECT * FROM flashcards WHERE sets_id = ?";
