@@ -14,9 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 // Controller for managing and displaying flashcards within a flashcard set
-
-// TODO: Implement the update and delete methods from the backend to the UI
-
 public class FlashcardSetController {
     @FXML private Label setDescriptionLabel;
     @FXML private Button createFlashcardButton;
@@ -26,6 +23,7 @@ public class FlashcardSetController {
     @FXML private Button deleteSetButton;
 
 
+    // Services handle database operations
     private FlashcardService flashcardService = new FlashcardService();
     private FlashcardSet currentSet;
     private FlashcardSetService flashcardSetService = new FlashcardSetService();
@@ -54,21 +52,23 @@ public class FlashcardSetController {
         deleteSetButton.setVisible(isOwner);
     }
 
-    // Load flashcards from the service and display them
+    // Load flashcards from the database using the service and create UI cards for each
     private void loadFlashcards() {
         try {
             List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSets_id());
             flashcardsContainer.getChildren().clear();
 
+            // Create a visual card for each flashcard
             for (Flashcard flashcard : flashcards) {
-                flashcardsContainer.getChildren().add(createFlashcardPane(flashcard));
+                Pane flashcardPane = createFlashcardPane(flashcard);
+                flashcardsContainer.getChildren().add(flashcardPane);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // Handle updating the flashcard set description, showing a dialog to input new description and using the service to save it to the database
+    // Show dialog to edit set description
     @FXML
     private void handleUpdateSet() {
         TextInputDialog dialog = new TextInputDialog(currentSet.getDescription());
@@ -94,8 +94,7 @@ public class FlashcardSetController {
         });
     }
 
-    // Handle deleting the flashcard set, showing a confirmation dialog and using the service to delete it from the database
-    // If deleted, call the onSetDeletedCallback to go back to previous view of sets list
+    // Confirm and delete the entire set
     @FXML
     private void handleDeleteSet() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -107,7 +106,7 @@ public class FlashcardSetController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 flashcardSetService.deleteSet(currentSet.getSets_id());
-
+                // Tell parent controller to refresh and go back to sets list
                 if (onSetDeletedCallback != null) {
                     onSetDeletedCallback.run();
                 }
@@ -118,111 +117,62 @@ public class FlashcardSetController {
     }
 
 
-    // Handle creating a new flashcard, showing a dialog to input details and using the service to save it to the database
+    // Show dialog to create new flashcard
     @FXML
     private void handleCreateFlashcard() {
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Create New Flashcard");
-        dialog.setHeaderText("Enter flashcard details");
+        if (showFlashcardDialog("Create New Flashcard", "Create", null)) {
+            loadFlashcards();
+        }
+    }
 
-        ButtonType createButton = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(createButton, ButtonType.CANCEL);
+    // Create visual flashcard component with edit/delete buttons for owners
+    private Pane createFlashcardPane(Flashcard flashcard) {
+        boolean isOwner = SessionManager.getCurrentUser() != null &&
+                SessionManager.getCurrentUser().getId() == currentSet.getUser_id();
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new javafx.geometry.Insets(20, 150, 10, 10));
+        // Use factory method in FlashcardCardController to create the card
+        FlashcardCardController controller = FlashcardCardController.createFlashcardCard(
+                flashcard,
+                isOwner,
+                () -> handleUpdateFlashcard(flashcard),
+                () -> handleDeleteFlashcard(flashcard)
+        );
 
-        TextField questionField = new TextField();
-        TextField choiceAField = new TextField();
-        TextField choiceBField = new TextField();
-        TextField choiceCField = new TextField();
-        ComboBox<String> answerBox = new ComboBox<>();
-        answerBox.setEditable(false);
-        answerBox.setPromptText("Select correct answer");
+        return controller.getRoot();
+    }
 
-        // Update answer choices when any choice field changes
-        choiceAField.textProperty().addListener((obs, old, newVal) ->
-                updateAnswerChoices(answerBox, choiceAField, choiceBField, choiceCField));
-        choiceBField.textProperty().addListener((obs, old, newVal) ->
-                updateAnswerChoices(answerBox, choiceAField, choiceBField, choiceCField));
-        choiceCField.textProperty().addListener((obs, old, newVal) ->
-                updateAnswerChoices(answerBox, choiceAField, choiceBField, choiceCField));
+    // Show dialog to edit flashcard
+    private void handleUpdateFlashcard(Flashcard flashcard) {
+        if (showFlashcardDialog("Update Flashcard", "Update", flashcard)) {
+            loadFlashcards();
+        }
+    }
 
-        grid.add(new Label("Question:"), 0, 0);
-        grid.add(questionField, 1, 0);
-        grid.add(new Label("Choice A:"), 0, 1);
-        grid.add(choiceAField, 1, 1);
-        grid.add(new Label("Choice B:"), 0, 2);
-        grid.add(choiceBField, 1, 2);
-        grid.add(new Label("Choice C:"), 0, 3);
-        grid.add(choiceCField, 1, 3);
-        grid.add(new Label("Correct Answer:"), 0, 4);
-        grid.add(answerBox, 1, 4);
+    // Handle deleting a flashcard
+    private void handleDeleteFlashcard(Flashcard flashcard) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Flashcard");
+        alert.setHeaderText("Delete Flashcard");
+        alert.setContentText("Are you sure you want to delete this flashcard? This action cannot be undone.");
 
-        dialog.getDialogPane().setContent(grid);
-
-        Optional<ButtonType> result = dialog.showAndWait();
-        if (result.isPresent() && result.get() == createButton) {
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                flashcardService.createFlashcard(
-                        currentSet.getSets_id(),
-                        questionField.getText(),
-                        answerBox.getValue(),
-                        choiceAField.getText(),
-                        choiceBField.getText(),
-                        choiceCField.getText()
-                );
+                flashcardService.deleteFlashcard(flashcard.getFlashcard_id());
                 loadFlashcards();
-            } catch (IllegalArgumentException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid Flashcard");
-                alert.setContentText(e.getMessage());
-                alert.showAndWait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    // Update the answer choices in the ComboBox with the text in the choice fields, for validation purposes (answer is always one of the choices)
-    private void updateAnswerChoices(ComboBox<String> answerBox,
-                                     TextField choiceA,
-                                     TextField choiceB,
-                                     TextField choiceC) {
-        answerBox.getItems().clear();
-        if (!choiceA.getText().trim().isEmpty()) answerBox.getItems().add(choiceA.getText());
-        if (!choiceB.getText().trim().isEmpty()) answerBox.getItems().add(choiceB.getText());
-        if (!choiceC.getText().trim().isEmpty()) answerBox.getItems().add(choiceC.getText());
-    }
-
-
-    // Create a pane representing a single flashcard with question and choices
-    private Pane createFlashcardPane(Flashcard flashcard) {
-        VBox cardPane = new VBox(10);
-        cardPane.getStyleClass().add("flashcard");
-        cardPane.setPadding(new javafx.geometry.Insets(15));
-
-        Label questionLabel = new Label(flashcard.getQuestion());
-        questionLabel.getStyleClass().add("flashcard-question");
-        questionLabel.setWrapText(true);
-
-
-        Label choicesLabel = new Label(String.format("Choices:\nA) %s\nB) %s\nC) %s",
-                flashcard.getChoice_a(), flashcard.getChoice_b(), flashcard.getChoice_c()));
-        choicesLabel.getStyleClass().add("flashcard-choices");
-        choicesLabel.setWrapText(true);
-
-        cardPane.getChildren().addAll(questionLabel, choicesLabel);
-        return cardPane;
-    }
-
-    // Placeholder for starting a quiz based on the flashcards in the set
+    // Start quiz mode with all flashcards in this set
     @FXML
     private void handleStartQuiz() {
         try {
             List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSets_id());
+
+            // Can't quiz with no cards
             if (flashcards.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Quiz");
@@ -244,5 +194,43 @@ public class FlashcardSetController {
         }
     }
 
+    // Reusable dialog for creating/editing flashcards
+    private boolean showFlashcardDialog(String title, String buttonText, Flashcard existingFlashcard) {
+        // Use factory method to create dialog with form fields
+        Dialog<ButtonType> dialog = FlashcardDialogController.createFlashcardDialog(title, buttonText, existingFlashcard);
+        // Get controller to access form data
+        FlashcardDialogController dialogController = (FlashcardDialogController) dialog.getDialogPane().getProperties().get("controller");
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if (result.isPresent() && result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+            try {
+                if (existingFlashcard == null) {
+                    // new flashcard
+                    flashcardService.createFlashcard(
+                            currentSet.getSets_id(),
+                            dialogController.getQuestion(),
+                            dialogController.getAnswer(),
+                            dialogController.getChoiceA(),
+                            dialogController.getChoiceB(),
+                            dialogController.getChoiceC()
+                    );
+                } else {
+                    // update flashcard
+                    flashcardService.updateFlashcard(
+                            existingFlashcard.getFlashcard_id(),
+                            dialogController.getQuestion(),
+                            dialogController.getAnswer(),
+                            dialogController.getChoiceA(),
+                            dialogController.getChoiceB(),
+                            dialogController.getChoiceC()
+                    );
+                }
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 
 }

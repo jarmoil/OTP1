@@ -1,0 +1,84 @@
+package controllers;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import models.Flashcard;
+
+// Controller for displaying a single flashcard card with question, choices, and owner controls
+public class FlashcardCardController {
+    @FXML private VBox cardPane;
+    @FXML private Label questionLabel;
+    @FXML private Label choicesLabel;
+    @FXML private HBox buttonBox;
+    @FXML private Button updateButton;
+    @FXML private Button deleteButton;
+
+    // Data and callbacks from parent controller
+    private Flashcard flashcard;
+    private Runnable onUpdateCallback;
+    private Runnable onDeleteCallback;
+
+    public void setFlashcard(Flashcard flashcard) {
+        this.flashcard = flashcard;
+        questionLabel.setText(flashcard.getQuestion());
+        choicesLabel.setText(String.format("Choices:\nA) %s\nB) %s\nC) %s",
+                flashcard.getChoice_a(), flashcard.getChoice_b(), flashcard.getChoice_c()));
+    }
+
+    // Show/hide edit buttons based on ownership
+    public void setOwnerControlsVisible(boolean visible) {
+        buttonBox.setVisible(visible);
+        buttonBox.setManaged(visible);
+    }
+
+    public void setOnUpdateCallback(Runnable callback) {
+        this.onUpdateCallback = callback;
+    }
+
+    public void setOnDeleteCallback(Runnable callback) {
+        this.onDeleteCallback = callback;
+    }
+
+    @FXML
+    private void handleUpdate() {
+        if (onUpdateCallback != null) {
+            onUpdateCallback.run();
+        }
+    }
+
+    @FXML
+    private void handleDelete() {
+        if (onDeleteCallback != null) {
+            onDeleteCallback.run();
+        }
+    }
+
+    // Factory method, creates complete flashcard card with all setup
+    public static FlashcardCardController createFlashcardCard(Flashcard flashcard, boolean isOwner,
+                                                              Runnable onUpdate, Runnable onDelete) {
+        try {
+            // Load FXML layout and get controller
+            FXMLLoader loader = new FXMLLoader(FlashcardCardController.class.getResource("/views/flashcardCard.fxml"));
+            VBox flashcardPane = loader.load();
+            FlashcardCardController controller = loader.getController();
+
+            // Configure the card with data and callbacks
+            controller.setFlashcard(flashcard);
+            controller.setOwnerControlsVisible(isOwner);
+            controller.setOnUpdateCallback(onUpdate);
+            controller.setOnDeleteCallback(onDelete);
+
+            return controller;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load flashcard card", e);
+        }
+    }
+
+    public VBox getRoot() {
+        return cardPane;
+    }
+}
