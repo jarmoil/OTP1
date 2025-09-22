@@ -62,4 +62,39 @@ public class FlashcardDao {
             if (closeConn) conn.close();
         }
     }
+
+    // Update flashcard information in the database by its ID
+    public boolean updateFlashcard(int flashcardId, String question, String answer,
+                                   String choiceA, String choiceB, String choiceC) throws Exception {
+        String sql = "UPDATE flashcards SET question = ?, answer = ?, choice_a = ?, choice_b = ?, choice_c = ? " +
+                "WHERE flashcard_id = ?";
+
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, question);
+            stmt.setString(2, answer);
+            stmt.setString(3, choiceA);
+            stmt.setString(4, choiceB);
+            stmt.setString(5, choiceC);
+            stmt.setInt(6, flashcardId);
+            return stmt.executeUpdate() > 0;
+        } finally {
+            if (closeConn) conn.close();
+        }
+    }
+
+    // Delete a flashcard from the database by its ID
+    public boolean deleteFlashcard(int flashcardId) throws Exception {
+        String sql = "DELETE FROM flashcards WHERE flashcard_id = ?";
+
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, flashcardId);
+            return stmt.executeUpdate() > 0;
+        } finally {
+            if (closeConn) conn.close();
+        }
+    }
 }
