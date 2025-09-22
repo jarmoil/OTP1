@@ -28,4 +28,16 @@ public class UserService {
         String hashedPassword = HashUtil.hashPassword(password);
         return userDao.createUser(username, hashedPassword);
     }
+
+    // Create a new user with teacher role. Only logged in teachers can create other teachers.
+    // Authorization will be added to controller later.
+    public boolean createTeacher(String username, String password) throws Exception {
+        // Check if username exists
+        if (userDao.findByUsername(username) != null) {
+            return false;
+        }
+
+        String hashedPassword = HashUtil.hashPassword(password);
+        return userDao.createTeacher(username, hashedPassword);
+    }
 }

@@ -29,8 +29,6 @@ public class UserDao {
         return null;
     }
 
-    // TODO: Implement user creation for teachers, only students possible now.
-    //  Quick fix: manually hash passwords and add teachers in the DB for testing role logic.
     // Create a new user with 'student' role
     public boolean createUser(String username, String hashedPassword) throws Exception {
         String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'student')";
@@ -42,6 +40,20 @@ public class UserDao {
             return stmt.executeUpdate() > 0;
         }
         finally {
+            if (closeConn) conn.close();
+        }
+    }
+
+    // Create a new user with teacher role
+    public boolean createTeacher(String username, String hashedPassword) throws Exception {
+        String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'teacher')";
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.setString(2, hashedPassword);
+            return stmt.executeUpdate() > 0;
+        } finally {
             if (closeConn) conn.close();
         }
     }
