@@ -8,6 +8,7 @@ import javafx.scene.layout.*;
 import models.Flashcard;
 import models.FlashcardSet;
 import services.FlashcardService;
+import services.FlashcardSetService;
 import utils.SessionManager;
 import java.util.List;
 import java.util.Optional;
@@ -21,10 +22,20 @@ public class FlashcardSetController {
     @FXML private Button createFlashcardButton;
     @FXML private VBox flashcardsContainer;
     @FXML private Button startQuizButton;
+    @FXML private Button updateSetButton;
+    @FXML private Button deleteSetButton;
 
 
     private FlashcardService flashcardService = new FlashcardService();
     private FlashcardSet currentSet;
+    private FlashcardSetService flashcardSetService = new FlashcardSetService();
+
+    // Set is deleted -> go back to previous view
+    private Runnable onSetDeletedCallback;
+
+    public void setOnSetDeletedCallback(Runnable callback) {
+        this.onSetDeletedCallback = callback;
+    }
 
     // Initialize the controller with the given flashcard set
     public void initData(FlashcardSet set) {
@@ -34,11 +45,13 @@ public class FlashcardSetController {
         loadFlashcards();
     }
 
-    // If owner of the set, show create flashcard button
+    // If owner of the set, show create flashcard, update set, delete set buttons
     private void updateUI() {
         boolean isOwner = SessionManager.getCurrentUser() != null &&
                 SessionManager.getCurrentUser().getId() == currentSet.getUser_id();
         createFlashcardButton.setVisible(isOwner);
+        updateSetButton.setVisible(isOwner);
+        deleteSetButton.setVisible(isOwner);
     }
 
     // Load flashcards from the service and display them
@@ -54,6 +67,56 @@ public class FlashcardSetController {
             e.printStackTrace();
         }
     }
+
+    // Handle updating the flashcard set description, showing a dialog to input new description and using the service to save it to the database
+    @FXML
+    private void handleUpdateSet() {
+        TextInputDialog dialog = new TextInputDialog(currentSet.getDescription());
+        dialog.setTitle("Update Set");
+        dialog.setHeaderText("Update set description");
+        dialog.setContentText("Description:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(description -> {
+            try {
+                flashcardSetService.updateSet(currentSet.getSets_id(), description);
+                currentSet.setDescription(description);
+                setDescriptionLabel.setText(description);
+            } catch (IllegalArgumentException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid Description");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    // Handle deleting the flashcard set, showing a confirmation dialog and using the service to delete it from the database
+    // If deleted, call the onSetDeletedCallback to go back to previous view of sets list
+    @FXML
+    private void handleDeleteSet() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Set");
+        alert.setHeaderText("Delete Flashcard Set");
+        alert.setContentText("Are you sure you want to delete this set? This action cannot be undone.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                flashcardSetService.deleteSet(currentSet.getSets_id());
+
+                if (onSetDeletedCallback != null) {
+                    onSetDeletedCallback.run();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     // Handle creating a new flashcard, showing a dialog to input details and using the service to save it to the database
     @FXML

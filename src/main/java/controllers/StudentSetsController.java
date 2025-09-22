@@ -98,6 +98,20 @@ public class StudentSetsController {
         }
     }
 
+    // Restore the main sets view after deleting a set in the details view
+    private void restoreSetsView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/studentSets.fxml"));
+            Parent root = loader.load();
+            StudentSetsController controller = loader.getController();
+
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Load the flashcard set details view into the content area to view flashcards in that set
     private void openSetDetails(FlashcardSet set) {
@@ -106,6 +120,12 @@ public class StudentSetsController {
             Parent root = loader.load();
             FlashcardSetController controller = loader.getController();
             controller.initData(set);
+
+            // Used when deleting a set in the details view to refresh the sets list and restore the sets view
+            controller.setOnSetDeletedCallback(() -> {
+                loadSets();
+                restoreSetsView();
+            });
 
             contentArea.getChildren().clear();
             contentArea.getChildren().add(root);

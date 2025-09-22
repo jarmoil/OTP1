@@ -12,23 +12,23 @@
 
 <AnchorPane prefHeight="680.0" prefWidth="500.0" stylesheets="@../css/flashcard.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FlashcardSetController">
     <children>
-        <Label fx:id="setDescriptionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="240.0" layoutY="14.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Desc">
-         <font>
-            <Font size="20.0" />
-         </font></Label>
-        <HBox layoutX="14.0" layoutY="15.0" spacing="10">
+        <Label fx:id="setDescriptionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="14.0" prefWidth="400.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Desc" wrapText="true">
+            <font>
+                <Font size="20.0" />
+            </font></Label>
+        <HBox layoutX="14.0" layoutY="50.0" spacing="10">
             <Button fx:id="createFlashcardButton" onAction="#handleCreateFlashcard" text="Create Flashcard" />
+            <Button fx:id="updateSetButton" onAction="#handleUpdateSet" text="Update Set" />
+            <Button fx:id="deleteSetButton" onAction="#handleDeleteSet" text="Delete Set" />
             <Button fx:id="startQuizButton" onAction="#handleStartQuiz" styleClass="quiz-button" text="Start Quiz" />
         </HBox>
-        <ScrollPane layoutX="20.0" layoutY="62.0" prefHeight="600.0" prefWidth="480.0" style="-fx-background: transparent; -fx-background-color: transparent;">
+        <ScrollPane layoutX="20.0" layoutY="90.0" prefHeight="570.0" prefWidth="480.0" style="-fx-background: transparent; -fx-background-color: transparent;">
             <StackPane alignment="CENTER">
-
-                    <VBox fx:id="flashcardsContainer" spacing="15" style="-fx-background-color: transparent;">
-                        <padding>
-                            <Insets bottom="10" left="10" right="10" top="10" />
-                        </padding>
-                    </VBox>
-
+                <VBox fx:id="flashcardsContainer" spacing="15" style="-fx-background-color: transparent;">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </VBox>
             </StackPane>
         </ScrollPane>
     </children>

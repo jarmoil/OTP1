@@ -92,12 +92,32 @@ public class TeacherSetsController {
         }
     }
 
+    // Load the flashcard set details view into the content area to view flashcards in that set
+    private void restoreSetsView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/teacherSets.fxml"));
+            Parent root = loader.load();
+            TeacherSetsController controller = loader.getController();
+
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void openSetDetails(FlashcardSet set) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/flashcardSet.fxml"));
             Parent root = loader.load();
             FlashcardSetController controller = loader.getController();
             controller.initData(set);
+
+            // Used when deleting a set in the details view to refresh the sets list and restore the sets view
+            controller.setOnSetDeletedCallback(() -> {
+                loadSets();
+                restoreSetsView();
+            });
 
             contentArea.getChildren().clear();
             contentArea.getChildren().add(root);
@@ -106,4 +126,5 @@ public class TeacherSetsController {
             e.printStackTrace();
         }
     }
+
 }
