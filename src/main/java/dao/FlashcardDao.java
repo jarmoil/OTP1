@@ -96,4 +96,21 @@ public class FlashcardDao {
             if (closeConn) conn.close();
         }
     }
+
+// Update flashcard statistics after an answer attempt
+    public boolean updateFlashcardStats(int flashcardId, boolean isCorrect) throws Exception {
+        String sql = "UPDATE flashcards SET times_answered = times_answered + 1" +
+                (isCorrect ? ", times_correct = times_correct + 1" : "") +
+                " WHERE flashcard_id = ?";
+
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, flashcardId);
+            return stmt.executeUpdate() > 0;
+        } finally {
+            if (closeConn) conn.close();
+        }
+    }
+
 }

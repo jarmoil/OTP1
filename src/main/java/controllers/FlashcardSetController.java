@@ -185,7 +185,12 @@ public class FlashcardSetController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/quiz.fxml"));
             Parent root = loader.load();
             QuizController controller = loader.getController();
-            controller.initQuiz(flashcards);
+
+            // Initialize quiz with flashcards, user ID, and set ID, -1 if not logged in (only logged in users can save stats)
+            int userId = SessionManager.getCurrentUser() != null ?
+                    SessionManager.getCurrentUser().getId() : -1;
+            int setId = currentSet.getSets_id();
+            controller.initQuiz(flashcards, userId, setId);
 
             flashcardsContainer.getChildren().clear();
             flashcardsContainer.getChildren().add(root);

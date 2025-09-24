@@ -40,6 +40,7 @@ public class MainWindowController {
     @FXML private Pane btnLogin;
     @FXML private Label btnLoginLabel;
     @FXML private Label btnLoginLabel1; // For showing username when logged in
+    @FXML private Label btnStatsLabel;
 
     //  minimize, close
     @FXML private Pane titlePane;
@@ -64,10 +65,18 @@ public class MainWindowController {
             setActiveSidebarButton(btnTeacherSets);
             loadContent("/views/teacherSets.fxml");
         });
+
+        // Load different stats view based on user role
         btnStats.setOnMouseClicked(e -> {
             setActiveSidebarButton(btnStats);
-            loadContent("/views/stats.fxml");
+            if (SessionManager.getCurrentUser() != null &&
+                    "teacher".equals(SessionManager.getCurrentUser().getRole())) {
+                loadContent("/views/analytics.fxml");
+            } else {
+                loadContent("/views/stats.fxml");
+            }
         });
+
         btnLogin.setOnMouseClicked(this::handleLoginLogout);
 
         // Window control handlers
@@ -128,6 +137,17 @@ public class MainWindowController {
         } else {
             btnLoginLabel.setText("Login");
             btnLoginLabel1.setVisible(false);
+        }
+        updateStatsButtonText();
+    }
+
+    // Change "Stats" to "Analytics" when teacher is logged in
+    private void updateStatsButtonText() {
+        if (SessionManager.getCurrentUser() != null &&
+                "teacher".equals(SessionManager.getCurrentUser().getRole())) {
+            btnStatsLabel.setText("Analytics");
+        } else {
+            btnStatsLabel.setText("Stats");
         }
     }
 
