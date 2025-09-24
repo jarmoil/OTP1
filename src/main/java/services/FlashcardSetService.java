@@ -6,7 +6,6 @@ import java.util.List;
 
 // Service class for flashcard set-related operations
 public class FlashcardSetService {
-    // TODO: Implement update and delete methods for flashcard sets
     private FlashcardSetDao flashcardSetDao = new FlashcardSetDao();
 
     // Retrieve all flashcard sets from the database using the DAO
@@ -36,4 +35,10 @@ public class FlashcardSetService {
     public boolean deleteSet(int setId) throws Exception {
         return flashcardSetDao.deleteSet(setId);
     }
+
+    // Retrieve a flashcard set by its ID
+    public FlashcardSet getSetById(int setId) throws Exception {
+        return flashcardSetDao.getSetById(setId);
+    }
+
 }
