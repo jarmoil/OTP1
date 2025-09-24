@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane fx:id="cardPane" prefHeight="120.0" prefWidth="400.0" styleClass="highlightCard" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AnalyticsCardController">
+    <children>
+        <VBox layoutX="15.0" layoutY="10.0" spacing="5.0" prefWidth="370.0">
+            <children>
+                <Label fx:id="setNameLabel" styleClass="card-title" text="Set Name" textFill="WHITE" wrapText="true" />
+                <Label fx:id="setPerformanceLabel" styleClass="card-subtitle" text="Overall: 0%" textFill="#CCCCCC" />
+                <Label fx:id="avgPerfLabel" styleClass="card-subtitle" text="Avg Student Score: 0.0%" textFill="#CCCCCC" />
+                <Label fx:id="clickHint" styleClass="card-subtitle" text="Click for details" textFill="#888888" style="-fx-font-style: italic;" />
+            </children>
+        </VBox>
+        <Label fx:id="performanceIndicator" layoutX="350.0" layoutY="15.0" styleClass="card-percentage" text="?" textFill="WHITE" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    </children>
+</Pane>

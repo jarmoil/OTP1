@@ -12,6 +12,8 @@ import models.User;
 import services.UserService;
 import utils.SessionManager;
 
+// TODO: Refresh main window after login/logout to update UI elements
+
 // Controller for the login modal and logic
 public class LoginController {
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fx:id="scrollPane" prefHeight="400.0" prefWidth="450.0" style="-fx-background: transparent; -fx-background-color: transparent;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FlashcardAnalyticsDialogController">
+    <content>
+        <VBox fx:id="container" spacing="10.0" style="-fx-padding: 20;" />
+    </content>
+</ScrollPane>
