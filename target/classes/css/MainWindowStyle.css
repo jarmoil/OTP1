@@ -17,3 +17,15 @@
     -fx-background-color: #00000025;
     -fx-background-radius: 15;
 }
+
+.performance-good {
+    -fx-text-fill: #4CAF50;
+}
+
+.performance-average {
+    -fx-text-fill: #FF9800;
+}
+
+.performance-poor {
+    -fx-text-fill: #F44336;
+}

@@ -94,6 +94,7 @@
     </dependencies>
 
     <build>
+        <finalName>main</finalName>
         <plugins>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -128,8 +129,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.5.1</version>
                 <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
                     <forkCount>1</forkCount>
                     <reuseForks>false</reuseForks>
                     <argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar}</argLine>
@@ -153,6 +157,26 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>Main</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
