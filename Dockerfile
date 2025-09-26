@@ -15,7 +15,6 @@ FROM eclipse-temurin:21-jdk
 # Install necessary dependencies for JavaFX, X11, and Xvfb
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    libgl1-mesa-glx \
     libgl1-mesa-dri \
     mesa-utils \
     libgl1 \
