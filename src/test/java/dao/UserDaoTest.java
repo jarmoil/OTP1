@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserDaoTest {
     private static Connection connection;
-    private UserDao userDao;
+    private IUserDao IUserDao;
 
     @BeforeAll
     static void setupDatabase() throws Exception {
@@ -33,7 +33,7 @@ class UserDaoTest {
     }
     @BeforeEach
     void setUp() {
-        userDao = new UserDao();
+        IUserDao = new UserDao();
     }
 
     @AfterEach
@@ -45,7 +45,7 @@ class UserDaoTest {
 
     @Test
     void testCreateUser() throws Exception {
-        boolean created = userDao.createUser("test1", "test1");
+        boolean created = IUserDao.createUser("test1", "test1");
         assertTrue(created);
 
         try (Statement statement = connection.createStatement();
@@ -61,10 +61,10 @@ class UserDaoTest {
             statement.execute ("INSERT INTO user_accounts (user_name, user_password, role) VALUES ('jesse', 'secret', 'student')");
         }
 
-        User user = userDao.findByUsername("jesse");
+        User user = IUserDao.findByUsername("jesse");
         assertNotNull(user);
 
-        User nonexistent = userDao.findByUsername("nonexistent");
+        User nonexistent = IUserDao.findByUsername("nonexistent");
         assertNull(nonexistent);
     }
 }

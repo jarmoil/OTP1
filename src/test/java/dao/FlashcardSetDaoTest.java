@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FlashcardSetDaoTest {
     private static Connection connection;
-    private FlashcardSetDao flashcardSetDao;
+    private IFlashcardSetDao IFlashcardSetDao;
 
     @BeforeAll
     static void setupDatabase() throws Exception {
@@ -44,7 +44,7 @@ class FlashcardSetDaoTest {
 
     @BeforeEach
     void setUp() {
-        flashcardSetDao = new FlashcardSetDao();
+        IFlashcardSetDao = new FlashcardSetDao();
     }
 
     @AfterEach
@@ -72,7 +72,7 @@ class FlashcardSetDaoTest {
             assertTrue(true);
         }
 
-        List<FlashcardSet> sets = flashcardSetDao.getAllSets();
+        List<FlashcardSet> sets = IFlashcardSetDao.getAllSets();
         assertEquals(1, sets.size());
         assertEquals("History set", sets.get(0).getDescription());
     }
@@ -101,11 +101,11 @@ class FlashcardSetDaoTest {
             stmt.execute("INSERT INTO sets (user_id, description, sets_correct_percentage) VALUES (" + teacherId + ", 'Physics set', 0)");
         }
 
-        List<FlashcardSet> studentSets = flashcardSetDao.getSetsByRole("student");
+        List<FlashcardSet> studentSets = IFlashcardSetDao.getSetsByRole("student");
         assertEquals(1, studentSets.size());
         assertEquals("Chemistry set", studentSets.get(0).getDescription());
 
-        List<FlashcardSet> teacherSets = flashcardSetDao.getSetsByRole("teacher");
+        List<FlashcardSet> teacherSets = IFlashcardSetDao.getSetsByRole("teacher");
         assertEquals(1, teacherSets.size());
         assertEquals("Physics set", teacherSets.get(0).getDescription());
     }
@@ -117,10 +117,10 @@ class FlashcardSetDaoTest {
             statement.execute("INSERT INTO user_accounts (role) VALUES ('teacher')");
         }
 
-        flashcardSetDao.createSet(1, "Chemistry set");
-        flashcardSetDao.createSet(2, "Biology set");
+        IFlashcardSetDao.createSet(1, "Chemistry set");
+        IFlashcardSetDao.createSet(2, "Biology set");
 
-        List<FlashcardSet> sets = flashcardSetDao.getAllSets();
+        List<FlashcardSet> sets = IFlashcardSetDao.getAllSets();
         assertNotNull(sets);
         assertEquals(2, sets.size());
         assertTrue(sets.stream().anyMatch(s -> "Chemistry set".equals(s.getDescription())));
@@ -128,7 +128,7 @@ class FlashcardSetDaoTest {
     }
     @Test
     void testGetAllSetsNull() throws Exception {
-        List<FlashcardSet> sets = flashcardSetDao.getAllSets();
+        List<FlashcardSet> sets = IFlashcardSetDao.getAllSets();
         assertNotNull(sets);
         assertTrue(sets.isEmpty());
     }

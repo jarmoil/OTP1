@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 // DAO class for managing flashcards in the database
-public class FlashcardDao {
+public class FlashcardDao implements IFlashcardDao {
     // Retrieve all flashcards for a given flashcard set ID
+    @Override
     public List<Flashcard> getFlashcardsBySetId(int setId) throws Exception {
         String sql = "SELECT * FROM flashcards WHERE sets_id = ?";
 
@@ -42,6 +43,7 @@ public class FlashcardDao {
     }
 
     // Create a new flashcard in the database
+    @Override
     public boolean createFlashcard(int setId, String question, String answer,
                                    String choiceA, String choiceB, String choiceC) throws Exception {
         String sql = "INSERT INTO flashcards (sets_id, times_answered, times_correct, question, answer, choice_a, choice_b, choice_c) " +
@@ -63,6 +65,7 @@ public class FlashcardDao {
     }
 
     // Update flashcard information in the database by its ID
+    @Override
     public boolean updateFlashcard(int flashcardId, String question, String answer,
                                    String choiceA, String choiceB, String choiceC) throws Exception {
         String sql = "UPDATE flashcards SET question = ?, answer = ?, choice_a = ?, choice_b = ?, choice_c = ? " +
@@ -84,6 +87,7 @@ public class FlashcardDao {
     }
 
     // Delete a flashcard from the database by its ID
+    @Override
     public boolean deleteFlashcard(int flashcardId) throws Exception {
         String sql = "DELETE FROM flashcards WHERE flashcard_id = ?";
 
@@ -98,7 +102,8 @@ public class FlashcardDao {
     }
 
 // Update flashcard statistics after an answer attempt
-    public boolean updateFlashcardStats(int flashcardId, boolean isCorrect) throws Exception {
+@Override
+public boolean updateFlashcardStats(int flashcardId, boolean isCorrect) throws Exception {
         String sql = "UPDATE flashcards SET times_answered = times_answered + 1" +
                 (isCorrect ? ", times_correct = times_correct + 1" : "") +
                 " WHERE flashcard_id = ?";

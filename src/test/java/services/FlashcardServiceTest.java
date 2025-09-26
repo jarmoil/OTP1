@@ -1,6 +1,7 @@
 package services;
 
 import dao.FlashcardDao;
+import dao.IFlashcardDao;
 import models.Flashcard;
 import utils.validation.FlashcardData;
 import utils.validation.Validator;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
 public class FlashcardServiceTest {
 
     @Mock
-    private FlashcardDao flashcardDao;
+    private IFlashcardDao flashcardDao;
 
     @Mock
     private Validator<FlashcardData> validator;
@@ -25,18 +26,9 @@ public class FlashcardServiceTest {
     private FlashcardService flashcardService;
 
     @BeforeEach
-    void setUp() throws Exception {
-        flashcardDao = mock(FlashcardDao.class);
-        validator = mock(Validator.class);
-        flashcardService = new FlashcardService();
-
-        java.lang.reflect.Field daoField = FlashcardService.class.getDeclaredField("flashcardDao");
-        daoField.setAccessible(true);
-        daoField.set(flashcardService, flashcardDao);
-
-        java.lang.reflect.Field validatorField = FlashcardService.class.getDeclaredField("validator");
-        validatorField.setAccessible(true);
-        validatorField.set(flashcardService, validator);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        flashcardService = new FlashcardService(flashcardDao, validator);
     }
 
     // Test retrieving flashcards by set ID

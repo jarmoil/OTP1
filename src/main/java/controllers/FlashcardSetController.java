@@ -1,5 +1,6 @@
 package controllers;
 
+import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,12 +25,18 @@ public class FlashcardSetController {
 
 
     // Services handle database operations
-    private FlashcardService flashcardService = new FlashcardService();
+    private FlashcardService flashcardService;
     private FlashcardSet currentSet;
-    private FlashcardSetService flashcardSetService = new FlashcardSetService();
+    private FlashcardSetService flashcardSetService;
 
     // Set is deleted -> go back to previous view
     private Runnable onSetDeletedCallback;
+
+    @FXML
+    public void initialize() {
+        flashcardService = ServiceFactory.getInstance().getFlashcardService();
+        flashcardSetService = ServiceFactory.getInstance().getFlashcardSetService();
+    }
 
     public void setOnSetDeletedCallback(Runnable callback) {
         this.onSetDeletedCallback = callback;

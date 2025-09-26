@@ -1,13 +1,17 @@
 package services;
 
-import dao.UserDao;
+import dao.IUserDao;
 import models.User;
 import utils.HashUtil;
 
 // Service class for user-related operations
 public class UserService {
 
-    private UserDao userDao = new UserDao();
+    private final IUserDao userDao;
+
+    public UserService(IUserDao userDao) {
+        this.userDao = userDao;
+    }
 
     // Authenticate user by username and password
     public User login(String username, String password) throws Exception {
@@ -20,7 +24,6 @@ public class UserService {
 
     // Register a new user with username and password
     public boolean register(String username, String password) throws Exception {
-        // Check if username exists
         if (userDao.findByUsername(username) != null) {
             return false;
         }
@@ -30,9 +33,7 @@ public class UserService {
     }
 
     // Create a new user with teacher role. Only logged in teachers can create other teachers.
-    // Authorization will be added to controller later.
     public boolean createTeacher(String username, String password) throws Exception {
-        // Check if username exists
         if (userDao.findByUsername(username) != null) {
             return false;
         }

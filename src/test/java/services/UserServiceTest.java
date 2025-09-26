@@ -1,5 +1,6 @@
 package services;
 
+import dao.IUserDao;
 import dao.UserDao;
 import models.User;
 import utils.HashUtil;
@@ -12,19 +13,15 @@ import static org.mockito.Mockito.*;
 public class UserServiceTest {
 
     @Mock
-    private UserDao userDao;
+    private IUserDao userDao;
 
     @InjectMocks
     private UserService userService;
 
     @BeforeEach
-    void setUp() throws Exception {
-        userDao = mock(UserDao.class);
-        userService = new UserService();
-
-        java.lang.reflect.Field daoField = UserService.class.getDeclaredField("userDao");
-        daoField.setAccessible(true);
-        daoField.set(userService, userDao);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        userService = new UserService(userDao);
     }
 
     // Test successful login

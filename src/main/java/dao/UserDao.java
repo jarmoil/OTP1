@@ -5,8 +5,9 @@ import models.User;
 import java.sql.*;
 
 // DAO class for managing user accounts in the database
-public class UserDao {
+public class UserDao implements IUserDao {
     // Find a user by username
+    @Override
     public User findByUsername(String username) throws Exception {
         String sql = "SELECT user_id, user_name, user_password, role FROM user_accounts WHERE user_name = ?";
         Connection conn = ConnectDB.getConnection();
@@ -30,6 +31,7 @@ public class UserDao {
     }
 
     // Create a new user with 'student' role
+    @Override
     public boolean createUser(String username, String hashedPassword) throws Exception {
         String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'student')";
         Connection conn = ConnectDB.getConnection();
@@ -45,6 +47,7 @@ public class UserDao {
     }
 
     // Create a new user with teacher role
+    @Override
     public boolean createTeacher(String username, String hashedPassword) throws Exception {
         String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'teacher')";
         Connection conn = ConnectDB.getConnection();

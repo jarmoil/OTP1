@@ -1,20 +1,21 @@
 package services;
 
-import dao.FlashcardDao;
+import dao.IFlashcardDao;
 import models.Flashcard;
 import utils.validation.FlashcardData;
-import utils.validation.FlashcardValidator;
 import utils.validation.Validator;
 
 import java.util.List;
 
 // Service class for flashcard-related operations
 public class FlashcardService {
-    private FlashcardDao flashcardDao = new FlashcardDao();
+    private final IFlashcardDao flashcardDao;
+    private final Validator<FlashcardData> validator;
 
-    // Validator for flashcard data
-    private Validator<FlashcardData> validator = new FlashcardValidator();
-
+    public FlashcardService(IFlashcardDao flashcardDao, Validator<FlashcardData> validator) {
+        this.flashcardDao = flashcardDao;
+        this.validator = validator;
+    }
 
     // Retrieve all flashcards for a given flashcard set ID
     public List<Flashcard> getFlashcardsBySetId(int setId) throws Exception {
@@ -40,6 +41,10 @@ public class FlashcardService {
     // Delete a flashcard from the database using the DAO
     public boolean deleteFlashcard(int flashcardId) throws Exception {
         return flashcardDao.deleteFlashcard(flashcardId);
+    }
+
+    public void updateFlashcardStats(int flashcardId, boolean isCorrect) throws Exception {
+        flashcardDao.updateFlashcardStats(flashcardId, isCorrect);
     }
 
 }

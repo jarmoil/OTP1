@@ -1,5 +1,6 @@
 package controllers;
 
+import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,8 +22,13 @@ public class LoginController {
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
 
-    private UserService userService = new UserService();
+    private UserService userService;
     private Stage modalStage;
+
+    @FXML
+    public void initialize() {
+        userService = ServiceFactory.getInstance().getUserService();
+    }
 
 
     public void setStage(Stage stage) {

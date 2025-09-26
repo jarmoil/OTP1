@@ -1,5 +1,6 @@
 package controllers;
 
+import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,10 +22,11 @@ public class StudentSetsController {
     @FXML private Button createSetButton;
     @FXML private AnchorPane contentArea;
 
-    private FlashcardSetService flashcardSetService = new FlashcardSetService();
+    private FlashcardSetService flashcardSetService;
 
     @FXML
     public void initialize() {
+        flashcardSetService = ServiceFactory.getInstance().getFlashcardSetService();
         loadSets();
         updateUI();
     }

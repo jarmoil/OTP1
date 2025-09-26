@@ -1,10 +1,13 @@
 package controllers;
 
+import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import models.Flashcard;
 import models.Statistics;
+import services.FlashcardService;
+import services.FlashcardSetService;
 import services.StatisticsService;
 import javafx.animation.RotateTransition;
 import javafx.util.Duration;
@@ -27,13 +30,18 @@ public class QuizController {
     private int correctAnswers = 0;
     private ToggleGroup choicesGroup;
     private Flashcard currentCard;
-    private final StatisticsService statisticsService = new StatisticsService();
+    private StatisticsService statisticsService;
+    private FlashcardService flashcardService;
+    private FlashcardSetService flashcardSetService;
     private final Map<Integer, Boolean> quizResults = new HashMap<>();
     private int userId;
     private int setId;
 
     @FXML
     public void initialize() {
+        statisticsService = ServiceFactory.getInstance().getStatisticsService();
+        flashcardService = ServiceFactory.getInstance().getFlashcardService();
+        flashcardSetService = ServiceFactory.getInstance().getFlashcardSetService();
         choicesGroup = new ToggleGroup();
         choiceA.setToggleGroup(choicesGroup);
         choiceB.setToggleGroup(choicesGroup);
@@ -218,7 +226,17 @@ public class QuizController {
     // Process and save user statistics, returning any relevant messages
     private String processUserStatistics(int percentage) {
         try {
-            boolean saved = statisticsService.processQuizResults(userId, setId, quizResults);
+            // Update individual flashcard stats
+            for (Map.Entry<Integer, Boolean> entry : quizResults.entrySet()) {
+                flashcardService.updateFlashcardStats(entry.getKey(), entry.getValue());
+            }
+
+            // Update set overall percentage
+            flashcardSetService.updateSetCorrectPercentage(setId);
+
+            // Process user statistics (fix the method call with correct parameters)
+            boolean saved = statisticsService.processQuizResults(userId, setId, correctAnswers, flashcards.size());
+
             String statsMessage = buildStatisticsMessage(percentage);
 
             if (!saved) {

@@ -1,5 +1,6 @@
 package controllers;
 
+import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -25,13 +26,17 @@ public class AnalyticsController {
     @FXML private Button createTeacherButton;
     @FXML private ScrollPane analyticsScrollPane;
 
-    private final StatisticsService statisticsService = new StatisticsService();
-    private final FlashcardSetService flashcardSetService = new FlashcardSetService();
-    private final UserService userService = new UserService();
-    private final FlashcardService flashcardService = new FlashcardService();
+    private StatisticsService statisticsService;
+    private FlashcardSetService flashcardSetService;
+    private UserService userService;
+    private FlashcardService flashcardService;
 
     @FXML
     public void initialize() {
+        statisticsService = ServiceFactory.getInstance().getStatisticsService();
+        flashcardSetService = ServiceFactory.getInstance().getFlashcardSetService();
+        userService = ServiceFactory.getInstance().getUserService();
+        flashcardService = ServiceFactory.getInstance().getFlashcardService();
         loadAnalytics();
     }
 

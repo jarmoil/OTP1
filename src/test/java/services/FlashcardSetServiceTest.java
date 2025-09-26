@@ -1,6 +1,7 @@
 package services;
 
 import dao.FlashcardSetDao;
+import dao.IFlashcardSetDao;
 import models.FlashcardSet;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
@@ -14,19 +15,15 @@ import static org.mockito.Mockito.*;
 public class FlashcardSetServiceTest {
 
     @Mock
-    private FlashcardSetDao flashcardSetDao;
+    private IFlashcardSetDao flashcardSetDao;
 
     @InjectMocks
     private FlashcardSetService flashcardSetService;
 
     @BeforeEach
-    void setUp() throws Exception {
-        flashcardSetDao = mock(FlashcardSetDao.class);
-        flashcardSetService = new FlashcardSetService();
-
-        java.lang.reflect.Field field = FlashcardSetService.class.getDeclaredField("flashcardSetDao");
-        field.setAccessible(true);
-        field.set(flashcardSetService, flashcardSetDao);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        flashcardSetService = new FlashcardSetService(flashcardSetDao);
     }
 
     // Tests that the service gets all flashcard sets

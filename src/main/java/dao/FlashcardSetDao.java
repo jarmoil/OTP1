@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 // DAO class for managing flashcard sets in the database
-public class FlashcardSetDao {
+public class FlashcardSetDao implements IFlashcardSetDao {
     // Retrieve all flashcard sets from the database
+    @Override
     public List<FlashcardSet> getAllSets() throws Exception {
         String sql = "SELECT * FROM sets";
         List<FlashcardSet> sets = new ArrayList<>();
@@ -33,6 +34,7 @@ public class FlashcardSetDao {
     }
 
     // Retrieve flashcard sets based on user role (student or teacher)
+    @Override
     public List<FlashcardSet> getSetsByRole(String role) throws Exception {
         String sql = "SELECT s.* FROM sets s " +
                 "INNER JOIN user_accounts u ON s.user_id = u.user_id " +
@@ -60,6 +62,7 @@ public class FlashcardSetDao {
     }
 
     // Retrieve a flashcard set by its ID
+    @Override
     public FlashcardSet getSetById(int setId) throws Exception {
         String sql = "SELECT * FROM sets WHERE sets_id = ?";
 
@@ -85,6 +88,7 @@ public class FlashcardSetDao {
 
 
     // Create a new flashcard set in the database
+    @Override
     public boolean createSet(int userId, String description) throws Exception {
         String sql = "INSERT INTO sets (user_id, description, sets_correct_percentage) VALUES (?, ?, 0)";
 
@@ -100,6 +104,7 @@ public class FlashcardSetDao {
     }
 
     // Update flashcard set information in the database with the given ID
+    @Override
     public boolean updateSet(int setId, String description) throws Exception {
         String sql = "UPDATE sets SET description = ? WHERE sets_id = ?";
 
@@ -115,6 +120,7 @@ public class FlashcardSetDao {
     }
 
     // Delete flashcard set from the database with the given ID
+    @Override
     public boolean deleteSet(int setId) throws Exception {
         String sql = "DELETE FROM sets WHERE sets_id = ?";
 
@@ -129,6 +135,7 @@ public class FlashcardSetDao {
     }
 
     // Update set's correct percentage based on individual flashcard statistics
+    @Override
     public boolean updateSetCorrectPercentage(int setId) throws Exception {
         // Calculate percentage as (total correct / total answered) * 100
         String sql = "UPDATE sets SET sets_correct_percentage = " +

@@ -1,12 +1,16 @@
 package services;
 
-import dao.FlashcardSetDao;
+import dao.IFlashcardSetDao;
 import models.FlashcardSet;
 import java.util.List;
 
 // Service class for flashcard set-related operations
 public class FlashcardSetService {
-    private FlashcardSetDao flashcardSetDao = new FlashcardSetDao();
+    private final IFlashcardSetDao flashcardSetDao;
+
+    public FlashcardSetService(IFlashcardSetDao flashcardSetDao) {
+        this.flashcardSetDao = flashcardSetDao;
+    }
 
     // Retrieve all flashcard sets from the database using the DAO
     public List<FlashcardSet> getAllSets() throws Exception {
@@ -39,6 +43,10 @@ public class FlashcardSetService {
     // Retrieve a flashcard set by its ID
     public FlashcardSet getSetById(int setId) throws Exception {
         return flashcardSetDao.getSetById(setId);
+    }
+
+    public void updateSetCorrectPercentage(int setId) throws Exception {
+        flashcardSetDao.updateSetCorrectPercentage(setId);
     }
 
 }

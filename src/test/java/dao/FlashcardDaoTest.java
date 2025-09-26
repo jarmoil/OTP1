@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FlashcardDaoTest {
 
-    private FlashcardDao flashcardDao;
+    private IFlashcardDao IFlashcardDao;
     private Connection connection;
 
     @BeforeAll
@@ -45,7 +45,7 @@ class FlashcardDaoTest {
 
     @BeforeEach
     void setUp() {
-        flashcardDao = new FlashcardDao();
+        IFlashcardDao = new FlashcardDao();
     }
 
     @AfterEach
@@ -57,20 +57,20 @@ class FlashcardDaoTest {
 
     @Test
     void testCreateFlashcard() throws Exception {
-        boolean created = flashcardDao.createFlashcard(
+        boolean created = IFlashcardDao.createFlashcard(
                 1, "What is an MVC?", "It's a programming model", "Tea", "Candy", "It's a programming model"
         );
 
         assertTrue(created);
 
-        List<Flashcard> flashcards = flashcardDao.getFlashcardsBySetId(1);
+        List<Flashcard> flashcards = IFlashcardDao.getFlashcardsBySetId(1);
         assertEquals(1, flashcards.size());
         assertEquals("What is an MVC?", flashcards.get(0).getQuestion());
     }
 
     @Test
     void testGetFlashcardsBySetId_emptyResult() throws Exception {
-        List<Flashcard> flashcards = flashcardDao.getFlashcardsBySetId(99);
+        List<Flashcard> flashcards = IFlashcardDao.getFlashcardsBySetId(99);
         assertNotNull(flashcards);
         assertTrue(flashcards.isEmpty());
     }

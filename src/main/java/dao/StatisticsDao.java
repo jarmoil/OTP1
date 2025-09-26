@@ -6,9 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatisticsDao {
+public class StatisticsDao implements IStatisticsDao {
 
     // Create or update user statistics for a flashcard set
+    @Override
     public boolean upsertStatistics(int userId, int setId, int correctPercentage) throws Exception {
         String checkSql = "SELECT stats_id FROM statistics WHERE user_id = ? AND sets_id = ?";
         String insertSql = "INSERT INTO statistics (user_id, sets_id, stats_correct_percentage) VALUES (?, ?, ?)";
@@ -48,6 +49,7 @@ public class StatisticsDao {
     }
 
     // Get all statistics from the database
+    @Override
     public List<Statistics> getAllStatistics() throws Exception {
         String sql = "SELECT * FROM statistics";
         List<Statistics> stats = new ArrayList<>();
@@ -74,6 +76,7 @@ public class StatisticsDao {
     }
 
     // Get statistics for a specific user and set (one record)
+    @Override
     public Statistics getStatistics(int userId, int setId) throws Exception {
         String sql = "SELECT * FROM statistics WHERE user_id = ? AND sets_id = ?";
 
@@ -100,6 +103,7 @@ public class StatisticsDao {
     }
 
     // Get all statistics for a specific user (list of records)
+    @Override
     public List<Statistics> getStatisticsByUser(int userId) throws Exception {
         String sql = "SELECT * FROM statistics WHERE user_id = ?";
         List<Statistics> stats = new ArrayList<>();

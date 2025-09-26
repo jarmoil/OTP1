@@ -1,5 +1,6 @@
 package controllers;
 
+import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -16,11 +17,13 @@ public class StatsController {
     @FXML private VBox statsContainer;
     @FXML private Label noStatsLabel;
 
-    private final StatisticsService statisticsService = new StatisticsService();
-    private final FlashcardSetService flashcardSetService = new FlashcardSetService();
+    private StatisticsService statisticsService;
+    private FlashcardSetService flashcardSetService;
 
     @FXML
     public void initialize() {
+        statisticsService = ServiceFactory.getInstance().getStatisticsService();
+        flashcardSetService = ServiceFactory.getInstance().getFlashcardSetService();
         loadStudentStatistics();
     }
 
