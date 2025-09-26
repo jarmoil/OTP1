@@ -1,4 +1,4 @@
-package controllers;
+package controllers.analytics;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +8,8 @@ import models.Flashcard;
 import models.Statistics;
 
 import java.util.List;
+
+// TODO: Refactor this class to reduce complexity and improve readability
 
 public class FlashcardAnalyticsDialogController {
     @FXML private ScrollPane scrollPane;

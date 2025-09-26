@@ -1,5 +1,6 @@
-package controllers;
+package controllers.flashcards;
 
+import controllers.QuizController;
 import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,8 @@ import services.FlashcardSetService;
 import utils.SessionManager;
 import java.util.List;
 import java.util.Optional;
+
+// TODO: Refactor this class to reduce complexity and improve readability
 
 // Controller for managing and displaying flashcards within a flashcard set
 public class FlashcardSetController {

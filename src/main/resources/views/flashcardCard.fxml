@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="cardPane" spacing="10" styleClass="flashcard" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FlashcardCardController">
+<VBox fx:id="cardPane" spacing="10" styleClass="flashcard" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.flashcards.FlashcardCardController">
     <padding>
         <Insets bottom="15" left="15" right="15" top="15" />
     </padding>

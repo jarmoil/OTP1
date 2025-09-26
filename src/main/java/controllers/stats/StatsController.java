@@ -1,4 +1,4 @@
-package controllers;
+package controllers.stats;
 
 import factory.ServiceFactory;
 import javafx.fxml.FXML;

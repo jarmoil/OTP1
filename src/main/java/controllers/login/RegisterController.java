@@ -1,4 +1,4 @@
-package controllers;
+package controllers.login;
 
 import factory.ServiceFactory;
 import javafx.fxml.FXML;
@@ -10,6 +10,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UserService;
+
+// TODO: add validation, improve error handling, password strength check, etc.
 
 public class RegisterController {
     @FXML private TextField usernameField;

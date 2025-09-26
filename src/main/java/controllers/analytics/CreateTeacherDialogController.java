@@ -1,9 +1,11 @@
-package controllers;
+package controllers.analytics;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+
+// TODO: add validation and error handling
 
 public class CreateTeacherDialogController {
     @FXML private TextField usernameField;

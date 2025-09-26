@@ -1,4 +1,4 @@
-package controllers;
+package controllers.login;
 
 import factory.ServiceFactory;
 import javafx.fxml.FXML;

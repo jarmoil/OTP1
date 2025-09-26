@@ -1,10 +1,12 @@
-package controllers;
+package controllers.analytics;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import models.FlashcardSet;
+
+// TODO: Refactor to reduce complexity and improve readability
 
 // Controller for displaying an analytics card with performance indicators
 public class AnalyticsCardController {

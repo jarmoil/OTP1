@@ -13,6 +13,8 @@ import javafx.animation.RotateTransition;
 import javafx.util.Duration;
 import java.util.*;
 
+// TODO: Refactor this class to reduce complexity and improve readability
+
 public class QuizController {
     @FXML private Label questionLabel;
     @FXML private RadioButton choiceA;

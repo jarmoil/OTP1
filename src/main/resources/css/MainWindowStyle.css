@@ -19,13 +19,13 @@
 }
 
 .performance-good {
-    -fx-text-fill: #4CAF50;
+    -fx-text-fill: #4CAF50 !important;
 }
 
 .performance-average {
-    -fx-text-fill: #FF9800;
+    -fx-text-fill: #FF9800 !important;
 }
 
 .performance-poor {
-    -fx-text-fill: #F44336;
+    -fx-text-fill: #F44336 !important;
 }

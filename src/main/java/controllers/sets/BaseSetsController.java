@@ -1,11 +1,12 @@
-package controllers;
+package controllers.sets;
 
+import controllers.flashcards.FlashcardSetController;
+import controllers.flashcards.SetCardController;
 import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -16,13 +17,12 @@ import utils.SessionManager;
 import java.util.List;
 import java.util.Optional;
 
-// Controller for displaying and managing flashcard sets made by students
-public class StudentSetsController {
-    @FXML private FlowPane setsContainer;
-    @FXML private Button createSetButton;
-    @FXML private AnchorPane contentArea;
+public abstract class BaseSetsController {
+    @FXML protected FlowPane setsContainer;
+    @FXML protected Button createSetButton;
+    @FXML protected AnchorPane contentArea;
 
-    private FlashcardSetService flashcardSetService;
+    protected FlashcardSetService flashcardSetService;
 
     @FXML
     public void initialize() {
@@ -31,10 +31,9 @@ public class StudentSetsController {
         updateUI();
     }
 
-    // Load student flashcard sets from the service and display them
-    private void loadSets() {
+    protected void loadSets() {
         try {
-            List<FlashcardSet> sets = flashcardSetService.getSetsByRole("student");
+            List<FlashcardSet> sets = flashcardSetService.getSetsByRole(getUserRole());
             setsContainer.getChildren().clear();
 
             for (FlashcardSet set : sets) {
@@ -46,22 +45,19 @@ public class StudentSetsController {
         }
     }
 
-
-    // Show create set button only for logged-in students
-    private void updateUI() {
+    protected void updateUI() {
         if (SessionManager.getCurrentUser() != null &&
-                "student".equals(SessionManager.getCurrentUser().getRole())) {
+                getUserRole().equals(SessionManager.getCurrentUser().getRole())) {
             createSetButton.setVisible(true);
         } else {
             createSetButton.setVisible(false);
         }
     }
 
-    // Handle creating a new flashcard set, showing a dialog to input description and using the service to save it to the database
     @FXML
-    private void handleCreateSet() {
+    protected void handleCreateSet() {
         if (SessionManager.getCurrentUser() == null ||
-                !"student".equals(SessionManager.getCurrentUser().getRole())) {
+                !getUserRole().equals(SessionManager.getCurrentUser().getRole())) {
             return;
         }
 
@@ -84,8 +80,7 @@ public class StudentSetsController {
         });
     }
 
-    // Create a pane representing a flashcard set with description and click handler to open details (show the flashcards in that set)
-    private Pane createSetPane(FlashcardSet set) {
+    protected Pane createSetPane(FlashcardSet set) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/setCard.fxml"));
             Pane setPane = loader.load();
@@ -100,30 +95,13 @@ public class StudentSetsController {
         }
     }
 
-    // Restore the main sets view after deleting a set in the details view
-    private void restoreSetsView() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/studentSets.fxml"));
-            Parent root = loader.load();
-            StudentSetsController controller = loader.getController();
-
-            contentArea.getChildren().clear();
-            contentArea.getChildren().add(root);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // Load the flashcard set details view into the content area to view flashcards in that set
-    private void openSetDetails(FlashcardSet set) {
+    protected void openSetDetails(FlashcardSet set) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/flashcardSet.fxml"));
             Parent root = loader.load();
             FlashcardSetController controller = loader.getController();
             controller.initData(set);
 
-            // Used when deleting a set in the details view to refresh the sets list and restore the sets view
             controller.setOnSetDeletedCallback(() -> {
                 loadSets();
                 restoreSetsView();
@@ -131,11 +109,23 @@ public class StudentSetsController {
 
             contentArea.getChildren().clear();
             contentArea.getChildren().add(root);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    protected abstract String getUserRole();
+    protected abstract String getViewResource();
 
+    protected void restoreSetsView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(getViewResource()));
+            Parent root = loader.load();
+
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

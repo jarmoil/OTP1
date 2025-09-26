@@ -1,10 +1,12 @@
-package controllers;
+package controllers.analytics;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import models.Flashcard;
+
+// TODO: Refactor to reduce complexity and improve readability
 
 public class FlashcardAnalyticsCardController {
     @FXML private Pane cardPane;

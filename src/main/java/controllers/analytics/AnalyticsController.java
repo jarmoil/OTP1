@@ -1,10 +1,9 @@
-package controllers;
+package controllers.analytics;
 
 import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
 import models.Flashcard;
 import models.Statistics;
 import models.FlashcardSet;
@@ -17,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+// TODO: Refactor this class to reduce complexity and improve readability
 
 // Controller for managing and displaying analytics data for teachers
 public class AnalyticsController {

@@ -1,4 +1,4 @@
-package controllers;
+package controllers.flashcards;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.Flashcard;
+
+// TODO: Refactor this class to reduce complexity and improve readability
 
 // Controller for displaying a single flashcard card with question, choices, and owner controls
 public class FlashcardCardController {

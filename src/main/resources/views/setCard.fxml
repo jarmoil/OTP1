@@ -3,6 +3,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="200" prefWidth="140" styleClass="highlight" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SetCardController">
+<Pane prefHeight="200" prefWidth="140" styleClass="highlight" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.flashcards.SetCardController">
     <Label fx:id="descLabel" layoutX="10" layoutY="10" prefWidth="120" wrapText="true" />
 </Pane>

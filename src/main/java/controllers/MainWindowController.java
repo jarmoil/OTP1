@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.login.LoginController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -117,7 +118,7 @@ public class MainWindowController {
                 loginStage.initModality(Modality.APPLICATION_MODAL);
                 loginStage.setScene(new javafx.scene.Scene(loader.load()));
 
-                controllers.LoginController controller = loader.getController();
+                LoginController controller = loader.getController();
                 controller.setStage(loginStage);
 
                 loginStage.showAndWait();

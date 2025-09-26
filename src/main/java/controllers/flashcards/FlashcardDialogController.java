@@ -1,10 +1,12 @@
-package controllers;
+package controllers.flashcards;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import models.Flashcard;
+
+// TODO: Refactor this class to reduce complexity and improve readability
 
 // Controller for the flashcard creation/editing dialog
 public class FlashcardDialogController {
