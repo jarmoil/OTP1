@@ -10,7 +10,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./resources/flashcardDB.sql:/docker-entrypoint-initdb.d/flashcardDB.sql
+      - ./resources/db_backup.sql:/docker-entrypoint-initdb.d/db_backup.sql
     restart: unless-stopped
 
   javaapp:
@@ -21,7 +21,7 @@ services:
       - DISPLAY=host.docker.internal:0.0
       - DB_HOST=mariadb
       - DB_PORT=3306
-      - DB_NAME=flashcardDB
+      - DB_NAME=db_backup
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:

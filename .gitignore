@@ -1,2 +1,4 @@
 src/main/resources/db.properties
 target/
+.env
+.gitignore
