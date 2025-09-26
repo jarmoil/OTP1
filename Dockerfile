@@ -15,6 +15,9 @@ FROM eclipse-temurin:21-jdk
 # Install necessary dependencies for JavaFX, X11, and Xvfb
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+    libgl1-mesa-glx \
+    libgl1-mesa-dri \
+    mesa-utils \
     libgl1 \
     libgtk-3-0 \
     libx11-6 \
@@ -42,5 +45,5 @@ ENV DISPLAY=:99
 # Copy the Maven built shaded application (JAR file) from the build stage
 COPY --from=build /app/target/main.jar app.jar
 
-CMD ["sh", "-c", "Xvfb :99 -screen 0 1024x768x16 2>/dev/null & java -Djava.library.path=/opt/javafx/lib --module-path /opt/javafx/lib --add-modules javafx.controls,javafx.fxml -jar app.jar"]
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1024x768x16 2>/dev/null & java -Dprism.order=sw -Djava.library.path=/opt/javafx/lib --module-path /opt/javafx/lib --add-modules javafx.controls,javafx.fxml -jar app.jar"]
 
