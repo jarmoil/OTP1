@@ -32,9 +32,7 @@ RUN apt-get update && \
 ENV DISPLAY=:99
 
 # Copy the Maven built shaded application (JAR file) from the build stage
-COPY --from=build /app/target/QuizzyCards-1.0-SNAPSHOT-shaded.jar app.jar
-
-RUN mvn package
+COPY --from=build /app/target/main.jar app.jar
 
 CMD ["sh", "-c", "Xvfb :99 -screen 0 1024x768x16 & java -Djava.library.path=/opt/javafx/lib --module-path /opt/javafx/lib --add-modules javafx.controls,javafx.fxml -jar app.jar"]
 
