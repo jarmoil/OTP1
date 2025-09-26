@@ -27,6 +27,13 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Download and unpack JavaFX SDK
+RUN wget https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_linux-x64_bin-sdk.zip \
+    && unzip openjfx-20.0.1_linux-x64_bin-sdk.zip -d /opt \
+    && mv /opt/javafx-sdk-20.0.1 /opt/javafx \
+    && rm openjfx-20.0.1_linux-x64_bin-sdk.zip
+
+
 
 # Set environment variable for X11 display
 ENV DISPLAY=:99
