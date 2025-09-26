@@ -24,6 +24,7 @@ RUN apt-get update && \
     xauth \
     x11-apps \
     xvfb \
+    unzip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -41,5 +42,5 @@ ENV DISPLAY=:99
 # Copy the Maven built shaded application (JAR file) from the build stage
 COPY --from=build /app/target/main.jar app.jar
 
-CMD ["sh", "-c", "Xvfb :99 -screen 0 1024x768x16 & java -Djava.library.path=/opt/javafx/lib --module-path /opt/javafx/lib --add-modules javafx.controls,javafx.fxml -jar app.jar"]
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1024x768x16 2>/dev/null & java -Djava.library.path=/opt/javafx/lib --module-path /opt/javafx/lib --add-modules javafx.controls,javafx.fxml -jar app.jar"]
 
