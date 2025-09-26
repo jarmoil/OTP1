@@ -21,6 +21,25 @@ pipeline{
             }
         }
 
+        stage('Prepare db.properties') {
+                    steps {
+                        withCredentials([
+                            string(credentialsId: 'db-host-secret-id', variable: 'DB_HOST'),
+                            string(credentialsId: 'db-port-secret-id', variable: 'DB_PORT'),
+                            string(credentialsId: 'db-name-secret-id', variable: 'DB_NAME'),
+                            usernamePassword(credentialsId: 'db-userpass-secret-id', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD')
+                        ]) {
+                            bat '''
+                                echo DB_HOST=%DB_HOST%> src\\main\\resources\\db.properties
+                                echo DB_PORT=%DB_PORT%>> src\\main\\resources\\db.properties
+                                echo DB_NAME=%DB_NAME%>> src\\main\\resources\\db.properties
+                                echo DB_USER=%DB_USER%>> src\\main\\resources\\db.properties
+                                echo DB_PASSWORD=%DB_PASSWORD%>> src\\main\\resources\\db.properties
+                            '''
+                        }
+                    }
+                }
+
         stage('Build') {
             steps {
                 bat 'mvn clean install' // sh for linux and ios
