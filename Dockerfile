@@ -25,7 +25,6 @@ RUN apt-get update && \
     libxrender1 \
     xauth \
     x11-apps \
-    xvfb \
     unzip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -38,11 +37,11 @@ RUN wget https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_linux-x64_b
 
 
 
-# Set environment variable for X11 display
-ENV DISPLAY=:99
+# Set DISPLAY for Xming (will be overridden by docker-compose)
+ENV DISPLAY=host.docker.internal:0.0
 
 # Copy the Maven built shaded application (JAR file) from the build stage
 COPY --from=build /app/target/main.jar app.jar
 
-CMD ["sh", "-c", "Xvfb :99 -screen 0 1024x768x16 2>/dev/null & java -Dprism.order=sw -Djava.library.path=/opt/javafx/lib --module-path /opt/javafx/lib --add-modules javafx.controls,javafx.fxml -jar app.jar"]
+CMD ["java", "-Dprism.order=sw", "-Djava.library.path=/opt/javafx/lib", "--module-path", "/opt/javafx/lib", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "app.jar"]
 
