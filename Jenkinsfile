@@ -17,7 +17,7 @@ pipeline{
     stages{
         stage('checking'){
             steps{
-                git branch:'jarmo', url:'https://github.com/jarmoil/OTP1.git'
+                git branch:'main', url:'https://github.com/jarmoil/OTP1.git'
             }
         }
 
