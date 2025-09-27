@@ -67,4 +67,17 @@ class UserDaoTest {
         User nonexistent = IUserDao.findByUsername("nonexistent");
         assertNull(nonexistent);
     }
+
+    @Test
+    void testCreateTeacher() throws Exception {
+        boolean created = IUserDao.createTeacher("teacher1", "password123");
+        assertTrue(created);
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS count FROM user_accounts WHERE user_name='teacher1' AND role='teacher'")) {
+            assertTrue(resultSet.next());
+            assertEquals(1, resultSet.getInt("count"));
+        }
+    }
+
 }
