@@ -1,3 +1,5 @@
 src/main/resources/db.properties
 target/
 .idea
+.env
+.gitignore

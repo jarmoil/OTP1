@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./resources/db_backup.sql:/docker-entrypoint-initdb.d/db_backup.sql
+    restart: unless-stopped
+
+  javaapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DISPLAY=host.docker.internal:0.0
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_NAME=db_backup
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - mariadb
+    stdin_open: true
+    tty: true
