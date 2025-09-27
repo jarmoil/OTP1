@@ -94,7 +94,7 @@ public class AnalyticsController {
         analyticsContainer.getChildren().clear();
 
         for (FlashcardSet set : allSets) {
-            List<Statistics> setStats = statsBySet.getOrDefault(set.getSets_id(), List.of());
+            List<Statistics> setStats = statsBySet.getOrDefault(set.getSets_id(), java.util.Collections.emptyList());
 
             // Calculate average student performance
             double avgStudentPerf = setStats.isEmpty() ? 0.0 :
