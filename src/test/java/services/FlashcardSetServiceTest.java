@@ -103,4 +103,42 @@ public class FlashcardSetServiceTest {
         assertTrue(result);
         verify(flashcardSetDao).deleteSet(setId);
     }
+
+    // Test retrieving a flashcard set by ID
+    @Test
+    void testGetSetById() throws Exception {
+        int setId = 1;
+        FlashcardSet mockSet = new FlashcardSet(1, 1, "Test Set", 75);
+        when(flashcardSetDao.getSetById(setId)).thenReturn(mockSet);
+
+        FlashcardSet result = flashcardSetService.getSetById(setId);
+
+        assertEquals(mockSet, result);
+        verify(flashcardSetDao).getSetById(setId);
+    }
+
+    // Test updating set correct percentage
+    @Test
+    void testUpdateSetCorrectPercentage() throws Exception {
+        int setId = 1;
+
+        flashcardSetService.updateSetCorrectPercentage(setId);
+
+        verify(flashcardSetDao).updateSetCorrectPercentage(setId);
+    }
+
+    // Test updateSetCorrectPercentage when DAO throws exception
+    @Test
+    void testUpdateSetCorrectPercentageException() throws Exception {
+        int setId = 1;
+        doThrow(new RuntimeException("Database error")).when(flashcardSetDao).updateSetCorrectPercentage(setId);
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            flashcardSetService.updateSetCorrectPercentage(setId);
+        });
+
+        assertEquals("Database error", exception.getMessage());
+        verify(flashcardSetDao).updateSetCorrectPercentage(setId);
+    }
+
 }

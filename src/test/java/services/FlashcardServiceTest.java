@@ -148,4 +148,21 @@ public class FlashcardServiceTest {
         assertFalse(result);
         verify(flashcardDao).deleteFlashcard(1);
     }
+
+    // Test updating flashcard stats with correct answer
+    @Test
+    void testUpdateFlashcardStatsCorrect() throws Exception {
+        flashcardService.updateFlashcardStats(1, true);
+
+        verify(flashcardDao).updateFlashcardStats(1, true);
+    }
+
+    // Test updating flashcard stats with incorrect answer
+    @Test
+    void testUpdateFlashcardStatsIncorrect() throws Exception {
+        flashcardService.updateFlashcardStats(1, false);
+
+        verify(flashcardDao).updateFlashcardStats(1, false);
+    }
+
 }
