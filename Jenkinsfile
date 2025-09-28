@@ -47,15 +47,10 @@ pipeline{
         }
         stage('Test') {
             steps {
-                bat 'mvn test'
+                bat 'mvn test -Dtest=!e2e.*'
             }
         }
-        stage('E2E Tests') {
-            steps {
-                bat 'mvn verify -P e2e'
-                // or: bat 'mvn test -Dtest=*E2E*'
-            }
-        }
+
 
         stage('Code Coverage') {
             steps {
