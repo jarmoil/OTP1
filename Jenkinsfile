@@ -13,7 +13,7 @@ pipeline{
 
     tools{
         maven 'MAVEN_HOME'
-    }
+    }e2e*
     stages{
         stage('checking'){
             steps{
