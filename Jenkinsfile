@@ -13,7 +13,7 @@ pipeline{
 
     tools{
         maven 'MAVEN_HOME'
-    }e2e*
+    }
     stages{
         stage('checking'){
             steps{
@@ -50,6 +50,13 @@ pipeline{
                 bat 'mvn test'
             }
         }
+        stage('E2E Tests') {
+            steps {
+                bat 'mvn verify -P e2e'
+                // or: bat 'mvn test -Dtest=*E2E*'
+            }
+        }
+
         stage('Code Coverage') {
             steps {
                 bat 'mvn jacoco:report'
