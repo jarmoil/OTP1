@@ -166,7 +166,9 @@
                 <version>3.5.1</version>
                 <configuration>
                     <excludes>
-                        <exclude>e2e/**</exclude>
+                        <exclude>**/e2e/*.java</exclude>
+                        <exclude>**/e2e/*Test.java</exclude>
+                        <exclude>**/MainE2EWorkFlowTest.java</exclude>
                     </excludes>
                     <includes>
                         <include>**/*Test.java</include>
