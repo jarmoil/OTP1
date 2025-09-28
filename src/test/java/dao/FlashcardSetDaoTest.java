@@ -11,8 +11,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// TODO: Add tests for the new update and delete methods
-
 class FlashcardSetDaoTest {
     private static Connection connection;
     private IFlashcardSetDao IFlashcardSetDao;
@@ -112,13 +110,20 @@ class FlashcardSetDaoTest {
 
     @Test
     void testGetAllSets() throws Exception {
+        int userId1, userId2;
         try (Statement statement = connection.createStatement()) {
             statement.execute("INSERT INTO user_accounts (role) VALUES ('student')");
             statement.execute("INSERT INTO user_accounts (role) VALUES ('teacher')");
+
+            ResultSet rs = statement.executeQuery("SELECT user_id FROM user_accounts ORDER BY user_id");
+            rs.next();
+            userId1 = rs.getInt(1);
+            rs.next();
+            userId2 = rs.getInt(1);
         }
 
-        IFlashcardSetDao.createSet(1, "Chemistry set");
-        IFlashcardSetDao.createSet(2, "Biology set");
+        IFlashcardSetDao.createSet(userId1, "Chemistry set");
+        IFlashcardSetDao.createSet(userId2, "Biology set");
 
         List<FlashcardSet> sets = IFlashcardSetDao.getAllSets();
         assertNotNull(sets);
@@ -126,10 +131,92 @@ class FlashcardSetDaoTest {
         assertTrue(sets.stream().anyMatch(s -> "Chemistry set".equals(s.getDescription())));
         assertTrue(sets.stream().anyMatch(s -> "Biology set".equals(s.getDescription())));
     }
+
     @Test
     void testGetAllSetsNull() throws Exception {
         List<FlashcardSet> sets = IFlashcardSetDao.getAllSets();
         assertNotNull(sets);
         assertTrue(sets.isEmpty());
     }
+
+    @Test
+    void testUpdateSet() throws Exception {
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute("INSERT INTO user_accounts (user_id, role) VALUES (1, 'student')");
+        }
+
+        IFlashcardSetDao.createSet(1, "Original Description");
+        int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
+
+        assertTrue(IFlashcardSetDao.updateSet(setId, "Updated Description"));
+        FlashcardSet updated = IFlashcardSetDao.getSetById(setId);
+        assertEquals("Updated Description", updated.getDescription());
+
+        assertFalse(IFlashcardSetDao.updateSet(999, "New Description"));
+    }
+
+    @Test
+    void testDeleteSet() throws Exception {
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute("INSERT INTO user_accounts (user_id, role) VALUES (1, 'student')");
+        }
+
+        IFlashcardSetDao.createSet(1, "To Delete");
+        int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
+
+        assertTrue(IFlashcardSetDao.deleteSet(setId));
+        assertNull(IFlashcardSetDao.getSetById(setId));
+
+        assertFalse(IFlashcardSetDao.deleteSet(999));
+    }
+
+    @Test
+    void testGetSetById() throws Exception {
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute("INSERT INTO user_accounts (user_id, role) VALUES (1, 'student')");
+        }
+
+        IFlashcardSetDao.createSet(1, "Test Set");
+        int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
+
+        FlashcardSet retrievedSet = IFlashcardSetDao.getSetById(setId);
+        assertNotNull(retrievedSet);
+        assertEquals("Test Set", retrievedSet.getDescription());
+
+        assertNull(IFlashcardSetDao.getSetById(999));
+    }
+
+    @Test
+    void testUpdateSetCorrectPercentage() throws Exception {
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute("INSERT INTO user_accounts (user_id, role) VALUES (1, 'student')");
+            stmt.execute("CREATE TABLE IF NOT EXISTS flashcards (" +
+                    "flashcard_id INT AUTO_INCREMENT PRIMARY KEY," +
+                    "sets_id INT NOT NULL," +
+                    "times_answered INT DEFAULT 0," +
+                    "times_correct INT DEFAULT 0," +
+                    "question VARCHAR(255)," +
+                    "answer VARCHAR(255)," +
+                    "choice_a VARCHAR(255)," +
+                    "choice_b VARCHAR(255)," +
+                    "choice_c VARCHAR(255))");
+        }
+
+        IFlashcardSetDao.createSet(1, "Test Set");
+        int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
+
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute("INSERT INTO flashcards (sets_id, times_answered, times_correct, question, answer, choice_a, choice_b, choice_c) " +
+                    "VALUES (" + setId + ", 10, 8, 'Q1', 'A1', 'C1', 'C2', 'C3')");
+            stmt.execute("INSERT INTO flashcards (sets_id, times_answered, times_correct, question, answer, choice_a, choice_b, choice_c) " +
+                    "VALUES (" + setId + ", 5, 3, 'Q2', 'A2', 'C1', 'C2', 'C3')");
+        }
+
+        assertTrue(IFlashcardSetDao.updateSetCorrectPercentage(setId));
+        FlashcardSet updated = IFlashcardSetDao.getSetById(setId);
+        assertEquals(73, updated.getSets_correct_percentage());
+
+        assertFalse(IFlashcardSetDao.updateSetCorrectPercentage(999));
+    }
+
 }
