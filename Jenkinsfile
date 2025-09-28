@@ -42,12 +42,12 @@ pipeline{
 
         stage('Build') {
             steps {
-                bat 'mvn clean install -Dtest=!e2e.*' // sh for linux and ios
+                bat 'mvn clean install' // sh for linux and ios
             }
         }
         stage('Test') {
             steps {
-                bat 'mvn test -Dtest=!e2e.*'
+                bat 'mvn test'
             }
         }
 
