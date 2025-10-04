@@ -4,11 +4,13 @@ import controllers.login.LoginController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import utils.SessionManager;
@@ -53,9 +55,11 @@ public class MainWindowController {
     @FXML private AnchorPane contentArea;
 
     private Stage mainStage;
+    private static Stage mainStageRef;
 
     public void init(Stage stage) {
         this.mainStage = stage;
+        mainStageRef = stage;
 
         // Navigation handlers
         btnStudentSets.setOnMouseClicked(e -> {
@@ -109,6 +113,20 @@ public class MainWindowController {
             // Logout
             SessionManager.clear();
             updateLoginUI();
+
+            // Reload main window after logout to reset UI
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/window.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                scene.setFill(Color.TRANSPARENT);
+                mainStage.setScene(scene);
+
+                MainWindowController controller = loader.getController();
+                controller.init(mainStage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         } else {
             // Open login modal
             try {
@@ -161,5 +179,10 @@ public class MainWindowController {
 
         activateSidebarButton = selectedButton;
         activateSidebarButton.setStyle("-fx-background-color: #9e9e9e;");
+    }
+
+    // Provide access to main stage for other controllers
+    public static Stage getMainStage() {
+        return mainStageRef;
     }
 }

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.User;
 import services.UserService;
@@ -49,6 +50,7 @@ public class LoginController {
 
                 if (modalStage != null) {
                     modalStage.close();
+                    showWindow();
                 }
 
             } else {
@@ -75,5 +77,23 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
+    // After login, open main window to refresh UI
+    private void showWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/window.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            Stage mainStage = controllers.MainWindowController.getMainStage();
+            mainStage.setScene(scene);
+
+            controllers.MainWindowController controller = loader.getController();
+            controller.init(mainStage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
