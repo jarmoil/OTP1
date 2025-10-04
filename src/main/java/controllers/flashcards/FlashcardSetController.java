@@ -205,6 +205,9 @@ public class FlashcardSetController {
             flashcardsContainer.getChildren().clear();
             flashcardsContainer.getChildren().add(root);
             startQuizButton.setVisible(false);
+            createFlashcardButton.setVisible(false);
+            updateSetButton.setVisible(false);
+            deleteSetButton.setVisible(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
