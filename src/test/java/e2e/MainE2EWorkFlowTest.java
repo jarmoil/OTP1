@@ -21,6 +21,8 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 // TODO: Find out why some tests fail randomly
+// Because some of clickOn() does not click by fx:id, but by text,
+// if there are multiple nodes with the same text, it may click the wrong one
 
 public class MainE2EWorkFlowTest extends ApplicationTest {
     private static Connection connection;
@@ -114,7 +116,7 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
 
         // Create a new flashcard
         clickOn("#createSetButton").write("Test Set");
-        clickOn("OK"); // Confirm creation
+        clickOn("OK"); // Confirm creation  <-------------  THIS IS NOT BY FX:ID, BUT BY TEXT
         waitForFxEvents(); // Wait for UI update
 
         // Verify the new set appears
@@ -123,7 +125,7 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
         );
 
         // Click the new set
-        clickOn("Test Set");
+        clickOn("Test Set"); // <-------------  THIS IS NOT BY FX:ID, BUT BY TEXT
 
         // Add a new flashcard to the set
         clickOn("#createFlashcardButton");
@@ -140,7 +142,7 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
         push(javafx.scene.input.KeyCode.ENTER);
 
         // Save the flashcard
-        clickOn("Create");
+        clickOn("Create"); // <-------------  THIS IS NOT BY FX:ID, BUT BY TEXT
 
         // Verify the new flashcard appears in the list
         verifyThat("#flashcardsContainer", node ->
@@ -150,7 +152,7 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
         // Update the flashcard
         clickOn("#updateSetButton");
         write("Test Set Updated");
-        clickOn("OK");
+        clickOn("OK"); // <-------------  THIS IS NOT BY FX:ID, BUT BY TEXT
 
         // Commented out flashcard update test due to random failures
 //        clickOn("#updateButton");
@@ -160,7 +162,7 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
 //        eraseText(20); // Clear existing text
 //        write("Test Question Updated");
 //
-//        clickOn("Update");
+//        clickOn("Update"); // <-------------  THIS IS NOT BY FX:ID, BUT BY TEXT
 //
 //        // Wait for the UI to update after clicking "Update"
 //        waitFor(2, java.util.concurrent.TimeUnit.SECONDS, () ->
@@ -183,7 +185,7 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
         clickOn("#choiceB"); // Select B answer
         clickOn("#submitButton");
 
-        clickOn("Next Question");
+        clickOn("Next Question"); // <-------------  THIS IS NOT BY FX:ID, BUT BY TEXT
 
         // Verify quiz completion
         clickOn("#btnStats");
@@ -198,9 +200,9 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
                 lookup("#setsContainer").tryQuery().isPresent()
         );
 
-        clickOn("Test Set Updated");
+        clickOn("Test Set Updated"); // <-------------  THIS IS NOT BY FX:ID, BUT BY TEXT
         clickOn("#deleteSetButton");
-        clickOn("OK"); // Confirm set deletion
+        clickOn("OK"); // Confirm set deletion // <-------------  THIS IS NOT BY FX:ID, BUT BY TEXT
 
         waitForFxEvents();
 
@@ -224,8 +226,14 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
         clickOn("#btnLogin")
                 .write("teacher")
                 .push(javafx.scene.input.KeyCode.TAB)
-                .write("teacher")
-                .clickOn(".button");
+                .write("teacher");
+
+        // This is a workaround to click the "Login" button specifically
+        clickOn(lookup(".button").queryAll().stream()
+                .filter(node -> node instanceof javafx.scene.control.Button &&
+                        "Login".equals(((javafx.scene.control.Button) node).getText()))
+                .findFirst()
+                .orElseThrow());
 
         // Click on Analytics tab
         clickOn("#btnStats");
@@ -235,7 +243,7 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
 //
 //        // Verify hint dialog appears
 //        verifyThat(".dialog-pane", isVisible());
-//        clickOn("Close"); // Close hint dialog
+//        clickOn("Close"); // Close hint dialog // <-------------  THIS IS NOT BY FX:ID, BUT BY TEXT
 
         // Exit the application
         clickOn("#btnClose");
