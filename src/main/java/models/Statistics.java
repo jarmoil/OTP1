@@ -25,4 +25,15 @@ public class Statistics {
     public void setSets_id(int sets_id) { this.sets_id = sets_id; }
     public void setStats_correct_percentage(int stats_correct_percentage) { this.stats_correct_percentage = stats_correct_percentage; }
 
+    // This method was used for debugging purposes, can be removed later if not needed
+    @Override
+    public String toString() {
+        return "Statistics{" +
+                "stats_id=" + stats_id +
+                ", user_id=" + user_id +
+                ", sets_id=" + sets_id +
+                ", stats_correct_percentage=" + stats_correct_percentage +
+                '}';
+    }
+
 }

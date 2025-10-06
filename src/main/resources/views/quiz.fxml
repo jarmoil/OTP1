@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="quizPane" prefHeight="360.0" prefWidth="260.0" styleClass="highlight" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.QuizController">
+<AnchorPane fx:id="quizPane" prefHeight="500.0" prefWidth="260.0" styleClass="highlight" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.QuizController">
     <children>
-        <VBox alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="350.0" prefWidth="250.0" spacing="20">
+        <VBox alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="490.0" prefWidth="250.0" spacing="20">
             <Label fx:id="questionLabel" textFill="WHITE" wrapText="true">
                 <font>
                     <Font size="18.0" />
@@ -25,7 +25,7 @@
             <Button fx:id="submitButton" onAction="#handleSubmit" text="Submit Answer" />
             <Button fx:id="nextButton" onAction="#handleNext" text="Next Question" visible="false" />
 
-            <Label fx:id="feedbackLabel" textFill="WHITE" wrapText="true">
+            <Label fx:id="feedbackLabel" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
                 <font>
                     <Font size="14.0" />
                 </font>

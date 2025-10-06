@@ -233,13 +233,15 @@ public class QuizController {
                 flashcardService.updateFlashcardStats(entry.getKey(), entry.getValue());
             }
 
-            // Update set overall percentage
-            flashcardSetService.updateSetCorrectPercentage(setId);
+            // Fetch previous statistics
+            Statistics previousStats = statisticsService.getStatistics(userId, setId);
 
-            // Process user statistics (fix the method call with correct parameters)
             boolean saved = statisticsService.processQuizResults(userId, setId, correctAnswers, flashcards.size());
 
-            String statsMessage = buildStatisticsMessage(percentage);
+            String statsMessage = buildStatisticsMessage(percentage, previousStats);
+
+            // Update set overall percentage
+            flashcardSetService.updateSetCorrectPercentage(setId);
 
             if (!saved) {
                 statsMessage += "\n Results could not be saved.";
@@ -253,22 +255,19 @@ public class QuizController {
     }
 
     // Build message about previous statistics and personal bests
-    private String buildStatisticsMessage(int percentage) {
-        try {
-            Statistics previousStats = statisticsService.getStatistics(userId, setId);
-            if (previousStats != null) {
-                String message = String.format("\nYour best score: %d%%", previousStats.getStats_correct_percentage());
-                if (percentage > previousStats.getStats_correct_percentage()) {
-                    message += "\n New personal best!";
-                }
-                return message;
-            } else {
-                return "\nFirst attempt on this set!";
+    private String buildStatisticsMessage(int percentage, Statistics previousStats) {
+        if (previousStats != null) {
+            int best = previousStats.getStats_correct_percentage();
+            String message = String.format("\nYour previous best score: %d%%", best);
+            if (percentage > best) {
+                message += "\n New personal best!";
             }
-        } catch (Exception e) {
-            return "\nError loading previous statistics.";
+            return message;
+        } else {
+            return "\nFirst attempt on this set!";
         }
     }
+
 
     // Update score display
     private void updateScore() {
