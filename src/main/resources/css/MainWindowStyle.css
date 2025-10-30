@@ -29,3 +29,7 @@
 .performance-poor {
     -fx-text-fill: #F44336 !important;
 }
+
+#languageSelector {
+    -fx-background-radius: 15;
+}

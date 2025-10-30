@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane prefHeight="753.0" prefWidth="757.0" stylesheets="@../css/MainWindowStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainWindowController">
 
     <!-- Sidebar -->
@@ -92,5 +93,6 @@
             <Image url="@../images/icons8-minimize-48.png" />
         </image>
     </ImageView>
+    <ComboBox fx:id="languageSelector" prefWidth="80" AnchorPane.topAnchor="16" AnchorPane.rightAnchor="100"/>
 
 </AnchorPane>

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -49,6 +50,7 @@ public class MainWindowController {
     @FXML private Pane titlePane;
     @FXML private ImageView btnClose;
     @FXML private ImageView btnMinimize;
+    @FXML private ComboBox<String> languageSelector;
 
 
     // Content area (Flashcard sets, stats, etc.)
@@ -56,6 +58,23 @@ public class MainWindowController {
 
     private Stage mainStage;
     private static Stage mainStageRef;
+
+
+    private void initializeLanguageSelector() {
+        languageSelector.getItems().addAll("EN", "JA", "RU");
+        languageSelector.setValue("EN"); // Default language
+
+        languageSelector.setOnAction(e -> {
+            String selectedLang = languageSelector.getValue();
+            changeLanguage(selectedLang);
+        });
+    }
+
+    private void changeLanguage(String language) {
+        // TODO: Implement language change logic with LanguageManager
+        // Load appropriate resource bundle based on language
+        System.out.println("Language changed to: " + language);
+    }
 
     public void init(Stage stage) {
         this.mainStage = stage;
@@ -89,6 +108,7 @@ public class MainWindowController {
         btnMinimize.setOnMouseClicked(e -> mainStage.setIconified(true));
 
         initializeDragListeners();
+        initializeLanguageSelector();
         updateLoginUI();
     }
 
