@@ -59,10 +59,10 @@
     <!-- Dynamic Content Area -->
     <AnchorPane fx:id="contentArea" layoutX="227.0" layoutY="52.0" prefHeight="689.0" prefWidth="520.0" styleClass="mainPane">
       <children>
-         <Label layoutX="40.0" layoutY="147.0" text="Welcome To Quizzy Words!" textFill="WHITE">
-            <font>
-               <Font size="36.0" />
-            </font>
+         <Label layoutX="40.0" layoutY="147.0" text="%windowFXML.welcome" textFill="WHITE" wrapText="true" maxWidth="300">
+         <font>
+            <Font size="30.0" />
+         </font>
          </Label>
          <Label layoutX="143.0" layoutY="322.0" text="Select set to play!" textFill="WHITE">
             <font>

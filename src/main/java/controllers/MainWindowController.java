@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import utils.LanguageManager;
 import utils.SessionManager;
 
 // Controller for the main application window, handling navigation and stuff
@@ -62,18 +63,44 @@ public class MainWindowController {
 
     private void initializeLanguageSelector() {
         languageSelector.getItems().addAll("EN", "JA", "RU");
-        languageSelector.setValue("EN"); // Default language
+
+        String currentLang = switch (LanguageManager.getCurrentLocale().getLanguage()) {
+            case "ja" -> "JA";
+            case "ru" -> "RU";
+            default -> "EN";
+        };
+        languageSelector.setValue(currentLang);
 
         languageSelector.setOnAction(e -> {
             String selectedLang = languageSelector.getValue();
-            changeLanguage(selectedLang);
+            if (selectedLang != null) {
+                changeLanguage(selectedLang);
+            }
         });
     }
 
     private void changeLanguage(String language) {
-        // TODO: Implement language change logic with LanguageManager
-        // Load appropriate resource bundle based on language
-        System.out.println("Language changed to: " + language);
+        // TODO: Show confirmation dialog before changing language and inform user that app will reload
+        LanguageManager.setLocale(language);
+
+        // Reload the main window to apply new language
+        try {
+            // Waiting for FXMLLoader with resource bundle support util class
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/window.fxml"));
+            loader.setResources(LanguageManager.getResourceBundle());
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            mainStage.setScene(scene);
+
+            MainWindowController controller = loader.getController();
+            controller.init(mainStage);
+
+            // Set value without triggering the event
+            controller.languageSelector.setValue(language);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void init(Stage stage) {
@@ -115,7 +142,9 @@ public class MainWindowController {
     // Load FXML content into the content area of the main window
     private void loadContent(String fxmlPath) {
         try {
+            // Waiting for FXMLLoader with resource bundle support util class
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            loader.setResources(LanguageManager.getResourceBundle());
             Parent content = loader.load();
             contentArea.getChildren().clear();
             contentArea.getChildren().add(content);
@@ -136,7 +165,9 @@ public class MainWindowController {
 
             // Reload main window after logout to reset UI
             try {
+                // Waiting for FXMLLoader with resource bundle support util class
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/window.fxml"));
+                loader.setResources(LanguageManager.getResourceBundle());
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 scene.setFill(Color.TRANSPARENT);
@@ -150,7 +181,9 @@ public class MainWindowController {
         } else {
             // Open login modal
             try {
+                // Waiting for FXMLLoader with resource bundle support util class
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
+                loader.setResources(LanguageManager.getResourceBundle());
                 Stage loginStage = new Stage();
                 loginStage.initOwner(mainStage);
                 loginStage.initModality(Modality.APPLICATION_MODAL);

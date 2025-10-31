@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import utils.LanguageManager;
 
 public class MainWindow extends Application {
 
@@ -15,7 +16,9 @@ public class MainWindow extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Waiting for FXMLLoader with resource bundle support util class
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/window.fxml"));
+        loader.setResources(LanguageManager.getResourceBundle());;
         Scene scene = new Scene(loader.load());
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
