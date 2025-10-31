@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import utils.FXMLLoaderUtil;
 import utils.LanguageManager;
 import utils.SessionManager;
 
@@ -85,9 +86,7 @@ public class MainWindowController {
 
         // Reload the main window to apply new language
         try {
-            // Waiting for FXMLLoader with resource bundle support util class
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/window.fxml"));
-            loader.setResources(LanguageManager.getResourceBundle());
+            FXMLLoader loader = FXMLLoaderUtil.createLoader("/views/window.fxml");
             Parent root = loader.load();
             Scene scene = new Scene(root);
             scene.setFill(Color.TRANSPARENT);
@@ -142,9 +141,7 @@ public class MainWindowController {
     // Load FXML content into the content area of the main window
     private void loadContent(String fxmlPath) {
         try {
-            // Waiting for FXMLLoader with resource bundle support util class
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            loader.setResources(LanguageManager.getResourceBundle());
+            FXMLLoader loader = FXMLLoaderUtil.createLoader(fxmlPath);
             Parent content = loader.load();
             contentArea.getChildren().clear();
             contentArea.getChildren().add(content);
@@ -165,9 +162,7 @@ public class MainWindowController {
 
             // Reload main window after logout to reset UI
             try {
-                // Waiting for FXMLLoader with resource bundle support util class
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/window.fxml"));
-                loader.setResources(LanguageManager.getResourceBundle());
+                FXMLLoader loader = FXMLLoaderUtil.createLoader("/views/window.fxml");
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 scene.setFill(Color.TRANSPARENT);
@@ -181,9 +176,7 @@ public class MainWindowController {
         } else {
             // Open login modal
             try {
-                // Waiting for FXMLLoader with resource bundle support util class
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
-                loader.setResources(LanguageManager.getResourceBundle());
+                FXMLLoader loader = FXMLLoaderUtil.createLoader("/views/login.fxml");
                 Stage loginStage = new Stage();
                 loginStage.initOwner(mainStage);
                 loginStage.initModality(Modality.APPLICATION_MODAL);
