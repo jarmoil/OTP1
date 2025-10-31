@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.User;
 import services.UserService;
+import utils.FXMLLoaderUtil;
 import utils.SessionManager;
 
 // TODO: Refresh main window after login/logout to update UI elements
@@ -81,7 +82,7 @@ public class LoginController {
     // After login, open main window to refresh UI
     private void showWindow() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/window.fxml"));
+            FXMLLoader loader = FXMLLoaderUtil.createLoader("/views/window.fxml");
             Parent root = loader.load();
             Scene scene = new Scene(root);
             scene.setFill(Color.TRANSPARENT);
@@ -94,6 +95,7 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
 
 
 }

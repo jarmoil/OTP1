@@ -196,11 +196,11 @@ public class MainWindowController {
     // Update login button text based on session state
     private void updateLoginUI() {
         if (SessionManager.getCurrentUser() != null) {
-            btnLoginLabel.setText("Logout");
+            btnLoginLabel.setText(LanguageManager.getString("mainWindowController.logout"));
             btnLoginLabel1.setText(SessionManager.getCurrentUser().getName());
             btnLoginLabel1.setVisible(true);
         } else {
-            btnLoginLabel.setText("Login");
+            btnLoginLabel.setText(LanguageManager.getString("mainWindowController.login"));
             btnLoginLabel1.setVisible(false);
         }
         updateStatsButtonText();
@@ -210,9 +210,9 @@ public class MainWindowController {
     private void updateStatsButtonText() {
         if (SessionManager.getCurrentUser() != null &&
                 "teacher".equals(SessionManager.getCurrentUser().getRole())) {
-            btnStatsLabel.setText("Analytics");
+            btnStatsLabel.setText(LanguageManager.getString("mainWindowController.analytics"));
         } else {
-            btnStatsLabel.setText("Stats");
+            btnStatsLabel.setText(LanguageManager.getString("mainWindowController.stats"));
         }
     }
 

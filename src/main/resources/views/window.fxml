@@ -15,7 +15,7 @@
         <children>
             <Pane fx:id="btnStudentSets" layoutX="31.0" layoutY="14.0" prefHeight="90.0" prefWidth="139.0" styleClass="highlightCard">
                 <children>
-                    <Label layoutX="20.0" layoutY="32.0" text="Student sets" textFill="WHITE">
+                    <Label layoutX="20.0" layoutY="32.0" text="%windowFXML.studentSets" wrapText="true" maxWidth="150" textFill="WHITE">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -25,7 +25,7 @@
 
             <Pane fx:id="btnTeacherSets" layoutX="31.0" layoutY="114.0" prefHeight="90.0" prefWidth="139.0" styleClass="highlightCard">
                 <children>
-                    <Label layoutX="21.0" layoutY="32.0" text="Teacher sets" textFill="WHITE">
+                    <Label layoutX="21.0" layoutY="32.0" text="%windowFXML.teacherSets" wrapText="true" maxWidth="150" textFill="WHITE">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -35,7 +35,7 @@
 
             <Pane fx:id="btnStats" layoutX="31.0" layoutY="214.0" prefHeight="90.0" prefWidth="139.0" styleClass="highlightCard">
                 <children>
-                    <Label fx:id="btnStatsLabel" layoutX="50.0" layoutY="32.0" text="Stats" textFill="WHITE">
+                    <Label fx:id="btnStatsLabel" layoutX="50.0" layoutY="32.0" text="%windowFXML.stats" wrapText="true" maxWidth="150" textFill="WHITE">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -45,12 +45,12 @@
 
             <Pane fx:id="btnLogin" layoutX="31.0" layoutY="580.0" prefHeight="90.0" prefWidth="139.0" styleClass="highlightCard">
                 <children>
-                    <Label fx:id="btnLoginLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="32.0" text="Login" textFill="WHITE">
+                    <Label fx:id="btnLoginLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="32.0" text="%windowFXML.login" wrapText="true" maxWidth="150" textFill="WHITE">
                         <font>
                             <Font size="18.0" />
                         </font>
                     </Label>
-               <Label fx:id="btnLoginLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="58.0" text="User" textAlignment="CENTER" textFill="WHITE" />
+               <Label fx:id="btnLoginLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="58.0" text="%windowFXML.user" textAlignment="CENTER" wrapText="true" maxWidth="150" textFill="WHITE" />
                 </children>
             </Pane>
         </children>
@@ -64,7 +64,7 @@
             <Font size="30.0" />
          </font>
          </Label>
-         <Label layoutX="143.0" layoutY="322.0" text="Select set to play!" textFill="WHITE">
+         <Label layoutX="143.0" layoutY="322.0" text="%windowFXML.select" wrapText="true" maxWidth="300" textFill="WHITE">
             <font>
                <Font size="30.0" />
             </font>
@@ -74,7 +74,7 @@
     <!-- Title Bar -->
     <Pane fx:id="titlePane" layoutX="-1.0" layoutY="2.0" prefHeight="51.0" prefWidth="757.0">
         <children>
-            <Label layoutX="324.0" layoutY="12.0" text="Quizzy Words" textFill="WHITE">
+            <Label layoutX="324.0" layoutY="12.0" text="%windowFXML.title" textFill="WHITE">
                 <font>
                     <Font size="18.0" />
                 </font>
@@ -93,6 +93,6 @@
             <Image url="@../images/icons8-minimize-48.png" />
         </image>
     </ImageView>
-    <ComboBox fx:id="languageSelector" prefWidth="80" AnchorPane.topAnchor="16" AnchorPane.rightAnchor="100"/>
+    <ComboBox fx:id="languageSelector" layoutX="600.0" layoutY="16.0" prefWidth="80.0" />
 
 </AnchorPane>
