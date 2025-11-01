@@ -17,10 +17,10 @@
                 <Font size="20.0" />
             </font></Label>
         <HBox layoutX="14.0" layoutY="50.0" spacing="10">
-            <Button fx:id="createFlashcardButton" onAction="#handleCreateFlashcard" text="Create Flashcard" />
-            <Button fx:id="updateSetButton" onAction="#handleUpdateSet" text="Update Set" />
-            <Button fx:id="deleteSetButton" onAction="#handleDeleteSet" text="Delete Set" />
-            <Button fx:id="startQuizButton" onAction="#handleStartQuiz" styleClass="quiz-button" text="Start Quiz" />
+            <Button fx:id="createFlashcardButton" onAction="#handleCreateFlashcard" text="%flashcardSetFXML.createFlashcard" />
+            <Button fx:id="updateSetButton" onAction="#handleUpdateSet" text="%flashcardSetFXML.updateSet" />
+            <Button fx:id="deleteSetButton" onAction="#handleDeleteSet" text="%flashcardSetFXML.deleteSet" />
+            <Button fx:id="startQuizButton" onAction="#handleStartQuiz" styleClass="quiz-button" text="%flashcardSetFXML.startQuiz" />
         </HBox>
         <ScrollPane layoutX="20.0" layoutY="90.0" prefHeight="570.0" prefWidth="480.0" style="-fx-background: transparent; -fx-background-color: transparent;">
             <StackPane alignment="CENTER">

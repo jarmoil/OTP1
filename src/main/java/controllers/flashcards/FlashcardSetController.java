@@ -11,6 +11,7 @@ import models.Flashcard;
 import models.FlashcardSet;
 import services.FlashcardService;
 import services.FlashcardSetService;
+import utils.LanguageManager;
 import utils.SessionManager;
 import java.util.List;
 import java.util.Optional;
@@ -82,9 +83,9 @@ public class FlashcardSetController {
     @FXML
     private void handleUpdateSet() {
         TextInputDialog dialog = new TextInputDialog(currentSet.getDescription());
-        dialog.setTitle("Update Set");
-        dialog.setHeaderText("Update set description");
-        dialog.setContentText("Description:");
+        dialog.setTitle(LanguageManager.getString("flashcardSetController.updateSet"));
+        dialog.setHeaderText(LanguageManager.getString("flashcardSetController.updateSetDesc"));
+        dialog.setContentText(LanguageManager.getString("flashcardSetController.description"));
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(description -> {
@@ -94,8 +95,8 @@ public class FlashcardSetController {
                 setDescriptionLabel.setText(description);
             } catch (IllegalArgumentException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid Description");
+                alert.setTitle(LanguageManager.getString("flashcardSetController.error"));
+                alert.setHeaderText(LanguageManager.getString("flashcardSetController.invalidDesc"));
                 alert.setContentText(e.getMessage());
                 alert.showAndWait();
             } catch (Exception e) {
@@ -108,9 +109,9 @@ public class FlashcardSetController {
     @FXML
     private void handleDeleteSet() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Set");
-        alert.setHeaderText("Delete Flashcard Set");
-        alert.setContentText("Are you sure you want to delete this set? This action cannot be undone.");
+        alert.setTitle(LanguageManager.getString("flashcardSetController.deleteSet"));
+        alert.setHeaderText(LanguageManager.getString("flashcardSetController.deleteFlashcardSet"));
+        alert.setContentText(LanguageManager.getString("flashcardSetController.delSetConfirmationText"));
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -130,7 +131,7 @@ public class FlashcardSetController {
     // Show dialog to create new flashcard
     @FXML
     private void handleCreateFlashcard() {
-        if (showFlashcardDialog("Create New Flashcard", "Create", null)) {
+        if (showFlashcardDialog(LanguageManager.getString("flashcardSetController.createNewFlashcard"), LanguageManager.getString("flashcardSetController.create"), null)) {
             loadFlashcards();
         }
     }
@@ -153,7 +154,7 @@ public class FlashcardSetController {
 
     // Show dialog to edit flashcard
     private void handleUpdateFlashcard(Flashcard flashcard) {
-        if (showFlashcardDialog("Update Flashcard", "Update", flashcard)) {
+        if (showFlashcardDialog(LanguageManager.getString("flashcardSetController.updateFlashcard"), LanguageManager.getString("flashcardSetController.update"), flashcard)) {
             loadFlashcards();
         }
     }
@@ -161,9 +162,9 @@ public class FlashcardSetController {
     // Handle deleting a flashcard
     private void handleDeleteFlashcard(Flashcard flashcard) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Flashcard");
-        alert.setHeaderText("Delete Flashcard");
-        alert.setContentText("Are you sure you want to delete this flashcard? This action cannot be undone.");
+        alert.setTitle(LanguageManager.getString("flashcardSetController.deleteFlashcard"));
+        alert.setHeaderText(LanguageManager.getString("flashcardSetController.deleteFlashcard"));
+        alert.setContentText(LanguageManager.getString("flashcardSetController.delFlashcardConfirmationText"));
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -185,14 +186,14 @@ public class FlashcardSetController {
             // Can't quiz with no cards
             if (flashcards.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Quiz");
-                alert.setHeaderText("Cannot Start Quiz");
-                alert.setContentText("This set has no flashcards!");
+                alert.setTitle(LanguageManager.getString("flashcardSetController.quiz"));
+                alert.setHeaderText(LanguageManager.getString("flashcardSetController.cannotStart"));
+                alert.setContentText(LanguageManager.getString("flashcardSetController.setNoFlashcards"));
                 alert.showAndWait();
                 return;
             }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/quiz.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/quiz.fxml"), utils.LanguageManager.getResourceBundle());
             Parent root = loader.load();
             QuizController controller = loader.getController();
 

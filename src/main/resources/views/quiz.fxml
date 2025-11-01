@@ -22,8 +22,8 @@
                 <RadioButton fx:id="choiceC" mnemonicParsing="false" textFill="WHITE" />
             </VBox>
 
-            <Button fx:id="submitButton" onAction="#handleSubmit" text="Submit Answer" />
-            <Button fx:id="nextButton" onAction="#handleNext" text="Next Question" visible="false" />
+            <Button fx:id="submitButton" onAction="#handleSubmit" text="%quizFXML.submit" />
+            <Button fx:id="nextButton" onAction="#handleNext" text="%quizFXML.next" visible="false" />
 
             <Label fx:id="feedbackLabel" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
                 <font>

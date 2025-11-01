@@ -82,7 +82,7 @@ public abstract class BaseSetsController {
 
     protected Pane createSetPane(FlashcardSet set) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/setCard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/setCard.fxml"), utils.LanguageManager.getResourceBundle());
             Pane setPane = loader.load();
             SetCardController controller = loader.getController();
             controller.setDescription(set.getDescription());
@@ -97,7 +97,7 @@ public abstract class BaseSetsController {
 
     protected void openSetDetails(FlashcardSet set) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/flashcardSet.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/flashcardSet.fxml"), utils.LanguageManager.getResourceBundle());
             Parent root = loader.load();
             FlashcardSetController controller = loader.getController();
             controller.initData(set);

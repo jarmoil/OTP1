@@ -11,6 +11,8 @@ import services.FlashcardSetService;
 import services.StatisticsService;
 import javafx.animation.RotateTransition;
 import javafx.util.Duration;
+import utils.LanguageManager;
+
 import java.util.*;
 
 // TODO: Refactor this class to reduce complexity and improve readability
@@ -83,9 +85,9 @@ public class QuizController {
     // Update question and choices text
     private void updateQuestionDisplay() {
         questionLabel.setText(currentCard.getQuestion());
-        choiceA.setText("A) " + currentCard.getChoice_a());
-        choiceB.setText("B) " + currentCard.getChoice_b());
-        choiceC.setText("C) " + currentCard.getChoice_c());
+        choiceA.setText(LanguageManager.getString("quizController.a") + currentCard.getChoice_a());
+        choiceB.setText(LanguageManager.getString("quizController.b") + currentCard.getChoice_b());
+        choiceC.setText(LanguageManager.getString("quizController.c") + currentCard.getChoice_c());
     }
 
     // Reset state for a new question
@@ -102,7 +104,7 @@ public class QuizController {
     private void handleSubmit() {
         RadioButton selectedButton = (RadioButton) choicesGroup.getSelectedToggle();
         if (selectedButton == null) {
-            feedbackLabel.setText("Please select an answer!");
+            feedbackLabel.setText(LanguageManager.getString("quizController.selectAnswer"));
             return;
         }
 
@@ -134,14 +136,14 @@ public class QuizController {
 
     // Show feedback for correct answer
     private void showCorrectFeedback() {
-        feedbackLabel.setText("Correct!");
+        feedbackLabel.setText(LanguageManager.getString("quizController.correct"));
         feedbackLabel.setStyle("-fx-text-fill: green;");
     }
 
     // Show feedback for incorrect answer with correct choice
     private void showIncorrectFeedback() {
         String correctChoice = getCorrectChoiceLetter();
-        feedbackLabel.setText("Incorrect! The correct answer was: " + correctChoice);
+        feedbackLabel.setText(LanguageManager.getString("quizController.incorrect") + correctChoice);
         feedbackLabel.setStyle("-fx-text-fill: red;");
     }
 
@@ -200,7 +202,7 @@ public class QuizController {
         if (userId != -1) {
             message += processUserStatistics(percentage);
         } else {
-            message += "\n Sign in to track your progress and save results!";
+            message += "\n " + LanguageManager.getString("quizController.signIn");
         }
 
         feedbackLabel.setText(message);
@@ -208,7 +210,7 @@ public class QuizController {
 
     // Hide quiz elements and show completion message
     private void hideQuizElements() {
-        questionLabel.setText("Quiz Complete!");
+        questionLabel.setText(LanguageManager.getString("quizController.complete"));
         choicesBox.setVisible(false);
         submitButton.setVisible(false);
         nextButton.setVisible(false);
@@ -221,9 +223,14 @@ public class QuizController {
 
     // Format results message
     private String formatResultsMessage(int percentage) {
-        return String.format("You got %d out of %d questions correct! (%d%%)",
-                correctAnswers, flashcards.size(), percentage);
+        String part1 = LanguageManager.getString("quizController.questionsPart1");
+        String part2 = LanguageManager.getString("quizController.questionsPart2");
+        String part3 = LanguageManager.getString("quizController.questionsPart3");
+
+        return String.format("%s %d %s %d %s (%d%%)",
+                part1, correctAnswers, part2, flashcards.size(), part3, percentage);
     }
+
 
     // Process and save user statistics, returning any relevant messages
     private String processUserStatistics(int percentage) {
@@ -244,13 +251,13 @@ public class QuizController {
             flashcardSetService.updateSetCorrectPercentage(setId);
 
             if (!saved) {
-                statsMessage += "\n Results could not be saved.";
+                statsMessage += "\n " + LanguageManager.getString("quizController.resultsNotSaved");
             }
 
             return statsMessage;
         } catch (Exception e) {
             e.printStackTrace();
-            return "\n Error saving results.";
+            return "\n " + LanguageManager.getString("quizController.resultsError");
         }
     }
 
@@ -258,20 +265,26 @@ public class QuizController {
     private String buildStatisticsMessage(int percentage, Statistics previousStats) {
         if (previousStats != null) {
             int best = previousStats.getStats_correct_percentage();
-            String message = String.format("\nYour previous best score: %d%%", best);
+            String prevBestText = LanguageManager.getString("quizController.previousBest");
+            String newBestText = LanguageManager.getString("quizController.newBest");
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("\n").append(prevBestText).append(" ").append(best).append("%");
             if (percentage > best) {
-                message += "\n New personal best!";
+                sb.append("\n").append(newBestText);
             }
-            return message;
+            return sb.toString();
         } else {
-            return "\nFirst attempt on this set!";
+            return "\n" + LanguageManager.getString("quizController.firstAttempt");
         }
     }
 
 
     // Update score display
+// java
     private void updateScore() {
-        scoreLabel.setText(String.format("Score: %d/%d", correctAnswers, flashcards.size()));
+        String scorePrefix = LanguageManager.getString("quizController.score");
+        scoreLabel.setText(String.format("%s %d/%d", scorePrefix, correctAnswers, flashcards.size()));
     }
 
     // Enable or disable answer choices
