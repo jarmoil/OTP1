@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -66,6 +68,27 @@ public abstract class BaseSetsController {
         dialog.setTitle(LanguageManager.getString("baseSetsController.createNewSet"));
         dialog.setHeaderText(LanguageManager.getString("baseSetsController.enterDescription"));
         dialog.setContentText(LanguageManager.getString("baseSetsController.description"));
+
+        if (contentArea != null && contentArea.getScene() != null) {
+            dialog.initOwner(contentArea.getScene().getWindow());
+        }
+
+        ButtonType okButton = new ButtonType(
+                LanguageManager.getString("baseSetsController.ok"),
+                ButtonBar.ButtonData.OK_DONE
+        );
+        ButtonType cancelButton = new ButtonType(
+                LanguageManager.getString("baseSetsController.cancel"),
+                ButtonBar.ButtonData.CANCEL_CLOSE
+        );
+        dialog.getDialogPane().getButtonTypes().setAll(okButton, cancelButton);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton != null && dialogButton.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                return dialog.getEditor().getText();
+            }
+            return null;
+        });
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(description -> {

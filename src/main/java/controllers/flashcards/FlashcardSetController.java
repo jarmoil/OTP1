@@ -87,6 +87,10 @@ public class FlashcardSetController {
         dialog.setHeaderText(LanguageManager.getString("flashcardSetController.updateSetDesc"));
         dialog.setContentText(LanguageManager.getString("flashcardSetController.description"));
 
+        ButtonType okButton = new ButtonType(LanguageManager.getString("flashcardSetController.ok"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType(LanguageManager.getString("flashcardSetController.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().setAll(okButton, cancelButton);
+
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(description -> {
             try {
@@ -113,8 +117,12 @@ public class FlashcardSetController {
         alert.setHeaderText(LanguageManager.getString("flashcardSetController.deleteFlashcardSet"));
         alert.setContentText(LanguageManager.getString("flashcardSetController.delSetConfirmationText"));
 
+        ButtonType okButton = new ButtonType(LanguageManager.getString("flashcardSetController.ok"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType(LanguageManager.getString("flashcardSetController.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getDialogPane().getButtonTypes().setAll(okButton, cancelButton);
+
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
+        if (result.isPresent() && result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
             try {
                 flashcardSetService.deleteSet(currentSet.getSets_id());
                 // Tell parent controller to refresh and go back to sets list

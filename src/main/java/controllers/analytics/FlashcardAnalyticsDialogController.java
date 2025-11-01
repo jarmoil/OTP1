@@ -47,9 +47,14 @@ public class FlashcardAnalyticsDialogController {
             controller.setFlashcards(flashcards, setStats);
 
             dialog.getDialogPane().setContent(dialogContent);
-            dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 
-            Button closeButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.CLOSE);
+            ButtonType closeType = new ButtonType(
+                    LanguageManager.getString("flashcardAnalyticsDialogController.close"),
+                    ButtonBar.ButtonData.CANCEL_CLOSE
+            );
+            dialog.getDialogPane().getButtonTypes().setAll(closeType);
+
+            Button closeButton = (Button) dialog.getDialogPane().lookupButton(closeType);
             closeButton.setStyle("-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-border-color: #666666;");
 
             return dialog;
