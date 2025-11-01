@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import models.FlashcardSet;
+import utils.LanguageManager;
 
 // TODO: Refactor to reduce complexity and improve readability
 
@@ -22,8 +23,8 @@ public class AnalyticsCardController {
     // Set analytics data and update UI elements
     public void setAnalyticsData(FlashcardSet set, double avgStudentPerformance) {
         setNameLabel.setText(set.getDescription());
-        setPerformanceLabel.setText("Overall: " + set.getSets_correct_percentage() + "%");
-        avgPerfLabel.setText(String.format("Avg Student Score: %.1f%%", avgStudentPerformance));
+        setPerformanceLabel.setText(LanguageManager.getString("analyticsCardController.overall") + set.getSets_correct_percentage() + "%");
+        avgPerfLabel.setText(LanguageManager.getString("analyticsCardController.avgScore") + avgStudentPerformance);
 
         int perfPercentage = (int) avgStudentPerformance;
         performanceIndicator.setText(getPerformanceStatus(perfPercentage));
@@ -80,7 +81,7 @@ public class AnalyticsCardController {
 
             return controller;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load analytics card", e);
+            throw new RuntimeException(LanguageManager.getString("analyticsCardController.failed") + e);
         }
     }
 
