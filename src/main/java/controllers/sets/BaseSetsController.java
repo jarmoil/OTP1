@@ -13,6 +13,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import models.FlashcardSet;
 import services.FlashcardSetService;
+import utils.LanguageManager;
 import utils.SessionManager;
 import java.util.List;
 import java.util.Optional;
@@ -62,9 +63,9 @@ public abstract class BaseSetsController {
         }
 
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Create New Set");
-        dialog.setHeaderText("Enter set description");
-        dialog.setContentText("Description:");
+        dialog.setTitle(LanguageManager.getString("baseSetsController.createNewSet"));
+        dialog.setHeaderText(LanguageManager.getString("baseSetsController.enterDescription"));
+        dialog.setContentText(LanguageManager.getString("baseSetsController.description"));
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(description -> {
