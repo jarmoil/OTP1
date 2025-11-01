@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import models.Statistics;
 import models.FlashcardSet;
+import utils.LanguageManager;
 
 // Controller for displaying a single statistic card with performance color coding
 public class StatCardController {
@@ -16,10 +17,10 @@ public class StatCardController {
 
     // Set statistic data and update UI
     public void setStatistic(Statistics stat, FlashcardSet set) {
-        String setName = set != null ? set.getDescription() : "Unknown Set";
+        String setName = set != null ? set.getDescription() : LanguageManager.getResourceBundle().getString("statCardController.unknown");
         setNameLabel.setText(setName);
         percentageLabel.setText(stat.getStats_correct_percentage() + "%");
-        bestScoreLabel.setText("Best Score");
+        bestScoreLabel.setText(LanguageManager.getResourceBundle().getString("statCardController.best"));
 
         // Apply performance color styling
         String colorClass = getPerformanceColorClass(stat.getStats_correct_percentage());
@@ -36,13 +37,13 @@ public class StatCardController {
     // Factory method to create and initialize a StatCardController instance
     public static StatCardController createStatCard(Statistics stat, FlashcardSet set) {
         try {
-            FXMLLoader loader = new FXMLLoader(StatCardController.class.getResource("/views/statCard.fxml"));
+            FXMLLoader loader = new FXMLLoader(StatCardController.class.getResource("/views/statCard.fxml"), LanguageManager.getResourceBundle());
             Pane statPane = loader.load();
             StatCardController controller = loader.getController();
             controller.setStatistic(stat, set);
             return controller;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load stat card", e);
+            throw new RuntimeException(LanguageManager.getString("statCardController.failedLoad") + e);
         }
     }
 

@@ -9,6 +9,7 @@ import models.Statistics;
 import models.FlashcardSet;
 import services.StatisticsService;
 import services.FlashcardSetService;
+import utils.LanguageManager;
 import utils.SessionManager;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class StatsController {
     // Load statistics for the logged-in student
     private void loadStudentStatistics() {
         if (SessionManager.getCurrentUser() == null) {
-            showNoStats("Please log in to view your statistics.");
+            showNoStats(LanguageManager.getString("statsController.noStatsLoaded"));
             return;
         }
 
@@ -40,7 +41,7 @@ public class StatsController {
             List<Statistics> userStats = statisticsService.getStatisticsByUser(userId);
 
             if (userStats.isEmpty()) {
-                showNoStats("No quiz attempts yet. Take some quizzes to see your progress!");
+                showNoStats(LanguageManager.getString("statsController.statsEmpty"));
                 return;
             }
 
@@ -58,7 +59,7 @@ public class StatsController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            showError("Error loading statistics.");
+            showError(LanguageManager.getString("statsController.loadingError"));
         }
     }
 
@@ -72,8 +73,8 @@ public class StatsController {
     // Show an error alert dialog
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Statistics Error");
+        alert.setTitle(LanguageManager.getString("statsController.error"));
+        alert.setHeaderText(LanguageManager.getString("statsController.statsError"));
         alert.setContentText(message);
         alert.showAndWait();
     }
