@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UserService;
+import utils.LanguageManager;
 
 // TODO: add validation, improve error handling, password strength check, etc.
 
@@ -39,7 +40,7 @@ public class RegisterController {
         String confirmPassword = confirmPasswordField.getText();
 
         if (!password.equals(confirmPassword)) {
-            errorLabel.setText("Passwords do not match");
+            errorLabel.setText(LanguageManager.getString("registerController.noMatch"));
             return;
         }
 
@@ -47,10 +48,10 @@ public class RegisterController {
             if (userService.register(username, password)) {
                 showLogin();
             } else {
-                errorLabel.setText("Username already exists");
+                errorLabel.setText(LanguageManager.getString("registerController.userExists"));
             }
         } catch (Exception e) {
-            errorLabel.setText("Registration error");
+            errorLabel.setText(LanguageManager.getString("registerController.registerError"));
             e.printStackTrace();
         }
     }
@@ -63,7 +64,7 @@ public class RegisterController {
     // Load and display the login view after successful registration or when navigating back
     private void showLogin() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"), LanguageManager.getResourceBundle());
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);

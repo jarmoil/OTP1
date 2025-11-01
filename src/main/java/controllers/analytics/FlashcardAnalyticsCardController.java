@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import models.Flashcard;
+import utils.LanguageManager;
 
 // TODO: Refactor to reduce complexity and improve readability
 
@@ -17,24 +18,39 @@ public class FlashcardAnalyticsCardController {
 
     // Update the card with flashcard data and performance rate
     public void setFlashcard(Flashcard flashcard, double performanceRate) {
+        String a = LanguageManager.getString("flashcardAnalyticsCardController.a");
+        String b = LanguageManager.getString("flashcardAnalyticsCardController.b");
+        String c = LanguageManager.getString("flashcardAnalyticsCardController.c");
+        String answerText = LanguageManager.getString("flashcardAnalyticsCardController.answer");
+        String answeredText = LanguageManager.getString("flashcardAnalyticsCardController.answered");
+        String correctText = LanguageManager.getString("flashcardAnalyticsCardController.correct");
+        String accuracyText = LanguageManager.getString("flashcardAnalyticsCardController.accuracy");
+        String noAttemptsText = LanguageManager.getString("flashcardAnalyticsCardController.noAttempts");
+
         questionLabel.setText(flashcard.getQuestion());
-        choicesLabel.setText(String.format("A) %s  B) %s  C) %s",
-                flashcard.getChoice_a(), flashcard.getChoice_b(), flashcard.getChoice_c()));
-        correctAnswerLabel.setText("Answer: " + flashcard.getAnswer());
+        choicesLabel.setText(String.format("%s %s  %s %s  %s %s",
+                a, flashcard.getChoice_a(),
+                b, flashcard.getChoice_b(),
+                c, flashcard.getChoice_c()));
+
+        correctAnswerLabel.setText(String.format("%s %s", answerText, flashcard.getAnswer()));
 
         int timesAnswered = flashcard.getTimes_answered();
         int timesCorrect = flashcard.getTimes_correct();
         double accuracy = timesAnswered > 0 ? (double) timesCorrect / timesAnswered * 100 : 0;
 
         if (timesAnswered > 0) {
-            performanceLabel.setText(String.format("Answered: %d | Correct: %d | Accuracy: %.1f%%",
-                    timesAnswered, timesCorrect, accuracy));
-            applyPerformanceColorClass((int) accuracy);
+            performanceLabel.setText(String.format("%s %d | %s %d | %s %.1f%%",
+                    answeredText, timesAnswered,
+                    correctText, timesCorrect,
+                    accuracyText, accuracy));
+            applyPerformanceColorClass((int) Math.round(accuracy));
         } else {
-            performanceLabel.setText("No attempts yet");
+            performanceLabel.setText(noAttemptsText);
             performanceLabel.setStyle("-fx-text-fill: #888888;");
         }
     }
+
 
     // Apply CSS color class to performance label
     private void applyPerformanceColorClass(int percentage) {
@@ -62,7 +78,7 @@ public class FlashcardAnalyticsCardController {
 
             return controller;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load flashcard analytics card", e);
+            throw new RuntimeException(LanguageManager.getString("flashcardAnalyticsCardController.failed") + e);
         }
     }
 

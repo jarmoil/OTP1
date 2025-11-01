@@ -59,8 +59,9 @@ public class FlashcardDialogController {
             dialog.setTitle(title);
             dialog.setHeaderText(existingFlashcard == null ? LanguageManager.getString("flashcardDialogController.enterFlashDetails") : LanguageManager.getString("flashcardDialogController.modifyFlashDetails"));
 
-            ButtonType actionButton = new ButtonType(buttonText, ButtonBar.ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().addAll(actionButton, ButtonType.CANCEL);
+            ButtonType actionButton = new ButtonType(LanguageManager.getString("flashcardDialogController.ok"), ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButton = new ButtonType(LanguageManager.getString("flashcardDialogController.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+            dialog.getDialogPane().getButtonTypes().setAll(actionButton, cancelButton);
 
             // Load the form layout from FXML file
             FXMLLoader loader = new FXMLLoader(FlashcardDialogController.class.getResource("/views/flashcardDialog.fxml"), utils.LanguageManager.getResourceBundle());

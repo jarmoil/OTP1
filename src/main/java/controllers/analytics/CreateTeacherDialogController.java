@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import utils.LanguageManager;
 
 // TODO: add validation and error handling
 
@@ -24,11 +25,12 @@ public class CreateTeacherDialogController {
     public static Dialog<ButtonType> createTeacherDialog() {
         try {
             Dialog<ButtonType> dialog = new Dialog<>();
-            dialog.setTitle("Create Teacher Account");
-            dialog.setHeaderText("Create New Teacher");
+            dialog.setTitle(LanguageManager.getString("createTeacherDialogController.createTeacher"));
+            dialog.setHeaderText(LanguageManager.getString("createTeacherDialogController.createNewTeacher"));
 
-            ButtonType createButton = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().addAll(createButton, ButtonType.CANCEL);
+            ButtonType createButton = new ButtonType(LanguageManager.getString("createTeacherDialogController.create"), ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButton = new ButtonType(LanguageManager.getString("createTeacherDialogController.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+            dialog.getDialogPane().getButtonTypes().addAll(createButton, cancelButton);
 
             FXMLLoader loader = new FXMLLoader(CreateTeacherDialogController.class.getResource("/views/createTeacherDialog.fxml"), utils.LanguageManager.getResourceBundle());
             GridPane dialogContent = loader.load();
@@ -48,7 +50,7 @@ public class CreateTeacherDialogController {
 
             return dialog;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create teacher dialog", e);
+            throw new RuntimeException(LanguageManager.getString("createTeacherDialogController.failed") + e);
         }
     }
 }

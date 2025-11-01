@@ -4,14 +4,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane fx:id="cardPane" prefHeight="80.0" prefWidth="200.0" styleClass="highlightCard" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.stats.StatCardController">
+<Pane fx:id="cardPane" prefHeight="80.0" prefWidth="200.0" styleClass="highlightCard" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.stats.StatCardController">
     <children>
         <VBox layoutX="15.0" layoutY="10.0" spacing="5.0">
             <children>
-                <Label fx:id="setNameLabel" styleClass="card-title" text="%statCardFXML.setName" textFill="WHITE" wrapText="true" prefWidth="170.0" />
+                <Label fx:id="setNameLabel" prefWidth="170.0" styleClass="card-title" text="%statCardFXML.setName" textFill="WHITE" wrapText="true" />
                 <Label fx:id="bestScoreLabel" styleClass="card-subtitle" text="%statCardFXML.bestScore" textFill="#CCCCCC" />
             </children>
         </VBox>
-        <Label fx:id="percentageLabel" layoutX="150.0" layoutY="45.0" styleClass="card-percentage" text="%statCardFXML.percentage" textFill="WHITE" />
+        <Label fx:id="percentageLabel" layoutX="14.0" layoutY="50.0" styleClass="card-percentage" text="%statCardFXML.percentage" textFill="WHITE" />
     </children>
 </Pane>

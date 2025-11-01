@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import models.Flashcard;
 import models.Statistics;
+import utils.LanguageManager;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class FlashcardAnalyticsDialogController {
         try {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle(title);
-            dialog.setHeaderText("Detailed flashcard statistics");
+            dialog.setHeaderText(LanguageManager.getString("flashcardAnalyticsDialogController.detailedStats"));
 
             dialog.getDialogPane().getStylesheets().add(
                     FlashcardAnalyticsDialogController.class.getResource("/css/MainWindowStyle.css").toExternalForm());
@@ -53,7 +54,7 @@ public class FlashcardAnalyticsDialogController {
 
             return dialog;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create flashcard analytics dialog", e);
+            throw new RuntimeException(LanguageManager.getString("flashcardAnalyticsDialogController.failed") + e);
         }
     }
 
