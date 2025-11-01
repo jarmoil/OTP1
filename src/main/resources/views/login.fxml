@@ -15,16 +15,16 @@
             <children>
                 <Pane layoutX="100.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" styleClass="highlightCard">
                     <children>
-                        <Label layoutX="71.0" layoutY="14.0" text="Login" textFill="WHITE">
+                        <Label layoutX="71.0" layoutY="14.0" text="%loginFXML.login" textFill="WHITE">
                             <font>
                                 <Font size="24.0" />
                             </font>
                         </Label>
 
-                        <TextField fx:id="usernameField" layoutX="20.0" layoutY="50.0" prefWidth="160.0" promptText="Username" />
-                        <PasswordField fx:id="passwordField" layoutX="20.0" layoutY="90.0" prefWidth="160.0" promptText="Password" />
-                        <Button layoutX="50.0" layoutY="140.0" onAction="#handleLogin" prefWidth="100.0" text="Login" />
-                        <Hyperlink layoutX="50.0" layoutY="170.0" onAction="#handleShowRegister" text="Create account" />
+                        <TextField fx:id="usernameField" layoutX="20.0" layoutY="50.0" prefWidth="160.0" promptText="%loginFXML.username" />
+                        <PasswordField fx:id="passwordField" layoutX="20.0" layoutY="90.0" prefWidth="160.0" promptText="%loginFXML.password" />
+                        <Button layoutX="50.0" layoutY="140.0" onAction="#handleLogin" prefWidth="100.0" text="%loginFXML.login" />
+                        <Hyperlink layoutX="50.0" layoutY="170.0" onAction="#handleShowRegister" text="%loginFXML.createAcc" />
 
                         <Label fx:id="errorLabel" layoutX="20.0" layoutY="180.0" textFill="RED" />
                     </children>
