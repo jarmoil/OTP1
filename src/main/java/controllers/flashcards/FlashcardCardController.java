@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.Flashcard;
+import utils.LanguageManager;
 
 // TODO: Refactor this class to reduce complexity and improve readability
 
@@ -27,9 +28,18 @@ public class FlashcardCardController {
     public void setFlashcard(Flashcard flashcard) {
         this.flashcard = flashcard;
         questionLabel.setText(flashcard.getQuestion());
-        choicesLabel.setText(String.format("Choices:\nA) %s\nB) %s\nC) %s",
-                flashcard.getChoice_a(), flashcard.getChoice_b(), flashcard.getChoice_c()));
-    }
+
+        String choicesTitle = utils.LanguageManager.getString("flashcardCardController.choices");
+        String aPrefix = utils.LanguageManager.getString("flashcardCardController.a");
+        String bPrefix = utils.LanguageManager.getString("flashcardCardController.b");
+        String cPrefix = utils.LanguageManager.getString("flashcardCardController.c");
+
+
+        choicesLabel.setText(String.format("%s%n%s %s%n%s %s%n%s %s", choicesTitle,
+                aPrefix, flashcard.getChoice_a(),
+                bPrefix, flashcard.getChoice_b(),
+                cPrefix, flashcard.getChoice_c()));
+                }
 
     // Show/hide edit buttons based on ownership
     public void setOwnerControlsVisible(boolean visible) {
@@ -64,7 +74,7 @@ public class FlashcardCardController {
                                                               Runnable onUpdate, Runnable onDelete) {
         try {
             // Load FXML layout and get controller
-            FXMLLoader loader = new FXMLLoader(FlashcardCardController.class.getResource("/views/flashcardCard.fxml"));
+            FXMLLoader loader = new FXMLLoader(FlashcardCardController.class.getResource("/views/flashcardCard.fxml"), utils.LanguageManager.getResourceBundle());
             VBox flashcardPane = loader.load();
             FlashcardCardController controller = loader.getController();
 
@@ -76,7 +86,7 @@ public class FlashcardCardController {
 
             return controller;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load flashcard card", e);
+            throw new RuntimeException(LanguageManager.getString("flashcardCardController.failed") + e);
         }
     }
 

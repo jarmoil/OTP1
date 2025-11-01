@@ -15,7 +15,7 @@
     <Label fx:id="choicesLabel" styleClass="flashcard-choices" wrapText="true" />
 
     <HBox fx:id="buttonBox" spacing="10">
-        <Button fx:id="updateButton" onAction="#handleUpdate" text="Update" />
-        <Button fx:id="deleteButton" onAction="#handleDelete" text="Delete" />
+        <Button fx:id="updateButton" onAction="#handleUpdate" text="%flashcardCardFXML.updateButton" />
+        <Button fx:id="deleteButton" onAction="#handleDelete" text="%flashcardCardFXML.deleteButton" />
     </HBox>
 </VBox>

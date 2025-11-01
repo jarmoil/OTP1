@@ -11,6 +11,7 @@ import services.StatisticsService;
 import services.FlashcardSetService;
 import services.UserService;
 import services.FlashcardService;
+import utils.LanguageManager;
 import utils.SessionManager;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +45,7 @@ public class AnalyticsController {
     // Load analytics data if user is a teacher
     private void loadAnalytics() {
         if (SessionManager.getCurrentUser() == null) {
-            showError("Please log in to view analytics.");
+            showError(LanguageManager.getString("analyticsController.login"));
             createTeacherButton.setVisible(false);
             return;
         }
@@ -54,7 +55,7 @@ public class AnalyticsController {
 
             // Only allow teachers to access analytics
             if (!"teacher".equals(userRole)) {
-                showError("Access denied. Only teachers can view analytics.");
+                showError(LanguageManager.getString("analyticsController.accessDenied"));
                 createTeacherButton.setVisible(false);
                 return;
             }
@@ -65,7 +66,7 @@ public class AnalyticsController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            showError("Error loading analytics data.");
+            showError(LanguageManager.getString("analyticsController.error"));
             createTeacherButton.setVisible(false);
         }
     }
@@ -123,7 +124,7 @@ public class AnalyticsController {
                     .collect(Collectors.toList());
 
             Dialog<ButtonType> dialog = FlashcardAnalyticsDialogController.createFlashcardAnalyticsDialog(
-                    "Flashcard Analytics - " + set.getDescription(),
+                    LanguageManager.getString("analyticsController.flashcardAnalytics") + set.getDescription(),
                     flashcards,
                     setStats
             );
@@ -132,7 +133,7 @@ public class AnalyticsController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            showError("Error loading flashcard details.");
+            showError(LanguageManager.getString("analyticsController.error1"));
         }
     }
 
@@ -141,12 +142,12 @@ public class AnalyticsController {
     private void handleCreateTeacher() {
         if (SessionManager.getCurrentUser() == null ||
                 !"teacher".equals(SessionManager.getCurrentUser().getRole())) {
-            showError("Access denied. Only teachers can create teacher accounts.");
+            showError(LanguageManager.getString("analyticsController.accessDenied1"));
             return;
         }
 
         if (showCreateTeacherDialog()) {
-            showSuccess("Teacher account created successfully!");
+            showSuccess(LanguageManager.getString("analyticsController.successfulCreation"));
         }
     }
 
@@ -165,7 +166,7 @@ public class AnalyticsController {
                 );
             } catch (Exception e) {
                 e.printStackTrace();
-                showError("Error creating teacher account.");
+                showError(LanguageManager.getString("analyticsController.error2"));
             }
         }
         return false;
@@ -183,7 +184,7 @@ public class AnalyticsController {
     // Show a success alert dialog
     private void showSuccess(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success");
+        alert.setTitle(LanguageManager.getString("analyticsController.success"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

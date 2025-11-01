@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import models.User;
 import services.UserService;
 import utils.FXMLLoaderUtil;
+import utils.LanguageManager;
 import utils.SessionManager;
 
 // TODO: Refresh main window after login/logout to update UI elements
@@ -55,11 +56,11 @@ public class LoginController {
                 }
 
             } else {
-                errorLabel.setText("Invalid username or password");
+                errorLabel.setText(LanguageManager.getString("loginController.invalidUserOrPass"));
             }
         } catch (Exception e) {
             e.printStackTrace();
-            errorLabel.setText("Login error");
+            errorLabel.setText(LanguageManager.getString("loginController.loginError"));
         }
     }
 
