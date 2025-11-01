@@ -67,7 +67,7 @@ public class LoginController {
     @FXML
     private void handleShowRegister() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/registration.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/registration.fxml"), utils.LanguageManager.getResourceBundle());
             Parent root = loader.load();
             Scene scene = new Scene(root);
             modalStage.setScene(scene);

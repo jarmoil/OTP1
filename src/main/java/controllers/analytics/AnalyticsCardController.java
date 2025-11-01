@@ -71,7 +71,7 @@ public class AnalyticsCardController {
                                                               double avgStudentPerformance,
                                                               Runnable onClickCallback) {
         try {
-            FXMLLoader loader = new FXMLLoader(AnalyticsCardController.class.getResource("/views/analyticsCard.fxml"));
+            FXMLLoader loader = new FXMLLoader(AnalyticsCardController.class.getResource("/views/analyticsCard.fxml"), utils.LanguageManager.getResourceBundle());
             Pane cardPane = loader.load();
             AnalyticsCardController controller = loader.getController();
 

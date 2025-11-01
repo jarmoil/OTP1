@@ -30,7 +30,7 @@ public class CreateTeacherDialogController {
             ButtonType createButton = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
             dialog.getDialogPane().getButtonTypes().addAll(createButton, ButtonType.CANCEL);
 
-            FXMLLoader loader = new FXMLLoader(CreateTeacherDialogController.class.getResource("/views/createTeacherDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(CreateTeacherDialogController.class.getResource("/views/createTeacherDialog.fxml"), utils.LanguageManager.getResourceBundle());
             GridPane dialogContent = loader.load();
             CreateTeacherDialogController controller = loader.getController();
 

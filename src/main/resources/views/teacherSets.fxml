@@ -8,12 +8,12 @@
 
 <AnchorPane fx:id="contentArea" prefHeight="689.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sets.TeacherSetsController">
     <children>
-        <Label layoutX="160.0" layoutY="14.0" text="Teacher Sets" textFill="WHITE">
+        <Label layoutX="160.0" layoutY="14.0" text="%teacherSetsFXML.teacherSets" textFill="WHITE">
             <font>
                 <Font size="36.0" />
             </font>
         </Label>
-        <Button fx:id="createSetButton" layoutX="14.0" layoutY="28.0" onAction="#handleCreateSet" text="Create Set" />
+        <Button fx:id="createSetButton" layoutX="14.0" layoutY="28.0" onAction="#handleCreateSet" text="%teacherSetsFXML.createSet" />
         <FlowPane fx:id="setsContainer" hgap="20" layoutX="10.0" layoutY="103.0" prefHeight="575.0" prefWidth="500.0" vgap="20" />
     </children>
 </AnchorPane>

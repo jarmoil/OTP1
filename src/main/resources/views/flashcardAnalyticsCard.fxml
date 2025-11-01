@@ -8,10 +8,10 @@
     <children>
         <VBox layoutX="15.0" layoutY="10.0" spacing="5.0" prefWidth="370.0">
             <children>
-                <Label fx:id="questionLabel" styleClass="card-title" text="Question" textFill="WHITE" wrapText="true" />
-                <Label fx:id="choicesLabel" styleClass="card-subtitle" text="Choices" textFill="#CCCCCC" wrapText="true" />
-                <Label fx:id="correctAnswerLabel" styleClass="card-subtitle" text="Answer" textFill="#90EE90" />
-                <Label fx:id="performanceLabel" styleClass="card-subtitle" text="Performance" textFill="#888888" />
+                <Label fx:id="questionLabel" styleClass="card-title" text="%flashcardAnalyticsCardFXML.question" textFill="WHITE" wrapText="true" />
+                <Label fx:id="choicesLabel" styleClass="card-subtitle" text="%flashcardAnalyticsCardFXML.choices" textFill="#CCCCCC" wrapText="true" />
+                <Label fx:id="correctAnswerLabel" styleClass="card-subtitle" text="%flashcardAnalyticsCardFXML.answer" textFill="#90EE90" />
+                <Label fx:id="performanceLabel" styleClass="card-subtitle" text="%flashcardAnalyticsCardFXML.performance" textFill="#888888" />
             </children>
         </VBox>
     </children>

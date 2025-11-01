@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="689.0" prefWidth="520.0" stylesheets="@../css/MainWindowStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.stats.StatsController">
     <children>
-        <Label layoutX="200.0" layoutY="14.0" text="Your Statistics" textFill="WHITE">
+        <Label layoutX="200.0" layoutY="14.0" text="%statsFXML.stats" textFill="WHITE">
             <font>
                 <Font size="28.0" />
             </font>
@@ -18,7 +18,7 @@
             <content>
                 <VBox fx:id="statsContainer" spacing="10.0" style="-fx-padding: 20;" >
                     <children>
-                        <Label fx:id="noStatsLabel" text="Loading statistics..." textFill="WHITE" />
+                        <Label fx:id="noStatsLabel" text="%statsFXML.statsLoading" textFill="WHITE" />
                     </children>
                 </VBox>
             </content>

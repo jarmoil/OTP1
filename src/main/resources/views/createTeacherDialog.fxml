@@ -17,9 +17,9 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label text="%createTeacherDialogFXML.username" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label text="%createTeacherDialogFXML.password" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
     </children>
 </GridPane>

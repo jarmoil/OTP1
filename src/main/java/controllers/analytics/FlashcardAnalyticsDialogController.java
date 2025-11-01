@@ -39,7 +39,7 @@ public class FlashcardAnalyticsDialogController {
                     FlashcardAnalyticsDialogController.class.getResource("/css/MainWindowStyle.css").toExternalForm());
             dialog.getDialogPane().setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white;");
 
-            FXMLLoader loader = new FXMLLoader(FlashcardAnalyticsDialogController.class.getResource("/views/flashcardAnalyticsDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(FlashcardAnalyticsDialogController.class.getResource("/views/flashcardAnalyticsDialog.fxml"), utils.LanguageManager.getResourceBundle());
             ScrollPane dialogContent = loader.load();
             FlashcardAnalyticsDialogController controller = loader.getController();
 

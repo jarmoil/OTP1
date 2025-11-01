@@ -54,7 +54,7 @@ public class FlashcardAnalyticsCardController {
     // Factory method to create and initialize a FlashcardAnalyticsCardController instance
     public static FlashcardAnalyticsCardController createFlashcardAnalyticsCard(Flashcard flashcard, double performanceRate) {
         try {
-            FXMLLoader loader = new FXMLLoader(FlashcardAnalyticsCardController.class.getResource("/views/flashcardAnalyticsCard.fxml"));
+            FXMLLoader loader = new FXMLLoader(FlashcardAnalyticsCardController.class.getResource("/views/flashcardAnalyticsCard.fxml"), utils.LanguageManager.getResourceBundle());
             Pane cardPane = loader.load();
             FlashcardAnalyticsCardController controller = loader.getController();
 

@@ -8,10 +8,10 @@
     <children>
         <VBox layoutX="15.0" layoutY="10.0" spacing="5.0">
             <children>
-                <Label fx:id="setNameLabel" styleClass="card-title" text="Set Name" textFill="WHITE" wrapText="true" prefWidth="170.0" />
-                <Label fx:id="bestScoreLabel" styleClass="card-subtitle" text="Best Score" textFill="#CCCCCC" />
+                <Label fx:id="setNameLabel" styleClass="card-title" text="%statCardFXML.setName" textFill="WHITE" wrapText="true" prefWidth="170.0" />
+                <Label fx:id="bestScoreLabel" styleClass="card-subtitle" text="%statCardFXML.bestScore" textFill="#CCCCCC" />
             </children>
         </VBox>
-        <Label fx:id="percentageLabel" layoutX="150.0" layoutY="45.0" styleClass="card-percentage" text="0%" textFill="WHITE" />
+        <Label fx:id="percentageLabel" layoutX="150.0" layoutY="45.0" styleClass="card-percentage" text="%statCardFXML.percentage" textFill="WHITE" />
     </children>
 </Pane>
