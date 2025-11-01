@@ -143,7 +143,7 @@ public abstract class BaseSetsController {
 
     protected void restoreSetsView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(getViewResource()));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(getViewResource()), utils.LanguageManager.getResourceBundle());
             Parent root = loader.load();
 
             contentArea.getChildren().clear();
