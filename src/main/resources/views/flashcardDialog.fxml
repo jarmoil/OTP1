@@ -11,18 +11,18 @@
         <Insets bottom="10" left="10" right="150" top="20" />
     </padding>
 
-    <Label text="Question:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <Label text="%flashcardDialogFXML.question" GridPane.columnIndex="0" GridPane.rowIndex="0" />
     <TextField fx:id="questionField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-    <Label text="Choice A:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <Label text="%flashcardDialogFXML.choiceA" GridPane.columnIndex="0" GridPane.rowIndex="1" />
     <TextField fx:id="choiceAField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-    <Label text="Choice B:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label text="%flashcardDialogFXML.choiceB" GridPane.columnIndex="0" GridPane.rowIndex="2" />
     <TextField fx:id="choiceBField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Label text="Choice C:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Label text="%flashcardDialogFXML.choiceC" GridPane.columnIndex="0" GridPane.rowIndex="3" />
     <TextField fx:id="choiceCField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-    <Label text="Correct Answer:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-    <ComboBox fx:id="answerBox" editable="false" promptText="Select correct answer" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Label text="%flashcardDialogFXML.correct" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <ComboBox fx:id="answerBox" editable="false" promptText="%flashcardDialogFXML.answerBox" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 </GridPane>

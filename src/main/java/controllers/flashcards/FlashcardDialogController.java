@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import models.Flashcard;
+import utils.LanguageManager;
 
 // TODO: Refactor this class to reduce complexity and improve readability
 
@@ -56,13 +57,13 @@ public class FlashcardDialogController {
         try {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle(title);
-            dialog.setHeaderText(existingFlashcard == null ? "Enter flashcard details" : "Modify flashcard details");
+            dialog.setHeaderText(existingFlashcard == null ? LanguageManager.getString("flashcardDialogController.enterFlashDetails") : LanguageManager.getString("flashcardDialogController.modifyFlashDetails"));
 
             ButtonType actionButton = new ButtonType(buttonText, ButtonBar.ButtonData.OK_DONE);
             dialog.getDialogPane().getButtonTypes().addAll(actionButton, ButtonType.CANCEL);
 
             // Load the form layout from FXML file
-            FXMLLoader loader = new FXMLLoader(FlashcardDialogController.class.getResource("/views/flashcardDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(FlashcardDialogController.class.getResource("/views/flashcardDialog.fxml"), utils.LanguageManager.getResourceBundle());
             GridPane dialogContent = loader.load();
             FlashcardDialogController controller = loader.getController();
 
@@ -75,7 +76,7 @@ public class FlashcardDialogController {
 
             return dialog;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create flashcard dialog", e);
+            throw new RuntimeException(LanguageManager.getString("flashcardDialogController.failed") + e);
         }
     }
 }
