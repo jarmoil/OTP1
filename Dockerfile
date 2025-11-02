@@ -35,6 +35,12 @@ RUN wget https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_linux-x64_b
     && mv /opt/javafx-sdk-20.0.1 /opt/javafx \
     && rm openjfx-20.0.1_linux-x64_bin-sdk.zip
 
+# Fonts for japanese
+RUN apt-get update && \
+    apt-get install -y fonts-noto-cjk && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 
 
 # Set DISPLAY for Xming (will be overridden by docker-compose)
