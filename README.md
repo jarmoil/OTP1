@@ -10,6 +10,7 @@ The project is implemented in Java using Maven.
 - Teachers can upload and share flashcard sets
 - Progress tracking and statistics for students
 - Analytics for teachers
+- Localization
 
 ## Technology Stack
 - Java
@@ -20,6 +21,7 @@ The project is implemented in Java using Maven.
 - Mockito
 - Docker
 - Jenkins
+- Resource Bundles
 
 ### Why this stack?
 - Java for good performance
@@ -30,12 +32,20 @@ The project is implemented in Java using Maven.
 - Mockito for testing purposes (creating mock objects and dependencies)
 - Docker for building, portability and deployment
 - Jenkins for CI and CD purposes
+- Resource Bundles for easy localization
 
 ## Methodology
 Agile
 
 ## Shade Plugin
 The project creates JAR file with all dependencies included using the Maven Shade Plugin. After `mvn clean install` there will be a file target/*.jar
+
+## Localization
+
+We used basic Resource bundles (MessagesBundle) and java locales to create localization for Russian and Japanese in addition to English.
+
+- Russian was translated using native Russian speaker
+- Japanese was translated using Google translate
 
 ## Setup and Installation
 
@@ -142,3 +152,15 @@ docker push jarmoillikainen/otp1_quizcard:v1
 **Pull the Docker Image from Docker Hub:**
 
 Using same command except swapping push to pull will do the job
+
+## Changing languages in the application (localization)
+
+**Explanation**
+
+Press the button the red arrow points to in the screenshot below:
+
+![Tutorial image for localization](documents/tutorial.png)
+
+That will open menu to choose from Japan (Ja), Russian (Ru) and English (EN) which is default.
+
+The rest of the application works the same.
