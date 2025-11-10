@@ -159,7 +159,7 @@ Using same command except swapping push to pull will do the job
 
 Press the button the red arrow points to in the screenshot below:
 
-![Tutorial image for localization](documents/tutorial.png)
+![Tutorial image for localization](documents/Diagrams/tutorial.png)
 
 That will open menu to choose from Japan (Ja), Russian (Ru) and English (EN) which is default.
 
