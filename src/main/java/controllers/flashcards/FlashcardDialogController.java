@@ -75,6 +75,8 @@ public class FlashcardDialogController {
             dialog.getDialogPane().setContent(dialogContent);
             dialog.getDialogPane().getProperties().put("controller", controller);
 
+            dialog.getDialogPane().getStylesheets().add(FlashcardDialogController.class.getResource("/css/global.css").toExternalForm());
+
             return dialog;
         } catch (Exception e) {
             throw new RuntimeException(LanguageManager.getString("flashcardDialogController.failed") + e);

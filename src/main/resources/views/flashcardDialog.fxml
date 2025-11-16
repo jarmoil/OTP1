@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane hgap="10" vgap="10" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.flashcards.FlashcardDialogController">
+<GridPane hgap="10" vgap="10" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.flashcards.FlashcardDialogController">
     <padding>
         <Insets bottom="10" left="10" right="150" top="20" />
     </padding>

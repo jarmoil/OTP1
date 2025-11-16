@@ -78,6 +78,8 @@ public class FlashcardCardController {
             VBox flashcardPane = loader.load();
             FlashcardCardController controller = loader.getController();
 
+            flashcardPane.getStylesheets().add(FlashcardCardController.class.getResource("/css/global.css").toExternalForm());
+
             // Configure the card with data and callbacks
             controller.setFlashcard(flashcard);
             controller.setOwnerControlsVisible(isOwner);

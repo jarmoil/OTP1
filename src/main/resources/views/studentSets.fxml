@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="contentArea" prefHeight="689.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sets.StudentSetsController">
+<AnchorPane fx:id="contentArea" stylesheets="@../css/global.css" prefHeight="689.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sets.StudentSetsController">
     <children>
         <Label layoutX="160.0" layoutY="14.0" text="%studentSetsFXML.studentSets" textFill="WHITE">
             <font>

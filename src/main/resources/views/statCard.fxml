@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane fx:id="cardPane" prefHeight="80.0" prefWidth="200.0" styleClass="highlightCard" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.stats.StatCardController">
+<Pane fx:id="cardPane" prefHeight="80.0" prefWidth="200.0" stylesheets="@../css/global.css" styleClass="highlightCard" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.stats.StatCardController">
     <children>
         <VBox layoutX="15.0" layoutY="10.0" spacing="5.0">
             <children>
