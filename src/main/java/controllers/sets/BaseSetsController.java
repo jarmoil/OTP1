@@ -36,7 +36,10 @@ public abstract class BaseSetsController {
 
     protected void loadSets() {
         try {
-            List<FlashcardSet> sets = flashcardSetService.getSetsByRole(getUserRole());
+            String langCode = LanguageManager.getCurrentLocale().getLanguage();
+
+            List<FlashcardSet> sets = flashcardSetService.getSetsByRoleAndLocale(getUserRole(), langCode);
+
             setsContainer.getChildren().clear();
 
             for (FlashcardSet set : sets) {
@@ -59,6 +62,17 @@ public abstract class BaseSetsController {
 
     @FXML
     protected void handleCreateSet() {
+        String rawCode = LanguageManager.getCurrentLocale().getLanguage();
+
+        String langCode;
+        if (rawCode.startsWith("ja")) {
+            langCode = "ja";
+        } else if (rawCode.startsWith("ru")) {
+            langCode = "ru";
+        } else {
+            langCode = "en";
+        }
+
         if (SessionManager.getCurrentUser() == null ||
                 !getUserRole().equals(SessionManager.getCurrentUser().getRole())) {
             return;
@@ -95,7 +109,7 @@ public abstract class BaseSetsController {
             try {
                 flashcardSetService.createSet(
                         SessionManager.getCurrentUser().getId(),
-                        description
+                        description,langCode
                 );
                 loadSets();
             } catch (Exception e) {

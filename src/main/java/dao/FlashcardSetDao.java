@@ -23,6 +23,7 @@ public class FlashcardSetDao implements IFlashcardSetDao {
                 sets.add(new FlashcardSet(
                         rs.getInt("sets_id"),
                         rs.getInt("user_id"),
+                        rs.getString("locale"),
                         rs.getString("description"),
                         rs.getInt("sets_correct_percentage")
                 ));
@@ -35,22 +36,24 @@ public class FlashcardSetDao implements IFlashcardSetDao {
 
     // Retrieve flashcard sets based on user role (student or teacher)
     @Override
-    public List<FlashcardSet> getSetsByRole(String role) throws Exception {
+    public List<FlashcardSet> getSetsByRoleAndLocale(String role, String locale) throws Exception {
         String sql = "SELECT s.* FROM sets s " +
                 "INNER JOIN user_accounts u ON s.user_id = u.user_id " +
-                "WHERE u.role = ?";
+                "WHERE s.locale = ? AND u.role = ?";
         List<FlashcardSet> sets = new ArrayList<>();
 
         Connection conn = ConnectDB.getConnection();
         boolean closeConn = conn != ConnectDB.gettestConn();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, role);
+            stmt.setString(1, locale);
+            stmt.setString(2, role);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 sets.add(new FlashcardSet(
                         rs.getInt("sets_id"),
                         rs.getInt("user_id"),
+                        rs.getString("locale"),
                         rs.getString("description"),
                         rs.getInt("sets_correct_percentage")
                 ));
@@ -76,6 +79,7 @@ public class FlashcardSetDao implements IFlashcardSetDao {
                 return new FlashcardSet(
                         rs.getInt("sets_id"),
                         rs.getInt("user_id"),
+                        rs.getString("locale"),
                         rs.getString("description"),
                         rs.getInt("sets_correct_percentage")
                 );
@@ -89,14 +93,15 @@ public class FlashcardSetDao implements IFlashcardSetDao {
 
     // Create a new flashcard set in the database
     @Override
-    public boolean createSet(int userId, String description) throws Exception {
-        String sql = "INSERT INTO sets (user_id, description, sets_correct_percentage) VALUES (?, ?, 0)";
+    public boolean createSet(int userId, String description, String locale) throws Exception {
+        String sql = "INSERT INTO sets (user_id, description, locale, sets_correct_percentage) VALUES (?, ?, ?, 0)";
 
         Connection conn = ConnectDB.getConnection();
         boolean closeConn = conn != ConnectDB.gettestConn();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             stmt.setString(2, description);
+            stmt.setString(3, locale);
             return stmt.executeUpdate() > 0;
         } finally {
             if (closeConn) conn.close();

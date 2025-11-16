@@ -68,10 +68,12 @@ DROP TABLE IF EXISTS `sets`;
 CREATE TABLE `sets` (
   `sets_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+  `locale` varchar(5) NOT NULL,
   `description` text NOT NULL,
   `sets_correct_percentage` int(11) DEFAULT NULL,
   PRIMARY KEY (`sets_id`),
   KEY `user_id` (`user_id`),
+  KEY `idx_locale` (`locale`),
   CONSTRAINT `sets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_accounts` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -83,10 +85,10 @@ CREATE TABLE `sets` (
 LOCK TABLES `sets` WRITE;
 /*!40000 ALTER TABLE `sets` DISABLE KEYS */;
 INSERT INTO `sets` VALUES
-(1,1,'Math',0),
-(2,1,'English',0),
-(3,2,'History',0),
-(4,1,'Trains 101',0);
+(1,1, 'en','Math',0),
+(2,1, 'en','English',0),
+(3,2, 'en', 'History',0),
+(4,1, 'en','Trains 101',0);
 /*!40000 ALTER TABLE `sets` ENABLE KEYS */;
 UNLOCK TABLES;
 

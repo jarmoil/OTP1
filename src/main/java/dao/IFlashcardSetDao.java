@@ -9,13 +9,13 @@ public interface IFlashcardSetDao {
     List<FlashcardSet> getAllSets() throws Exception;
 
     // Retrieve flashcard sets based on user role (student or teacher)
-    List<FlashcardSet> getSetsByRole(String role) throws Exception;
+    List<FlashcardSet> getSetsByRoleAndLocale(String role, String locale) throws Exception;
 
     // Retrieve a flashcard set by its ID
     FlashcardSet getSetById(int setId) throws Exception;
 
     // Create a new flashcard set in the database
-    boolean createSet(int userId, String description) throws Exception;
+    boolean createSet(int userId, String description, String locale) throws Exception;
 
     // Update flashcard set information in the database with the given ID
     boolean updateSet(int setId, String description) throws Exception;
