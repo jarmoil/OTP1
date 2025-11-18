@@ -9,6 +9,10 @@ public class ConnectDB {
     private static final Properties props = new Properties();
     private static Connection testConn;
 
+    private ConnectDB() {
+        // Private constructor to prevent instantiation
+    }
+
     static {
         try (InputStream input = ConnectDB.class.getClassLoader().getResourceAsStream("db.properties")) {
             if (input == null) {
