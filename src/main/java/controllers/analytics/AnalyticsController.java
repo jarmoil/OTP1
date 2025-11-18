@@ -93,7 +93,7 @@ public class AnalyticsController {
         analyticsContainer.getChildren().clear();
 
         for (FlashcardSet set : allSets) {
-            List<Statistics> setStats = statsBySet.getOrDefault(set.getSets_id(), java.util.Collections.emptyList());
+            List<Statistics> setStats = statsBySet.getOrDefault(set.getSetsId(), java.util.Collections.emptyList());
 
             // Calculate average student performance
             double avgStudentPerf = setStats.isEmpty() ? 0.0 :
@@ -113,12 +113,12 @@ public class AnalyticsController {
     // Show detailed analytics for a specific flashcard set
     private void showSetDetails(FlashcardSet set) {
         try {
-            List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(set.getSets_id());
+            List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(set.getSetsId());
             List<Statistics> allStats = statisticsService.getAllStatistics();
 
             // Get all statistics for this specific set
             List<Statistics> setStats = allStats.stream()
-                    .filter(stat -> stat.getSets_id() == set.getSets_id())
+                    .filter(stat -> stat.getSets_id() == set.getSetsId())
                     .toList();
 
             Dialog<ButtonType> dialog = FlashcardAnalyticsDialogController.createFlashcardAnalyticsDialog(

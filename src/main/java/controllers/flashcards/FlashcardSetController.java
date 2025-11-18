@@ -56,7 +56,7 @@ public class FlashcardSetController {
     // If owner of the set, show create flashcard, update set, delete set buttons
     private void updateUI() {
         boolean isOwner = SessionManager.getCurrentUser() != null &&
-                SessionManager.getCurrentUser().getId() == currentSet.getUser_id();
+                SessionManager.getCurrentUser().getId() == currentSet.getUserId();
         createFlashcardButton.setVisible(isOwner);
         updateSetButton.setVisible(isOwner);
         deleteSetButton.setVisible(isOwner);
@@ -65,7 +65,7 @@ public class FlashcardSetController {
     // Load flashcards from the database using the service and create UI cards for each
     private void loadFlashcards() {
         try {
-            List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSets_id());
+            List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSetsId());
             flashcardsContainer.getChildren().clear();
 
             // Create a visual card for each flashcard
@@ -95,7 +95,7 @@ public class FlashcardSetController {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(description -> {
             try {
-                flashcardSetService.updateSet(currentSet.getSets_id(), description);
+                flashcardSetService.updateSet(currentSet.getSetsId(), description);
                 currentSet.setDescription(description);
                 setDescriptionLabel.setText(description);
             } catch (IllegalArgumentException e) {
@@ -127,7 +127,7 @@ public class FlashcardSetController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
             try {
-                flashcardSetService.deleteSet(currentSet.getSets_id());
+                flashcardSetService.deleteSet(currentSet.getSetsId());
                 // Tell parent controller to refresh and go back to sets list
                 if (onSetDeletedCallback != null) {
                     onSetDeletedCallback.run();
@@ -150,7 +150,7 @@ public class FlashcardSetController {
     // Create visual flashcard component with edit/delete buttons for owners
     private Pane createFlashcardPane(Flashcard flashcard) {
         boolean isOwner = SessionManager.getCurrentUser() != null &&
-                SessionManager.getCurrentUser().getId() == currentSet.getUser_id();
+                SessionManager.getCurrentUser().getId() == currentSet.getUserId();
 
         // Use factory method in FlashcardCardController to create the card
         FlashcardCardController controller = FlashcardCardController.createFlashcardCard(
@@ -194,7 +194,7 @@ public class FlashcardSetController {
     @FXML
     private void handleStartQuiz() {
         try {
-            List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSets_id());
+            List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(currentSet.getSetsId());
 
             // Can't quiz with no cards
             if (flashcards.isEmpty()) {
@@ -215,7 +215,7 @@ public class FlashcardSetController {
             // Initialize quiz with flashcards, user ID, and set ID, -1 if not logged in (only logged in users can save stats)
             int userId = SessionManager.getCurrentUser() != null ?
                     SessionManager.getCurrentUser().getId() : -1;
-            int setId = currentSet.getSets_id();
+            int setId = currentSet.getSetsId();
             controller.initQuiz(flashcards, userId, setId);
 
             flashcardsContainer.getChildren().clear();
@@ -242,7 +242,7 @@ public class FlashcardSetController {
                 if (existingFlashcard == null) {
                     // new flashcard
                     flashcardService.createFlashcard(
-                            currentSet.getSets_id(),
+                            currentSet.getSetsId(),
                             dialogController.getQuestion(),
                             dialogController.getAnswer(),
                             dialogController.getChoiceA(),

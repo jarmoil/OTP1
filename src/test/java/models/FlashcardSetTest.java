@@ -17,22 +17,22 @@ class FlashcardSetTest {
                 "History",
                 75);
 
-        assertEquals(1, flashcardSet.getSets_id());
-        assertEquals(1, flashcardSet.getUser_id());
+        assertEquals(1, flashcardSet.getSetsId());
+        assertEquals(1, flashcardSet.getUserId());
         assertEquals("History", flashcardSet.getDescription());
-        assertEquals(75, flashcardSet.getSets_correct_percentage());
+        assertEquals(75, flashcardSet.getSetsCorrectPercentage());
         assertNotNull(flashcardSet.getFlashcards());
         assertTrue(flashcardSet.getFlashcards().isEmpty());
 
-        flashcardSet.setSets_id(2);
-        flashcardSet.setUser_id(3);
+        flashcardSet.setSetsId(2);
+        flashcardSet.setUserId(3);
         flashcardSet.setDescription("Biology");
-        flashcardSet.setSets_correct_percentage(80);
+        flashcardSet.setSetsCorrectPercentage(80);
 
-        assertEquals(2, flashcardSet.getSets_id());
-        assertEquals(3, flashcardSet.getUser_id());
+        assertEquals(2, flashcardSet.getSetsId());
+        assertEquals(3, flashcardSet.getUserId());
         assertEquals("Biology", flashcardSet.getDescription());
-        assertEquals(80, flashcardSet.getSets_correct_percentage());
+        assertEquals(80, flashcardSet.getSetsCorrectPercentage());
     }
 
     @Test

@@ -23,7 +23,7 @@ public class AnalyticsCardController {
     // Set analytics data and update UI elements
     public void setAnalyticsData(FlashcardSet set, double avgStudentPerformance) {
         setNameLabel.setText(set.getDescription());
-        setPerformanceLabel.setText(LanguageManager.getString("analyticsCardController.overall") + set.getSets_correct_percentage() + "%");
+        setPerformanceLabel.setText(LanguageManager.getString("analyticsCardController.overall") + set.getSetsCorrectPercentage() + "%");
         avgPerfLabel.setText(LanguageManager.getString("analyticsCardController.avgScore") + avgStudentPerformance);
 
         int perfPercentage = (int) avgStudentPerformance;

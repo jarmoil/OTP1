@@ -147,7 +147,7 @@ class FlashcardSetDaoTest {
         }
 
         IFlashcardSetDao.createSet(1, "Original Description", "en");
-        int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
+        int setId = IFlashcardSetDao.getAllSets().get(0).getSetsId();
 
         assertTrue(IFlashcardSetDao.updateSet(setId, "Updated Description"));
         FlashcardSet updated = IFlashcardSetDao.getSetById(setId);
@@ -163,7 +163,7 @@ class FlashcardSetDaoTest {
         }
 
         IFlashcardSetDao.createSet(1, "To Delete", "en");
-        int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
+        int setId = IFlashcardSetDao.getAllSets().get(0).getSetsId();
 
         assertTrue(IFlashcardSetDao.deleteSet(setId));
         assertNull(IFlashcardSetDao.getSetById(setId));
@@ -178,7 +178,7 @@ class FlashcardSetDaoTest {
         }
 
         IFlashcardSetDao.createSet(1, "Test Set", "en");
-        int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
+        int setId = IFlashcardSetDao.getAllSets().get(0).getSetsId();
 
         FlashcardSet retrievedSet = IFlashcardSetDao.getSetById(setId);
         assertNotNull(retrievedSet);
@@ -204,7 +204,7 @@ class FlashcardSetDaoTest {
         }
 
         IFlashcardSetDao.createSet(1, "Test Set", "en");
-        int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
+        int setId = IFlashcardSetDao.getAllSets().get(0).getSetsId();
 
         try (Statement stmt = connection.createStatement()) {
             stmt.execute("INSERT INTO flashcards (sets_id, times_answered, times_correct, question, answer, choice_a, choice_b, choice_c) " +
@@ -215,7 +215,7 @@ class FlashcardSetDaoTest {
 
         assertTrue(IFlashcardSetDao.updateSetCorrectPercentage(setId));
         FlashcardSet updated = IFlashcardSetDao.getSetById(setId);
-        assertEquals(73, updated.getSets_correct_percentage());
+        assertEquals(73, updated.getSetsCorrectPercentage());
 
         assertFalse(IFlashcardSetDao.updateSetCorrectPercentage(999));
     }

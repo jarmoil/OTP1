@@ -4,29 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FlashcardSet {
-    private int sets_id;
-    private int user_id;
+    private int setsId;
+    private int userId;
     private String locale;
     private String description;
-    private int sets_correct_percentage;
+    private int setsCorrectPercentage;
 
     private List<Flashcard> flashcards;
 
-    public FlashcardSet(int sets_id, int user_id, String locale, String description, int sets_correct_percentage) {
-        this.sets_id = sets_id;
-        this.user_id = user_id;
+    public FlashcardSet(int setsId, int userId, String locale, String description, int setsCorrectPercentage) {
+        this.setsId = setsId;
+        this.userId = userId;
         this.locale = locale;
         this.description = description;
-        this.sets_correct_percentage = sets_correct_percentage;
+        this.setsCorrectPercentage = setsCorrectPercentage;
         this.flashcards = new ArrayList<>();
     }
 
     // getters
-    public int getSets_id() {
-        return sets_id;
+    public int getSetsId() {
+        return setsId;
     }
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
     public String getLocale() {
         return locale;
@@ -34,8 +34,8 @@ public class FlashcardSet {
     public String getDescription() {
         return description;
     }
-    public int getSets_correct_percentage() {
-        return sets_correct_percentage;
+    public int getSetsCorrectPercentage() {
+        return setsCorrectPercentage;
     }
     public List<Flashcard> getFlashcards() {
         return flashcards;
@@ -45,11 +45,11 @@ public class FlashcardSet {
     public void setFlashcards(List<Flashcard> flashcards) {
         this.flashcards = flashcards;
     }
-    public void setSets_id(int sets_id) {
-        this.sets_id = sets_id;
+    public void setSetsId(int setsId) {
+        this.setsId = setsId;
     }
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
     public void setLocale(String locale) {
         this.locale = locale;
@@ -57,8 +57,8 @@ public class FlashcardSet {
     public void setDescription(String description) {
         this.description = description;
     }
-    public void setSets_correct_percentage(int sets_correct_percentage) {
-        this.sets_correct_percentage = sets_correct_percentage;
+    public void setSetsCorrectPercentage(int setsCorrectPercentage) {
+        this.setsCorrectPercentage = setsCorrectPercentage;
     }
 }
 
