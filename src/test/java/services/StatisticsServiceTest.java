@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class StatisticsServiceTest {
+class StatisticsServiceTest {
 
     @Mock
     private IStatisticsDao statisticsDao;

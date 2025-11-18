@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class FlashcardSetServiceTest {
+class FlashcardSetServiceTest {
 
     @Mock
     private IFlashcardSetDao flashcardSetDao;

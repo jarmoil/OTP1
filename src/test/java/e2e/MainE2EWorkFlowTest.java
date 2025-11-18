@@ -24,7 +24,7 @@ import java.sql.Statement;
 // Because some of clickOn() does not click by fx:id, but by text,
 // if there are multiple nodes with the same text, it may click the wrong one
 
-public class MainE2EWorkFlowTest extends ApplicationTest {
+class MainE2EWorkFlowTest extends ApplicationTest {
     private static Connection connection;
 
     @BeforeAll
@@ -95,7 +95,7 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
     }
 
     @Test
-    public void completeCoreWorkflow() throws TimeoutException, InterruptedException {
+    void completeCoreWorkflow() throws TimeoutException, InterruptedException {
         // Verify main window is displayed
         verifyThat("#btnLogin", isVisible());
 

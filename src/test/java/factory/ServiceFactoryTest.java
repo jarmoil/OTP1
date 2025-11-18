@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ServiceFactoryTest {
+class ServiceFactoryTest {
 
     @BeforeEach
     void setUp() throws Exception {

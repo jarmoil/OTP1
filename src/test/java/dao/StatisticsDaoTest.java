@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StatisticsDaoTest {
+class StatisticsDaoTest {
     private static Connection connection;
     private IStatisticsDao statisticsDao;
 

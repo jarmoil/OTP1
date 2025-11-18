@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SessionManagerTest {
+class SessionManagerTest {
 
     @BeforeEach
     void setUp() {
