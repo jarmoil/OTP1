@@ -46,6 +46,7 @@ public class MainE2EWorkFlowTest extends ApplicationTest {
             stmt.execute("CREATE TABLE sets (" +
                     "sets_id INT AUTO_INCREMENT PRIMARY KEY," +
                     "user_id INT NOT NULL," +
+                    "locale VARCHAR(5) NOT NULL," +
                     "description VARCHAR(255) NOT NULL," +
                     "sets_correct_percentage INT DEFAULT 0," +
                     "FOREIGN KEY (user_id) REFERENCES user_accounts(user_id) ON DELETE CASCADE)");

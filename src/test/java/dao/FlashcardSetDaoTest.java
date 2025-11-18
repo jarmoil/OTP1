@@ -28,6 +28,7 @@ class FlashcardSetDaoTest {
             statement.execute("CREATE TABLE sets (" +
                     "sets_id INT AUTO_INCREMENT PRIMARY KEY," +
                     "user_id INT NOT NULL," +
+                    "locale VARCHAR(5) NOT NULL," +
                     "description VARCHAR(255) NOT NULL," +
                     "sets_correct_percentage INT DEFAULT 0," +
                     "FOREIGN KEY (user_id) REFERENCES user_accounts(user_id)" +
@@ -99,11 +100,11 @@ class FlashcardSetDaoTest {
             stmt.execute("INSERT INTO sets (user_id, description, sets_correct_percentage) VALUES (" + teacherId + ", 'Physics set', 0)");
         }
 
-        List<FlashcardSet> studentSets = IFlashcardSetDao.getSetsByRole("student");
+        List<FlashcardSet> studentSets = IFlashcardSetDao.getSetsByRoleAndLocale("student", "en");
         assertEquals(1, studentSets.size());
         assertEquals("Chemistry set", studentSets.get(0).getDescription());
 
-        List<FlashcardSet> teacherSets = IFlashcardSetDao.getSetsByRole("teacher");
+        List<FlashcardSet> teacherSets = IFlashcardSetDao.getSetsByRoleAndLocale("teacher", "en");
         assertEquals(1, teacherSets.size());
         assertEquals("Physics set", teacherSets.get(0).getDescription());
     }
@@ -122,8 +123,8 @@ class FlashcardSetDaoTest {
             userId2 = rs.getInt(1);
         }
 
-        IFlashcardSetDao.createSet(userId1, "Chemistry set");
-        IFlashcardSetDao.createSet(userId2, "Biology set");
+        IFlashcardSetDao.createSet(userId1, "Chemistry set", "en");
+        IFlashcardSetDao.createSet(userId2, "Biology set", "en");
 
         List<FlashcardSet> sets = IFlashcardSetDao.getAllSets();
         assertNotNull(sets);
@@ -145,7 +146,7 @@ class FlashcardSetDaoTest {
             stmt.execute("INSERT INTO user_accounts (user_id, role) VALUES (1, 'student')");
         }
 
-        IFlashcardSetDao.createSet(1, "Original Description");
+        IFlashcardSetDao.createSet(1, "Original Description", "en");
         int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
 
         assertTrue(IFlashcardSetDao.updateSet(setId, "Updated Description"));
@@ -161,7 +162,7 @@ class FlashcardSetDaoTest {
             stmt.execute("INSERT INTO user_accounts (user_id, role) VALUES (1, 'student')");
         }
 
-        IFlashcardSetDao.createSet(1, "To Delete");
+        IFlashcardSetDao.createSet(1, "To Delete", "en");
         int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
 
         assertTrue(IFlashcardSetDao.deleteSet(setId));
@@ -176,7 +177,7 @@ class FlashcardSetDaoTest {
             stmt.execute("INSERT INTO user_accounts (user_id, role) VALUES (1, 'student')");
         }
 
-        IFlashcardSetDao.createSet(1, "Test Set");
+        IFlashcardSetDao.createSet(1, "Test Set", "en");
         int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
 
         FlashcardSet retrievedSet = IFlashcardSetDao.getSetById(setId);
@@ -202,7 +203,7 @@ class FlashcardSetDaoTest {
                     "choice_c VARCHAR(255))");
         }
 
-        IFlashcardSetDao.createSet(1, "Test Set");
+        IFlashcardSetDao.createSet(1, "Test Set", "en");
         int setId = IFlashcardSetDao.getAllSets().get(0).getSets_id();
 
         try (Statement stmt = connection.createStatement()) {

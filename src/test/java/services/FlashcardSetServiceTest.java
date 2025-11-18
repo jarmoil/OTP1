@@ -30,8 +30,8 @@ public class FlashcardSetServiceTest {
     @Test
     void testGetAllSets() throws Exception{
         List<FlashcardSet> mockSets = Arrays.asList(
-                new FlashcardSet(1, 1, "Set 1", 0),
-                new FlashcardSet(2, 1, "Set 2", 0)
+                new FlashcardSet(1, 1, "en", "Set 1", 0),
+                new FlashcardSet(2, 1, "en", "Set 2", 0)
         );
         when(flashcardSetDao.getAllSets()).thenReturn(mockSets);
 
@@ -45,13 +45,14 @@ public class FlashcardSetServiceTest {
     @Test
     void testGetSetsByRole() throws Exception {
         String role = "student";
-        List<FlashcardSet> mockSets = Arrays.asList(new FlashcardSet(1, 1, "Set 1", 0));
-        when(flashcardSetDao.getSetsByRole(role)).thenReturn(mockSets);
+        String locale = "en";
+        List<FlashcardSet> mockSets = Arrays.asList(new FlashcardSet(1, 1, "en", "Set 1", 0));
+        when(flashcardSetDao.getSetsByRoleAndLocale(role, locale)).thenReturn(mockSets);
 
-        List<FlashcardSet> result = flashcardSetService.getSetsByRole(role);
+        List<FlashcardSet> result = flashcardSetService.getSetsByRoleAndLocale(role, locale);
 
         assertEquals(mockSets, result);
-        verify(flashcardSetDao).getSetsByRole(role);
+        verify(flashcardSetDao).getSetsByRoleAndLocale(role, locale);
     }
 
     // Tests that the service creates a new flashcard set
@@ -59,12 +60,13 @@ public class FlashcardSetServiceTest {
     void testCreateSet() throws Exception {
         int userId = 1;
         String description = "Test Description";
-        when(flashcardSetDao.createSet(userId, description)).thenReturn(true);
+        String locale = "en";
+        when(flashcardSetDao.createSet(userId, description, locale)).thenReturn(true);
 
-        boolean result = flashcardSetService.createSet(userId, description);
+        boolean result = flashcardSetService.createSet(userId, description, locale);
 
         assertTrue(result);
-        verify(flashcardSetDao).createSet(userId, description);
+        verify(flashcardSetDao).createSet(userId, description, locale);
     }
 
     // Tests that the service updates a flashcard set
@@ -108,7 +110,7 @@ public class FlashcardSetServiceTest {
     @Test
     void testGetSetById() throws Exception {
         int setId = 1;
-        FlashcardSet mockSet = new FlashcardSet(1, 1, "Test Set", 75);
+        FlashcardSet mockSet = new FlashcardSet(1, 1, "en", "Test Set", 75);
         when(flashcardSetDao.getSetById(setId)).thenReturn(mockSet);
 
         FlashcardSet result = flashcardSetService.getSetById(setId);

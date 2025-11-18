@@ -13,6 +13,7 @@ class FlashcardSetTest {
         FlashcardSet flashcardSet = new FlashcardSet(
                 1,
                 1,
+                "en",
                 "History",
                 75);
 
@@ -36,7 +37,7 @@ class FlashcardSetTest {
 
     @Test
     void testFlashcardsList() {
-        FlashcardSet flashcardSet = new FlashcardSet(2,2, "Chemistry", 90);
+        FlashcardSet flashcardSet = new FlashcardSet(2,2, "en", "Chemistry", 90);
         Flashcard card1 = new Flashcard(1, 1, 10, 9, "Question 1", "Answer 1", "A", "B","C");
         Flashcard card2 = new Flashcard(2, 2, 10, 9, "Question 2", "Answer 2", "A", "B","C");
 
