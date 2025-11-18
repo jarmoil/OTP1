@@ -16,8 +16,6 @@ import utils.SessionManager;
 import java.util.List;
 import java.util.Optional;
 
-// TODO: Refactor this class to reduce complexity and improve readability
-
 // Controller for managing and displaying flashcards within a flashcard set
 public class FlashcardSetController {
     @FXML private Label setDescriptionLabel;
@@ -27,6 +25,7 @@ public class FlashcardSetController {
     @FXML private Button updateSetButton;
     @FXML private Button deleteSetButton;
 
+    private static final String GLOBAL_CSS = "/css/global.css";
 
     // Services handle database operations
     private FlashcardService flashcardService;
@@ -87,7 +86,7 @@ public class FlashcardSetController {
         dialog.setHeaderText(LanguageManager.getString("flashcardSetController.updateSetDesc"));
         dialog.setContentText(LanguageManager.getString("flashcardSetController.description"));
 
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/css/global.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource(GLOBAL_CSS).toExternalForm());
 
         ButtonType okButton = new ButtonType(LanguageManager.getString("flashcardSetController.ok"), ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButton = new ButtonType(LanguageManager.getString("flashcardSetController.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -119,7 +118,7 @@ public class FlashcardSetController {
         alert.setHeaderText(LanguageManager.getString("flashcardSetController.deleteFlashcardSet"));
         alert.setContentText(LanguageManager.getString("flashcardSetController.delSetConfirmationText"));
 
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("/css/global.css").toExternalForm());
+        alert.getDialogPane().getStylesheets().add(getClass().getResource(GLOBAL_CSS).toExternalForm());
 
         ButtonType okButton = new ButtonType(LanguageManager.getString("flashcardSetController.ok"), ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButton = new ButtonType(LanguageManager.getString("flashcardSetController.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -178,7 +177,7 @@ public class FlashcardSetController {
         alert.setHeaderText(LanguageManager.getString("flashcardSetController.deleteFlashcard"));
         alert.setContentText(LanguageManager.getString("flashcardSetController.delFlashcardConfirmationText"));
 
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("/css/global.css").toExternalForm());
+        alert.getDialogPane().getStylesheets().add(getClass().getResource(GLOBAL_CSS).toExternalForm());
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -204,8 +203,7 @@ public class FlashcardSetController {
                 alert.setHeaderText(LanguageManager.getString("flashcardSetController.cannotStart"));
                 alert.setContentText(LanguageManager.getString("flashcardSetController.setNoFlashcards"));
 
-                alert.getDialogPane().getStylesheets().add(getClass().getResource("/css/global.css").toExternalForm());
-
+                alert.getDialogPane().getStylesheets().add(getClass().getResource(GLOBAL_CSS).toExternalForm());
                 alert.showAndWait();
                 return;
             }
@@ -234,7 +232,7 @@ public class FlashcardSetController {
     // Reusable dialog for creating/editing flashcards
     private boolean showFlashcardDialog(String title, String buttonText, Flashcard existingFlashcard) {
         // Use factory method to create dialog with form fields
-        Dialog<ButtonType> dialog = FlashcardDialogController.createFlashcardDialog(title, buttonText, existingFlashcard);
+        Dialog<ButtonType> dialog = FlashcardDialogController.createFlashcardDialog(title, existingFlashcard);
         // Get controller to access form data
         FlashcardDialogController dialogController = (FlashcardDialogController) dialog.getDialogPane().getProperties().get("controller");
 

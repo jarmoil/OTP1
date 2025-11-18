@@ -7,8 +7,6 @@ import javafx.scene.layout.GridPane;
 import models.Flashcard;
 import utils.LanguageManager;
 
-// TODO: Refactor this class to reduce complexity and improve readability
-
 // Controller for the flashcard creation/editing dialog
 public class FlashcardDialogController {
     @FXML private TextField questionField;
@@ -52,8 +50,7 @@ public class FlashcardDialogController {
 
     // Factory method, creates complete dialog with form and buttons
 
-    public static Dialog<ButtonType> createFlashcardDialog(String title, String buttonText,
-                                                           Flashcard existingFlashcard) {
+    public static Dialog<ButtonType> createFlashcardDialog(String title, Flashcard existingFlashcard) {
         try {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle(title);
