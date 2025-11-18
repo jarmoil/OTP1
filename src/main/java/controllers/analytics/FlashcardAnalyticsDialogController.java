@@ -63,10 +63,10 @@ public class FlashcardAnalyticsDialogController {
 
     // Calculate performance percentage for a flashcard
     private double calculateFlashcardPerformance(Flashcard flashcard) {
-        int timesAnswered = flashcard.getTimes_answered();
+        int timesAnswered = flashcard.getTimesAnswered();
         if (timesAnswered == 0) return 0.0;
 
-        return (double) flashcard.getTimes_correct() / timesAnswered * 100.0;
+        return (double) flashcard.getTimesCorrect() / timesAnswered * 100.0;
     }
 
 }

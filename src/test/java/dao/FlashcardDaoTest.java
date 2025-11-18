@@ -63,11 +63,11 @@ class FlashcardDaoTest {
         assertEquals(1, flashcards.size());
 
         Flashcard flashcard = flashcards.get(0);
-        assertEquals(1, flashcard.getSets_id());
+        assertEquals(1, flashcard.getSetsId());
         assertEquals("What is MVC?", flashcard.getQuestion());
         assertEquals("Model View Controller", flashcard.getAnswer());
-        assertEquals(0, flashcard.getTimes_answered());
-        assertEquals(0, flashcard.getTimes_correct());
+        assertEquals(0, flashcard.getTimesAnswered());
+        assertEquals(0, flashcard.getTimesCorrect());
     }
 
     @Test
@@ -89,7 +89,7 @@ class FlashcardDaoTest {
     void testUpdateFlashcard() throws Exception {
         // Create flashcard
         flashcardDao.createFlashcard(1, "Original", "Original Answer", "A", "B", "C");
-        int flashcardId = flashcardDao.getFlashcardsBySetId(1).get(0).getFlashcard_id();
+        int flashcardId = flashcardDao.getFlashcardsBySetId(1).get(0).getFlashcardId();
 
         // Test successful update
         assertTrue(flashcardDao.updateFlashcard(flashcardId, "Updated", "Updated Answer", "UA", "UB", "UC"));
@@ -106,7 +106,7 @@ class FlashcardDaoTest {
     void testDeleteFlashcard() throws Exception {
         // Create flashcard
         flashcardDao.createFlashcard(1, "Question", "Answer", "A", "B", "C");
-        int flashcardId = flashcardDao.getFlashcardsBySetId(1).get(0).getFlashcard_id();
+        int flashcardId = flashcardDao.getFlashcardsBySetId(1).get(0).getFlashcardId();
 
         // Test successful deletion
         assertTrue(flashcardDao.deleteFlashcard(flashcardId));
@@ -120,19 +120,19 @@ class FlashcardDaoTest {
     void testUpdateFlashcardStats() throws Exception {
         // Create flashcard
         flashcardDao.createFlashcard(1, "Question", "Answer", "A", "B", "C");
-        int flashcardId = flashcardDao.getFlashcardsBySetId(1).get(0).getFlashcard_id();
+        int flashcardId = flashcardDao.getFlashcardsBySetId(1).get(0).getFlashcardId();
 
         // Test correct answer
         assertTrue(flashcardDao.updateFlashcardStats(flashcardId, true));
         Flashcard updated = flashcardDao.getFlashcardsBySetId(1).get(0);
-        assertEquals(1, updated.getTimes_answered());
-        assertEquals(1, updated.getTimes_correct());
+        assertEquals(1, updated.getTimesAnswered());
+        assertEquals(1, updated.getTimesCorrect());
 
         // Test incorrect answer
         assertTrue(flashcardDao.updateFlashcardStats(flashcardId, false));
         updated = flashcardDao.getFlashcardsBySetId(1).get(0);
-        assertEquals(2, updated.getTimes_answered());
-        assertEquals(1, updated.getTimes_correct());
+        assertEquals(2, updated.getTimesAnswered());
+        assertEquals(1, updated.getTimesCorrect());
 
         // Test non-existent ID
         assertFalse(flashcardDao.updateFlashcardStats(999, true));
@@ -148,6 +148,6 @@ class FlashcardDaoTest {
         assertTrue(flashcardDao.createFlashcard(2, "What's 2+2?", "It's 4!", "A&B", "<C>", "\"D\""));
         Flashcard special = flashcardDao.getFlashcardsBySetId(2).get(0);
         assertEquals("What's 2+2?", special.getQuestion());
-        assertEquals("\"D\"", special.getChoice_c());
+        assertEquals("\"D\"", special.getChoiceC());
     }
 }

@@ -27,14 +27,14 @@ public class FlashcardAnalyticsCardController {
 
         questionLabel.setText(flashcard.getQuestion());
         choicesLabel.setText(String.format("%s %s  %s %s  %s %s",
-                a, flashcard.getChoice_a(),
-                b, flashcard.getChoice_b(),
-                c, flashcard.getChoice_c()));
+                a, flashcard.getChoiceA(),
+                b, flashcard.getChoiceB(),
+                c, flashcard.getChoiceC()));
 
         correctAnswerLabel.setText(String.format("%s %s", answerText, flashcard.getAnswer()));
 
-        int timesAnswered = flashcard.getTimes_answered();
-        int timesCorrect = flashcard.getTimes_correct();
+        int timesAnswered = flashcard.getTimesAnswered();
+        int timesCorrect = flashcard.getTimesCorrect();
         double accuracy = timesAnswered > 0 ? (double) timesCorrect / timesAnswered * 100 : 0;
 
         if (timesAnswered > 0) {

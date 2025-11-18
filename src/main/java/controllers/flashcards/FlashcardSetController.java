@@ -182,7 +182,7 @@ public class FlashcardSetController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                flashcardService.deleteFlashcard(flashcard.getFlashcard_id());
+                flashcardService.deleteFlashcard(flashcard.getFlashcardId());
                 loadFlashcards();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -252,7 +252,7 @@ public class FlashcardSetController {
                 } else {
                     // update flashcard
                     flashcardService.updateFlashcard(
-                            existingFlashcard.getFlashcard_id(),
+                            existingFlashcard.getFlashcardId(),
                             dialogController.getQuestion(),
                             dialogController.getAnswer(),
                             dialogController.getChoiceA(),

@@ -26,9 +26,9 @@ public class FlashcardDialogController {
     public void setFlashcard(Flashcard flashcard) {
         if (flashcard != null) {
             questionField.setText(flashcard.getQuestion());
-            choiceAField.setText(flashcard.getChoice_a());
-            choiceBField.setText(flashcard.getChoice_b());
-            choiceCField.setText(flashcard.getChoice_c());
+            choiceAField.setText(flashcard.getChoiceA());
+            choiceBField.setText(flashcard.getChoiceB());
+            choiceCField.setText(flashcard.getChoiceC());
             updateAnswerChoices();
             answerBox.setValue(flashcard.getAnswer());
         }

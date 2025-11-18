@@ -83,9 +83,9 @@ public class QuizController {
     // Update question and choices text
     private void updateQuestionDisplay() {
         questionLabel.setText(currentCard.getQuestion());
-        choiceA.setText(LanguageManager.getString("quizController.a") + currentCard.getChoice_a());
-        choiceB.setText(LanguageManager.getString("quizController.b") + currentCard.getChoice_b());
-        choiceC.setText(LanguageManager.getString("quizController.c") + currentCard.getChoice_c());
+        choiceA.setText(LanguageManager.getString("quizController.a") + currentCard.getChoiceA());
+        choiceB.setText(LanguageManager.getString("quizController.b") + currentCard.getChoiceB());
+        choiceC.setText(LanguageManager.getString("quizController.c") + currentCard.getChoiceC());
     }
 
     // Reset state for a new question
@@ -110,7 +110,7 @@ public class QuizController {
         boolean isCorrect = userAnswer.equals(currentCard.getAnswer());
 
         // Store result for statistics
-        quizResults.put(currentCard.getFlashcard_id(), isCorrect);
+        quizResults.put(currentCard.getFlashcardId(), isCorrect);
 
         if (isCorrect) {
             correctAnswers++;
@@ -127,9 +127,9 @@ public class QuizController {
 
     // Get the answer text corresponding to the selected radio button
     private String getSelectedAnswer(RadioButton selectedButton) {
-        if (selectedButton == choiceA) return currentCard.getChoice_a();
-        if (selectedButton == choiceB) return currentCard.getChoice_b();
-        return currentCard.getChoice_c();
+        if (selectedButton == choiceA) return currentCard.getChoiceA();
+        if (selectedButton == choiceB) return currentCard.getChoiceB();
+        return currentCard.getChoiceC();
     }
 
     // Show feedback for correct answer
@@ -147,9 +147,9 @@ public class QuizController {
 
     // Determine which choice letter corresponds to the correct answer
     private String getCorrectChoiceLetter() {
-        if (currentCard.getAnswer().equals(currentCard.getChoice_a())) return "A";
-        if (currentCard.getAnswer().equals(currentCard.getChoice_b())) return "B";
-        if (currentCard.getAnswer().equals(currentCard.getChoice_c())) return "C";
+        if (currentCard.getAnswer().equals(currentCard.getChoiceA())) return "A";
+        if (currentCard.getAnswer().equals(currentCard.getChoiceB())) return "B";
+        if (currentCard.getAnswer().equals(currentCard.getChoiceC())) return "C";
         return "?";
     }
 

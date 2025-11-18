@@ -32,9 +32,9 @@ public class FlashcardCardController {
 
 
         choicesLabel.setText(String.format("%s%n%s %s%n%s %s%n%s %s", choicesTitle,
-                aPrefix, flashcard.getChoice_a(),
-                bPrefix, flashcard.getChoice_b(),
-                cPrefix, flashcard.getChoice_c()));
+                aPrefix, flashcard.getChoiceA(),
+                bPrefix, flashcard.getChoiceB(),
+                cPrefix, flashcard.getChoiceC()));
                 }
 
     // Show/hide edit buttons based on ownership
