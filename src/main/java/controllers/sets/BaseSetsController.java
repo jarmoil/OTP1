@@ -87,6 +87,8 @@ public abstract class BaseSetsController {
             dialog.initOwner(contentArea.getScene().getWindow());
         }
 
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/css/global.css").toExternalForm());
+
         ButtonType okButton = new ButtonType(
                 LanguageManager.getString("baseSetsController.ok"),
                 ButtonBar.ButtonData.OK_DONE

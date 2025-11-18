@@ -87,6 +87,8 @@ public class FlashcardSetController {
         dialog.setHeaderText(LanguageManager.getString("flashcardSetController.updateSetDesc"));
         dialog.setContentText(LanguageManager.getString("flashcardSetController.description"));
 
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/css/global.css").toExternalForm());
+
         ButtonType okButton = new ButtonType(LanguageManager.getString("flashcardSetController.ok"), ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButton = new ButtonType(LanguageManager.getString("flashcardSetController.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().setAll(okButton, cancelButton);
@@ -116,6 +118,8 @@ public class FlashcardSetController {
         alert.setTitle(LanguageManager.getString("flashcardSetController.deleteSet"));
         alert.setHeaderText(LanguageManager.getString("flashcardSetController.deleteFlashcardSet"));
         alert.setContentText(LanguageManager.getString("flashcardSetController.delSetConfirmationText"));
+
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/css/global.css").toExternalForm());
 
         ButtonType okButton = new ButtonType(LanguageManager.getString("flashcardSetController.ok"), ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButton = new ButtonType(LanguageManager.getString("flashcardSetController.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -174,6 +178,8 @@ public class FlashcardSetController {
         alert.setHeaderText(LanguageManager.getString("flashcardSetController.deleteFlashcard"));
         alert.setContentText(LanguageManager.getString("flashcardSetController.delFlashcardConfirmationText"));
 
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/css/global.css").toExternalForm());
+
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
@@ -197,6 +203,9 @@ public class FlashcardSetController {
                 alert.setTitle(LanguageManager.getString("flashcardSetController.quiz"));
                 alert.setHeaderText(LanguageManager.getString("flashcardSetController.cannotStart"));
                 alert.setContentText(LanguageManager.getString("flashcardSetController.setNoFlashcards"));
+
+                alert.getDialogPane().getStylesheets().add(getClass().getResource("/css/global.css").toExternalForm());
+
                 alert.showAndWait();
                 return;
             }

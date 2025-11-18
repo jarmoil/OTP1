@@ -1,3 +1,6 @@
+.root * {
+    -fx-font-family: "Noto Sans CJK JP", "Yu Gothic", "Meiryo", "MS Gothic", "Arial Unicode MS", sans-serif;
+}
 .flashcard {
     -fx-background-color: rgba(255, 255, 255, 0.15);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);

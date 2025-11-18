@@ -39,6 +39,10 @@ public class CreateTeacherDialogController {
             dialog.getDialogPane().setContent(dialogContent);
             dialog.getDialogPane().getProperties().put("controller", controller);
 
+            dialog.getDialogPane().getStylesheets().add(
+                    CreateTeacherDialogController.class.getResource("/css/global.css").toExternalForm()
+            );
+
             // Validation
             Button createBtn = (Button) dialog.getDialogPane().lookupButton(createButton);
             createBtn.setDisable(true);
