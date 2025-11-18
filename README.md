@@ -164,3 +164,9 @@ Press the button the red arrow points to in the screenshot below:
 That will open menu to choose from Japan (Ja), Russian (Ru) and English (EN) which is default.
 
 The rest of the application works the same.
+
+Localization method:
+
+Database localization is done by checking the locale the user is using on the app and based on that, the flashcard set is stored in the database with a column indicating the language it was created in. 
+
+The flashcard sets are then displayed on the app by which locale is chosen by the user. If the locale is Russian, only display flashcard sets that are in Russian etc.
