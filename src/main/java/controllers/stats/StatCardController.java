@@ -38,7 +38,7 @@ public class StatCardController {
     public static StatCardController createStatCard(Statistics stat, FlashcardSet set) {
         try {
             FXMLLoader loader = new FXMLLoader(StatCardController.class.getResource("/views/statCard.fxml"), LanguageManager.getResourceBundle());
-            Pane statPane = loader.load();
+            loader.load();
             StatCardController controller = loader.getController();
             controller.setStatistic(stat, set);
             return controller;
