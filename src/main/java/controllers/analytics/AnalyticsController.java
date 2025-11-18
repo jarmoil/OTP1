@@ -18,8 +18,6 @@ import java.util.Optional;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// TODO: Refactor this class to reduce complexity and improve readability
-
 // Controller for managing and displaying analytics data for teachers
 public class AnalyticsController {
     @FXML private Label averagePerformanceLabel;
@@ -121,7 +119,7 @@ public class AnalyticsController {
             // Get all statistics for this specific set
             List<Statistics> setStats = allStats.stream()
                     .filter(stat -> stat.getSets_id() == set.getSets_id())
-                    .collect(Collectors.toList());
+                    .toList();
 
             Dialog<ButtonType> dialog = FlashcardAnalyticsDialogController.createFlashcardAnalyticsDialog(
                     LanguageManager.getString("analyticsController.flashcardAnalytics") + set.getDescription(),
