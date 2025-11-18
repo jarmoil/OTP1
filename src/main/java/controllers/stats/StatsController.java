@@ -28,6 +28,16 @@ public class StatsController {
         loadStudentStatistics();
     }
 
+    private void addStatCard(Statistics stat) {
+        try {
+            FlashcardSet set = flashcardSetService.getSetById(stat.getSets_id());
+            StatCardController cardController = StatCardController.createStatCard(stat, set);
+            statsContainer.getChildren().add(cardController.getRoot());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     // Load statistics for the logged-in student
     private void loadStudentStatistics() {
         if (SessionManager.getCurrentUser() == null) {
@@ -48,13 +58,7 @@ public class StatsController {
             statsContainer.getChildren().clear();
 
             for (Statistics stat : userStats) {
-                try {
-                    FlashcardSet set = flashcardSetService.getSetById(stat.getSets_id());
-                    StatCardController cardController = StatCardController.createStatCard(stat, set);
-                    statsContainer.getChildren().add(cardController.getRoot());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                addStatCard(stat);
             }
 
         } catch (Exception e) {
