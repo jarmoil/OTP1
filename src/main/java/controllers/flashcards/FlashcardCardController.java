@@ -9,8 +9,6 @@ import javafx.scene.layout.VBox;
 import models.Flashcard;
 import utils.LanguageManager;
 
-// TODO: Refactor this class to reduce complexity and improve readability
-
 // Controller for displaying a single flashcard card with question, choices, and owner controls
 public class FlashcardCardController {
     @FXML private VBox cardPane;
@@ -21,12 +19,10 @@ public class FlashcardCardController {
     @FXML private Button deleteButton;
 
     // Data and callbacks from parent controller
-    private Flashcard flashcard;
     private Runnable onUpdateCallback;
     private Runnable onDeleteCallback;
 
     public void setFlashcard(Flashcard flashcard) {
-        this.flashcard = flashcard;
         questionLabel.setText(flashcard.getQuestion());
 
         String choicesTitle = utils.LanguageManager.getString("flashcardCardController.choices");
