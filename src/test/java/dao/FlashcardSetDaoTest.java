@@ -66,7 +66,7 @@ class FlashcardSetDaoTest {
 
         try (Statement stmt = connection.createStatement()) {
             boolean created = stmt.execute(
-                    "INSERT INTO sets (user_id, description, sets_correct_percentage) VALUES (" + userId + ", 'History set', 0)"
+                    "INSERT INTO sets (user_id, locale, description, sets_correct_percentage) VALUES (" + userId + ", 'en', 'History set', 0)"
             );
             assertTrue(true);
         }
@@ -96,8 +96,8 @@ class FlashcardSetDaoTest {
         }
 
         try (Statement stmt = connection.createStatement()) {
-            stmt.execute("INSERT INTO sets (user_id, description, sets_correct_percentage) VALUES (" + studentId + ", 'Chemistry set', 0)");
-            stmt.execute("INSERT INTO sets (user_id, description, sets_correct_percentage) VALUES (" + teacherId + ", 'Physics set', 0)");
+            stmt.execute("INSERT INTO sets (user_id, locale, description, sets_correct_percentage) VALUES (" + studentId + ", 'en', 'Chemistry set', 0)");
+            stmt.execute("INSERT INTO sets (user_id, locale, description, sets_correct_percentage) VALUES (" + teacherId + ", 'en', 'Physics set', 0)");
         }
 
         List<FlashcardSet> studentSets = IFlashcardSetDao.getSetsByRoleAndLocale("student", "en");
