@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 import services.UserService;
 import utils.LanguageManager;
 
-// TODO: add validation, improve error handling, password strength check, etc.
-
 public class RegisterController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
