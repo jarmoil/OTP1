@@ -1,38 +1,38 @@
 package models;
 
 public class Statistics {
-    private int stats_id;
-    private int user_id;
-    private int sets_id;
-    private int stats_correct_percentage;
+    private int statsId;
+    private int userId;
+    private int setsId;
+    private int statsCorrectPercentage;
 
-    public Statistics(int stats_id, int user_id, int sets_id, int stats_correct_percentage) {
-        this.stats_id = stats_id;
-        this.user_id = user_id;
-        this.sets_id = sets_id;
-        this.stats_correct_percentage = stats_correct_percentage;
+    public Statistics(int statsId, int userId, int setsId, int statsCorrectPercentage) {
+        this.statsId = statsId;
+        this.userId = userId;
+        this.setsId = setsId;
+        this.statsCorrectPercentage = statsCorrectPercentage;
     }
 
     // Getters
-    public int getStats_id() { return stats_id; }
-    public int getUser_id() { return user_id; }
-    public int getSets_id() { return sets_id; }
-    public int getStats_correct_percentage() { return stats_correct_percentage; }
+    public int getStatsId() { return statsId; }
+    public int getUserId() { return userId; }
+    public int getSetsId() { return setsId; }
+    public int getStatsCorrectPercentage() { return statsCorrectPercentage; }
 
     // Setters
-    public void setStats_id(int stats_id) { this.stats_id = stats_id; }
-    public void setUser_id(int user_id) { this.user_id = user_id; }
-    public void setSets_id(int sets_id) { this.sets_id = sets_id; }
-    public void setStats_correct_percentage(int stats_correct_percentage) { this.stats_correct_percentage = stats_correct_percentage; }
+    public void setStatsId(int statsId) { this.statsId = statsId; }
+    public void setUserId(int userId) { this.userId = userId; }
+    public void setSetsId(int setsId) { this.setsId = setsId; }
+    public void setStatsCorrectPercentage(int statsCorrectPercentage) { this.statsCorrectPercentage = statsCorrectPercentage; }
 
     // This method was used for debugging purposes, can be removed later if not needed
     @Override
     public String toString() {
         return "Statistics{" +
-                "stats_id=" + stats_id +
-                ", user_id=" + user_id +
-                ", sets_id=" + sets_id +
-                ", stats_correct_percentage=" + stats_correct_percentage +
+                "stats_id=" + statsId +
+                ", user_id=" + userId +
+                ", sets_id=" + setsId +
+                ", stats_correct_percentage=" + statsCorrectPercentage +
                 '}';
     }
 

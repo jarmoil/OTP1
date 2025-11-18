@@ -5,7 +5,6 @@ import models.Statistics;
 import org.junit.jupiter.api.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
@@ -74,9 +73,9 @@ public class StatisticsDaoTest {
 
         Statistics stats = statisticsDao.getStatistics(1, 1);
         assertNotNull(stats);
-        assertEquals(1, stats.getUser_id());
-        assertEquals(1, stats.getSets_id());
-        assertEquals(85, stats.getStats_correct_percentage());
+        assertEquals(1, stats.getUserId());
+        assertEquals(1, stats.getSetsId());
+        assertEquals(85, stats.getStatsCorrectPercentage());
     }
 
     @Test
@@ -90,7 +89,7 @@ public class StatisticsDaoTest {
         assertTrue(statisticsDao.upsertStatistics(1, 1, 90));
 
         Statistics stats = statisticsDao.getStatistics(1, 1);
-        assertEquals(90, stats.getStats_correct_percentage());
+        assertEquals(90, stats.getStatsCorrectPercentage());
     }
 
     @Test
@@ -120,7 +119,7 @@ public class StatisticsDaoTest {
 
         Statistics stats = statisticsDao.getStatistics(1, 1);
         assertNotNull(stats);
-        assertEquals(85, stats.getStats_correct_percentage());
+        assertEquals(85, stats.getStatsCorrectPercentage());
 
         assertNull(statisticsDao.getStatistics(999, 999));
     }
@@ -138,7 +137,7 @@ public class StatisticsDaoTest {
 
         List<Statistics> userStats = statisticsDao.getStatisticsByUser(1);
         assertEquals(2, userStats.size());
-        assertTrue(userStats.stream().allMatch(s -> s.getUser_id() == 1));
+        assertTrue(userStats.stream().allMatch(s -> s.getUserId() == 1));
 
         assertTrue(statisticsDao.getStatisticsByUser(999).isEmpty());
     }

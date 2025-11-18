@@ -30,7 +30,7 @@ public class StatsController {
 
     private void addStatCard(Statistics stat) {
         try {
-            FlashcardSet set = flashcardSetService.getSetById(stat.getSets_id());
+            FlashcardSet set = flashcardSetService.getSetById(stat.getSetsId());
             StatCardController cardController = StatCardController.createStatCard(stat, set);
             statsContainer.getChildren().add(cardController.getRoot());
         } catch (Exception e) {

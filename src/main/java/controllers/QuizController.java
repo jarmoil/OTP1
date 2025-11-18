@@ -262,7 +262,7 @@ public class QuizController {
     // Build message about previous statistics and personal bests
     private String buildStatisticsMessage(int percentage, Statistics previousStats) {
         if (previousStats != null) {
-            int best = previousStats.getStats_correct_percentage();
+            int best = previousStats.getStatsCorrectPercentage();
             String prevBestText = LanguageManager.getString("quizController.previousBest");
             String newBestText = LanguageManager.getString("quizController.newBest");
 

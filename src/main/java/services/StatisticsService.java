@@ -16,7 +16,7 @@ public class StatisticsService {
         int userPercentage = Math.round((float) correctCount * 100 / totalQuestions);
 
         Statistics previousStats = statisticsDao.getStatistics(userId, setId);
-        if (previousStats == null || userPercentage > previousStats.getStats_correct_percentage()) {
+        if (previousStats == null || userPercentage > previousStats.getStatsCorrectPercentage()) {
             return statisticsDao.upsertStatistics(userId, setId, userPercentage);
         }
         return true;

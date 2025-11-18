@@ -19,11 +19,11 @@ public class StatCardController {
     public void setStatistic(Statistics stat, FlashcardSet set) {
         String setName = set != null ? set.getDescription() : LanguageManager.getResourceBundle().getString("statCardController.unknown");
         setNameLabel.setText(setName);
-        percentageLabel.setText(stat.getStats_correct_percentage() + "%");
+        percentageLabel.setText(stat.getStatsCorrectPercentage() + "%");
         bestScoreLabel.setText(LanguageManager.getResourceBundle().getString("statCardController.best"));
 
         // Apply performance color styling
-        String colorClass = getPerformanceColorClass(stat.getStats_correct_percentage());
+        String colorClass = getPerformanceColorClass(stat.getStatsCorrectPercentage());
         percentageLabel.getStyleClass().add(colorClass);
     }
 

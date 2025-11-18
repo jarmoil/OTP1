@@ -75,7 +75,7 @@ public class AnalyticsController {
         List<FlashcardSet> allSets = flashcardSetService.getAllSets();
 
         double avgPerformance = allStats.isEmpty() ? 0.0 :
-                allStats.stream().mapToInt(Statistics::getStats_correct_percentage).average().orElse(0.0);
+                allStats.stream().mapToInt(Statistics::getStatsCorrectPercentage).average().orElse(0.0);
         int totalSets = allSets.size();
 
         averagePerformanceLabel.setText(String.format("%.1f%%", avgPerformance));
@@ -88,7 +88,7 @@ public class AnalyticsController {
         List<Statistics> allStats = statisticsService.getAllStatistics();
 
         Map<Integer, List<Statistics>> statsBySet = allStats.stream()
-                .collect(Collectors.groupingBy(Statistics::getSets_id));
+                .collect(Collectors.groupingBy(Statistics::getSetsId));
 
         analyticsContainer.getChildren().clear();
 
@@ -97,7 +97,7 @@ public class AnalyticsController {
 
             // Calculate average student performance
             double avgStudentPerf = setStats.isEmpty() ? 0.0 :
-                    setStats.stream().mapToInt(Statistics::getStats_correct_percentage).average().orElse(0.0);
+                    setStats.stream().mapToInt(Statistics::getStatsCorrectPercentage).average().orElse(0.0);
 
             // Create analytics card using factory method
             AnalyticsCardController cardController = AnalyticsCardController.createAnalyticsCard(
@@ -118,7 +118,7 @@ public class AnalyticsController {
 
             // Get all statistics for this specific set
             List<Statistics> setStats = allStats.stream()
-                    .filter(stat -> stat.getSets_id() == set.getSetsId())
+                    .filter(stat -> stat.getSetsId() == set.getSetsId())
                     .toList();
 
             Dialog<ButtonType> dialog = FlashcardAnalyticsDialogController.createFlashcardAnalyticsDialog(
