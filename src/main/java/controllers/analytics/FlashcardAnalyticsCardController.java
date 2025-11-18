@@ -7,8 +7,6 @@ import javafx.scene.layout.Pane;
 import models.Flashcard;
 import utils.LanguageManager;
 
-// TODO: Refactor to reduce complexity and improve readability
-
 public class FlashcardAnalyticsCardController {
     @FXML private Pane cardPane;
     @FXML private Label questionLabel;
@@ -17,7 +15,7 @@ public class FlashcardAnalyticsCardController {
     @FXML private Label performanceLabel;
 
     // Update the card with flashcard data and performance rate
-    public void setFlashcard(Flashcard flashcard, double performanceRate) {
+    public void setFlashcard(Flashcard flashcard) {
         String a = LanguageManager.getString("flashcardAnalyticsCardController.a");
         String b = LanguageManager.getString("flashcardAnalyticsCardController.b");
         String c = LanguageManager.getString("flashcardAnalyticsCardController.c");
@@ -71,10 +69,10 @@ public class FlashcardAnalyticsCardController {
     public static FlashcardAnalyticsCardController createFlashcardAnalyticsCard(Flashcard flashcard, double performanceRate) {
         try {
             FXMLLoader loader = new FXMLLoader(FlashcardAnalyticsCardController.class.getResource("/views/flashcardAnalyticsCard.fxml"), utils.LanguageManager.getResourceBundle());
-            Pane cardPane = loader.load();
+            loader.load();
             FlashcardAnalyticsCardController controller = loader.getController();
 
-            controller.setFlashcard(flashcard, performanceRate);
+            controller.setFlashcard(flashcard);
 
             return controller;
         } catch (Exception e) {
