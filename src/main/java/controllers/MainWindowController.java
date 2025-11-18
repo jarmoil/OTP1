@@ -20,9 +20,8 @@ import utils.SessionManager;
 
 // Controller for the main application window, handling navigation and stuff
 public class MainWindowController {
-    // TODO: Make window scalable and fullscreen ???
 
-    // MAKE IT POSSIBLE TO DRAG THE WINDOW AROUND1?!?!!?!?
+    // Window dragging variables
     private double xOffset;
     private double yOffset;
 
@@ -81,7 +80,6 @@ public class MainWindowController {
     }
 
     private void changeLanguage(String language) {
-        // TODO: Show confirmation dialog before changing language and inform user that app will reload
         LanguageManager.setLocale(language);
 
         // Reload the main window to apply new language
