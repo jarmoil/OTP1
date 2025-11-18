@@ -7,8 +7,6 @@ import javafx.scene.layout.Pane;
 import models.FlashcardSet;
 import utils.LanguageManager;
 
-// TODO: Refactor to reduce complexity and improve readability
-
 // Controller for displaying an analytics card with performance indicators
 public class AnalyticsCardController {
     @FXML private Pane cardPane;
@@ -18,7 +16,9 @@ public class AnalyticsCardController {
     @FXML private Label performanceIndicator;
     @FXML private Label clickHint;
 
-    private Runnable onClickCallback;
+    private static final String PERFORMANCE_GOOD = "performance-good";
+    private static final String PERFORMANCE_AVERAGE = "performance-average";
+    private static final String PERFORMANCE_POOR = "performance-poor";
 
     // Set analytics data and update UI elements
     public void setAnalyticsData(FlashcardSet set, double avgStudentPerformance) {
@@ -34,7 +34,6 @@ public class AnalyticsCardController {
 
     // Set callback for click events on the card
     public void setOnClickCallback(Runnable callback) {
-        this.onClickCallback = callback;
         cardPane.setStyle("-fx-cursor: hand;");
         cardPane.setOnMouseClicked(e -> {
             if (callback != null) {
@@ -52,8 +51,8 @@ public class AnalyticsCardController {
 
     // Apply color class to performance indicators based on percentage
     private void applyPerformanceColorClass(int percentage) {
-        performanceIndicator.getStyleClass().removeAll("performance-good", "performance-average", "performance-poor");
-        avgPerfLabel.getStyleClass().removeAll("performance-good", "performance-average", "performance-poor");
+        performanceIndicator.getStyleClass().removeAll(PERFORMANCE_GOOD, PERFORMANCE_AVERAGE, PERFORMANCE_POOR);
+        avgPerfLabel.getStyleClass().removeAll(PERFORMANCE_GOOD, PERFORMANCE_AVERAGE, PERFORMANCE_POOR);
 
         String colorClass = getPerformanceColorClass(percentage);
         performanceIndicator.getStyleClass().add(colorClass);
@@ -62,9 +61,9 @@ public class AnalyticsCardController {
 
     // Determine color class based on performance percentage
     private String getPerformanceColorClass(int percentage) {
-        if (percentage >= 80) return "performance-good";
-        if (percentage >= 60) return "performance-average";
-        return "performance-poor";
+        if (percentage >= 80) return PERFORMANCE_GOOD;
+        if (percentage >= 60) return PERFORMANCE_AVERAGE;
+        return PERFORMANCE_POOR;
     }
 
     // Factory method to create and initialize an AnalyticsCardController instance
@@ -73,7 +72,7 @@ public class AnalyticsCardController {
                                                               Runnable onClickCallback) {
         try {
             FXMLLoader loader = new FXMLLoader(AnalyticsCardController.class.getResource("/views/analyticsCard.fxml"), utils.LanguageManager.getResourceBundle());
-            Pane cardPane = loader.load();
+            loader.load();
             AnalyticsCardController controller = loader.getController();
 
             controller.setAnalyticsData(set, avgStudentPerformance);
