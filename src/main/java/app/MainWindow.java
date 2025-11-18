@@ -18,7 +18,7 @@ public class MainWindow extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Waiting for FXMLLoader with resource bundle support util class
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/window.fxml"));
-        loader.setResources(LanguageManager.getResourceBundle());;
+        loader.setResources(LanguageManager.getResourceBundle());
         Scene scene = new Scene(loader.load());
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
@@ -26,7 +26,6 @@ public class MainWindow extends Application {
         primaryStage.setResizable(false);
         primaryStage.setTitle("Quizzy - Quiz Application");
         ((MainWindowController)loader.getController()).init(primaryStage);
-        // primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
         primaryStage.show();
     }
 }
