@@ -6,8 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import utils.LanguageManager;
 
-// TODO: add validation and error handling
-
 public class CreateTeacherDialogController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
