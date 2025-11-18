@@ -16,8 +16,6 @@ import utils.FXMLLoaderUtil;
 import utils.LanguageManager;
 import utils.SessionManager;
 
-// TODO: Refresh main window after login/logout to update UI elements
-
 // Controller for the login modal and logic
 public class LoginController {
 
