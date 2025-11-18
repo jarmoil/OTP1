@@ -8,6 +8,13 @@ import java.util.List;
 
 // DAO class for managing flashcard sets in the database
 public class FlashcardSetDao implements IFlashcardSetDao {
+
+    private static final String COL_SETS_ID = "sets_id";
+    private static final String COL_USER_ID = "user_id";
+    private static final String COL_LOCALE = "locale";
+    private static final String COL_DESCRIPTION = "description";
+    private static final String COL_SETS_CORRECT_PERCENTAGE = "sets_correct_percentage";
+
     // Retrieve all flashcard sets from the database
     @Override
     public List<FlashcardSet> getAllSets() throws Exception {
@@ -21,11 +28,11 @@ public class FlashcardSetDao implements IFlashcardSetDao {
 
             while (rs.next()) {
                 sets.add(new FlashcardSet(
-                        rs.getInt("sets_id"),
-                        rs.getInt("user_id"),
-                        rs.getString("locale"),
-                        rs.getString("description"),
-                        rs.getInt("sets_correct_percentage")
+                        rs.getInt(COL_SETS_ID),
+                        rs.getInt(COL_USER_ID),
+                        rs.getString(COL_LOCALE),
+                        rs.getString(COL_DESCRIPTION),
+                        rs.getInt(COL_SETS_CORRECT_PERCENTAGE)
                 ));
             }
         } finally {
@@ -51,11 +58,11 @@ public class FlashcardSetDao implements IFlashcardSetDao {
 
             while (rs.next()) {
                 sets.add(new FlashcardSet(
-                        rs.getInt("sets_id"),
-                        rs.getInt("user_id"),
-                        rs.getString("locale"),
-                        rs.getString("description"),
-                        rs.getInt("sets_correct_percentage")
+                        rs.getInt(COL_SETS_ID),
+                        rs.getInt(COL_USER_ID),
+                        rs.getString(COL_LOCALE),
+                        rs.getString(COL_DESCRIPTION),
+                        rs.getInt(COL_SETS_CORRECT_PERCENTAGE)
                 ));
             }
         } finally {
@@ -77,11 +84,11 @@ public class FlashcardSetDao implements IFlashcardSetDao {
 
             if (rs.next()) {
                 return new FlashcardSet(
-                        rs.getInt("sets_id"),
-                        rs.getInt("user_id"),
-                        rs.getString("locale"),
-                        rs.getString("description"),
-                        rs.getInt("sets_correct_percentage")
+                        rs.getInt(COL_SETS_ID),
+                        rs.getInt(COL_USER_ID),
+                        rs.getString(COL_LOCALE),
+                        rs.getString(COL_DESCRIPTION),
+                        rs.getInt(COL_SETS_CORRECT_PERCENTAGE)
                 );
             }
             return null;
