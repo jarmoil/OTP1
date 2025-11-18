@@ -52,12 +52,8 @@ public abstract class BaseSetsController {
     }
 
     protected void updateUI() {
-        if (SessionManager.getCurrentUser() != null &&
-                getUserRole().equals(SessionManager.getCurrentUser().getRole())) {
-            createSetButton.setVisible(true);
-        } else {
-            createSetButton.setVisible(false);
-        }
+        createSetButton.setVisible(SessionManager.getCurrentUser() != null &&
+                getUserRole().equals(SessionManager.getCurrentUser().getRole()));
     }
 
     @FXML
