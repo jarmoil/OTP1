@@ -8,6 +8,11 @@ import java.util.List;
 
 public class StatisticsDao implements IStatisticsDao {
 
+    private static final String COL_STATS_ID = "stats_id";
+    private static final String COL_USER_ID = "user_id";
+    private static final String COL_SETS_ID = "sets_id";
+    private static final String COL_STATS_CORRECT_PERCENTAGE = "stats_correct_percentage";
+
     // Create or update user statistics for a flashcard set
     @Override
     public boolean upsertStatistics(int userId, int setId, int correctPercentage) throws Exception {
@@ -62,10 +67,10 @@ public class StatisticsDao implements IStatisticsDao {
 
             while (rs.next()) {
                 stats.add(new Statistics(
-                        rs.getInt("stats_id"),
-                        rs.getInt("user_id"),
-                        rs.getInt("sets_id"),
-                        rs.getInt("stats_correct_percentage")
+                        rs.getInt(COL_STATS_ID),
+                        rs.getInt(COL_USER_ID),
+                        rs.getInt(COL_SETS_ID),
+                        rs.getInt(COL_STATS_CORRECT_PERCENTAGE)
                 ));
             }
         } finally {
@@ -90,10 +95,10 @@ public class StatisticsDao implements IStatisticsDao {
 
             if (rs.next()) {
                 return new Statistics(
-                        rs.getInt("stats_id"),
-                        rs.getInt("user_id"),
-                        rs.getInt("sets_id"),
-                        rs.getInt("stats_correct_percentage")
+                        rs.getInt(COL_STATS_ID),
+                        rs.getInt(COL_USER_ID),
+                        rs.getInt(COL_SETS_ID),
+                        rs.getInt(COL_STATS_CORRECT_PERCENTAGE)
                 );
             }
             return null;
@@ -117,10 +122,10 @@ public class StatisticsDao implements IStatisticsDao {
 
             while (rs.next()) {
                 stats.add(new Statistics(
-                        rs.getInt("stats_id"),
-                        rs.getInt("user_id"),
-                        rs.getInt("sets_id"),
-                        rs.getInt("stats_correct_percentage")
+                        rs.getInt(COL_STATS_ID),
+                        rs.getInt(COL_USER_ID),
+                        rs.getInt(COL_SETS_ID),
+                        rs.getInt(COL_STATS_CORRECT_PERCENTAGE)
                 ));
             }
         } finally {
