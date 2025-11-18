@@ -10,14 +10,12 @@ import utils.LanguageManager;
 
 import java.util.List;
 
-// TODO: Refactor this class to reduce complexity and improve readability
-
 public class FlashcardAnalyticsDialogController {
     @FXML private ScrollPane scrollPane;
     @FXML private VBox container;
 
     // Populate the dialog with flashcard analytics cards
-    public void setFlashcards(List<Flashcard> flashcards, List<Statistics> setStats) {
+    public void setFlashcards(List<Flashcard> flashcards) {
         container.getChildren().clear();
 
         for (Flashcard flashcard : flashcards) {
@@ -44,7 +42,7 @@ public class FlashcardAnalyticsDialogController {
             ScrollPane dialogContent = loader.load();
             FlashcardAnalyticsDialogController controller = loader.getController();
 
-            controller.setFlashcards(flashcards, setStats);
+            controller.setFlashcards(flashcards);
 
             dialog.getDialogPane().setContent(dialogContent);
 
