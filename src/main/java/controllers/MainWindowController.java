@@ -1,8 +1,11 @@
 package controllers;
 
 import controllers.login.LoginController;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -62,11 +65,12 @@ public class MainWindowController {
 
 
     private void initializeLanguageSelector() {
-        languageSelector.getItems().addAll("EN", "JA", "RU");
+        languageSelector.getItems().addAll("EN", "JA", "RU", "IR");
 
         String currentLang = switch (LanguageManager.getCurrentLocale().getLanguage()) {
             case "ja" -> "JA";
             case "ru" -> "RU";
+            case "fa" -> "IR";
             default -> "EN";
         };
         languageSelector.setValue(currentLang);
@@ -80,6 +84,7 @@ public class MainWindowController {
     }
 
     private void changeLanguage(String language) {
+
         LanguageManager.setLocale(language);
 
         // Reload the main window to apply new language
@@ -88,16 +93,31 @@ public class MainWindowController {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             scene.setFill(Color.TRANSPARENT);
+
+            root.setNodeOrientation("IR".equals(language) ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
+
             mainStage.setScene(scene);
 
             MainWindowController controller = loader.getController();
             controller.init(mainStage);
 
             // Set value without triggering the event
+            EventHandler<ActionEvent> handler = controller.languageSelector.getOnAction();
+            controller.languageSelector.setOnAction(null);
             controller.languageSelector.setValue(language);
+            controller.languageSelector.setOnAction(handler);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void applyOrientation() {
+        if(mainStage == null || mainStage.getScene() == null) return;
+        Parent root = mainStage.getScene().getRoot();
+        if (root == null) return;
+
+        String lang = LanguageManager.getCurrentLocale().getLanguage();
+        root.setNodeOrientation("fa".equals(lang) ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
     }
 
     public void init(Stage stage) {
@@ -134,6 +154,7 @@ public class MainWindowController {
         initializeDragListeners();
         initializeLanguageSelector();
         updateLoginUI();
+        applyOrientation();
     }
 
     // Load FXML content into the content area of the main window
@@ -157,6 +178,7 @@ public class MainWindowController {
             // Logout
             SessionManager.clear();
             updateLoginUI();
+            applyOrientation();
 
             // Reload main window after logout to reset UI
             try {

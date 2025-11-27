@@ -29,6 +29,7 @@ public class LanguageManager {
         Locale locale = switch (languageCode) {
             case "JA" -> new Locale("ja", "JP");
             case "RU" -> new Locale("ru", "RU");
+            case "IR" -> new Locale("fa", "IR");
             default -> new Locale("en", "US");
         };
         setLocale(locale);
