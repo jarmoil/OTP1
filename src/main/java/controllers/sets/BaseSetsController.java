@@ -65,6 +65,8 @@ public abstract class BaseSetsController {
             langCode = "ja";
         } else if (rawCode.startsWith("ru")) {
             langCode = "ru";
+        } else if (rawCode.startsWith("fa")) {
+            langCode = "fa";
         } else {
             langCode = "en";
         }
