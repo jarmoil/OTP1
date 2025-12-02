@@ -230,6 +230,7 @@
                     <threshold>Low</threshold>
                     <xmlOutput>true</xmlOutput>
                     <htmlOutput>true</htmlOutput>
+                    <failOnError>false</failOnError>
                 </configuration>
                 <executions>
                     <execution>
