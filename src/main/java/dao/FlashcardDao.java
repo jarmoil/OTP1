@@ -99,33 +99,8 @@ public class FlashcardDao implements IFlashcardDao {
         }
     }
 
-    // Delete a flashcard from the database by its ID
-    @Override
-    public boolean deleteFlashcard(int flashcardId) throws DataOperationException {
-        String sql = "DELETE FROM flashcards WHERE flashcard_id = ?";
-
-        try {
-            Connection conn = ConnectDB.getConnection();
-            boolean closeConn = conn != ConnectDB.gettestConn();
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, flashcardId);
-                return stmt.executeUpdate() > 0;
-            } finally {
-                if (closeConn) conn.close();
-            }
-        } catch (Exception e) {
-            throw new DataOperationException("Failed to delete flashcard ID: " + flashcardId, e);
-        }
-    }
-
-// Update flashcard statistics after an answer attempt
-@Override
-public boolean updateFlashcardStats(int flashcardId, boolean isCorrect) throws DataOperationException {
-    String sql = "UPDATE flashcards SET times_answered = times_answered + 1" +
-            (isCorrect ? ", times_correct = times_correct + 1" : "") +
-            " WHERE flashcard_id = ?";
-
-    try {
+    // Extracted method to handle flashcard deletion and stats update queries
+    static boolean queryFlashcard(int flashcardId, String sql) throws SQLException {
         Connection conn = ConnectDB.getConnection();
         boolean closeConn = conn != ConnectDB.gettestConn();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -134,8 +109,31 @@ public boolean updateFlashcardStats(int flashcardId, boolean isCorrect) throws D
         } finally {
             if (closeConn) conn.close();
         }
-    } catch (Exception e) {
-        throw new DataOperationException("Failed to update flashcard stats for ID: " + flashcardId, e);
     }
-}
+
+    // Delete a flashcard from the database by its ID
+    @Override
+    public boolean deleteFlashcard(int flashcardId) throws DataOperationException {
+        String sql = "DELETE FROM flashcards WHERE flashcard_id = ?";
+
+        try {
+            return queryFlashcard(flashcardId, sql);
+        } catch (Exception e) {
+            throw new DataOperationException("Failed to delete flashcard ID: " + flashcardId, e);
+        }
+    }
+
+    // Update flashcard statistics after an answer attempt
+    @Override
+    public boolean updateFlashcardStats(int flashcardId, boolean isCorrect) throws DataOperationException {
+        String sql = "UPDATE flashcards SET times_answered = times_answered + 1" +
+                (isCorrect ? ", times_correct = times_correct + 1" : "") +
+                " WHERE flashcard_id = ?";
+
+        try {
+            return queryFlashcard(flashcardId, sql);
+        } catch (Exception e) {
+            throw new DataOperationException("Failed to update flashcard stats for ID: " + flashcardId, e);
+        }
+    }
 }
