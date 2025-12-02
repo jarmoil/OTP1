@@ -120,9 +120,12 @@ public class MainWindowController {
         root.setNodeOrientation("fa".equals(lang) ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT);
     }
 
+    public static void initStage(Stage stage) {
+        mainStageRef = stage;
+    }
+
     public void init(Stage stage) {
         this.mainStage = stage;
-        mainStageRef = stage;
 
         // Navigation handlers
         btnStudentSets.setOnMouseClicked(e -> {

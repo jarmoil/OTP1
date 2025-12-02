@@ -25,7 +25,10 @@ public class MainWindow extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setResizable(false);
         primaryStage.setTitle("Quizzy - Quiz Application");
-        ((MainWindowController)loader.getController()).init(primaryStage);
+        MainWindowController controller = loader.getController();
+        MainWindowController.initStage(primaryStage);
+        controller.init(primaryStage);
+
         primaryStage.show();
     }
 }
