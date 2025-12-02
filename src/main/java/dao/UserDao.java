@@ -1,6 +1,7 @@
 package dao;
 
 import database.ConnectDB;
+import exceptions.DataOperationException;
 import models.User;
 import java.sql.*;
 
@@ -8,56 +9,71 @@ import java.sql.*;
 public class UserDao implements IUserDao {
     // Find a user by username
     @Override
-    public User findByUsername(String username) throws Exception {
+    public User findByUsername(String username) throws DataOperationException {
         String sql = "SELECT user_id, user_name, user_password, role FROM user_accounts WHERE user_name = ?";
-        Connection conn = ConnectDB.getConnection();
-        boolean closeConn = conn != ConnectDB.gettestConn();
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
+        try {
+            Connection conn = ConnectDB.getConnection();
+            boolean closeConn = conn != ConnectDB.gettestConn();
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username);
+                ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                return new User(
-                        rs.getInt("user_id"),
-                        rs.getString("user_name"),
-                        rs.getString("user_password"),
-                        rs.getString("role")
-                );
+                if (rs.next()) {
+                    return new User(
+                            rs.getInt("user_id"),
+                            rs.getString("user_name"),
+                            rs.getString("user_password"),
+                            rs.getString("role")
+                    );
+                }
+            } finally {
+                if (closeConn) conn.close();
             }
-        } finally {
-            if (closeConn) conn.close();
+
+        } catch (Exception e) {
+            throw new DataOperationException("Failed to find user by username: " + username, e);
         }
         return null;
     }
 
     // Create a new user with 'student' role
     @Override
-    public boolean createUser(String username, String hashedPassword) throws Exception {
-        String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'student')";
-        Connection conn = ConnectDB.getConnection();
-        boolean closeConn = conn != ConnectDB.gettestConn();
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            stmt.setString(2, hashedPassword);
-            return stmt.executeUpdate() > 0;
-        }
-        finally {
-            if (closeConn) conn.close();
+    public boolean createUser(String username, String hashedPassword) throws DataOperationException {
+        try {
+            String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'student')";
+            Connection conn = ConnectDB.getConnection();
+            boolean closeConn = conn != ConnectDB.gettestConn();
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username);
+                stmt.setString(2, hashedPassword);
+                return stmt.executeUpdate() > 0;
+            } finally {
+                if (closeConn) conn.close();
+            }
+
+        } catch (Exception e) {
+            throw new DataOperationException("Failed to create user: " + username, e);
         }
     }
 
     // Create a new user with teacher role
     @Override
-    public boolean createTeacher(String username, String hashedPassword) throws Exception {
+    public boolean createTeacher(String username, String hashedPassword) throws DataOperationException {
         String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'teacher')";
-        Connection conn = ConnectDB.getConnection();
-        boolean closeConn = conn != ConnectDB.gettestConn();
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            stmt.setString(2, hashedPassword);
-            return stmt.executeUpdate() > 0;
-        } finally {
-            if (closeConn) conn.close();
+
+        try {
+            Connection conn = ConnectDB.getConnection();
+            boolean closeConn = conn != ConnectDB.gettestConn();
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username);
+                stmt.setString(2, hashedPassword);
+                return stmt.executeUpdate() > 0;
+            } finally {
+                if (closeConn) conn.close();
+            }
+
+        } catch (Exception e) {
+            throw new DataOperationException("Failed to create teacher: " + username, e);
         }
     }
 }

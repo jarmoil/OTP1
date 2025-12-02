@@ -1,6 +1,7 @@
 package services;
 
 import dao.IUserDao;
+import exceptions.DataOperationException;
 import models.User;
 import utils.HashUtil;
 
@@ -14,7 +15,7 @@ public class UserService {
     }
 
     // Authenticate user by username and password
-    public User login(String username, String password) throws Exception {
+    public User login(String username, String password) throws DataOperationException {
         User user = userDao.findByUsername(username);
         if (user != null && HashUtil.checkPassword(password, user.getPassword())) {
             return user;
@@ -23,7 +24,7 @@ public class UserService {
     }
 
     // Register a new user with username and password
-    public boolean register(String username, String password) throws Exception {
+    public boolean register(String username, String password) throws DataOperationException {
         if (userDao.findByUsername(username) != null) {
             return false;
         }
@@ -33,7 +34,7 @@ public class UserService {
     }
 
     // Create a new user with teacher role. Only logged in teachers can create other teachers.
-    public boolean createTeacher(String username, String password) throws Exception {
+    public boolean createTeacher(String username, String password) throws DataOperationException {
         if (userDao.findByUsername(username) != null) {
             return false;
         }
