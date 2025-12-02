@@ -17,7 +17,8 @@ class SessionManagerTest {
     // Just to get 100% coverage
     @Test
     void testConstructor() {
-        new SessionManager();
+        SessionManager sessionManager = new SessionManager();
+        assertNotNull(sessionManager);
     }
 
     // Test setting and getting current user

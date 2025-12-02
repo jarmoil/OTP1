@@ -9,7 +9,8 @@ class HashUtilTest {
     // Just to get 100% coverage
     @Test
     void testConstructor() {
-        new HashUtil();
+        HashUtil hashUtil = new HashUtil();
+        assertNotNull(hashUtil);
     }
 
     // Test successful password hashing
