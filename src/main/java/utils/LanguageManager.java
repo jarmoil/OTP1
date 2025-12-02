@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  */
 public class LanguageManager {
     private static final String BUNDLE_BASE_NAME = "MessagesBundle";
-    private static final ObjectProperty<Locale> currentLocale = new SimpleObjectProperty<>(new Locale("en", "US"));
+    private static final ObjectProperty<Locale> currentLocale = new SimpleObjectProperty<>(Locale.of("en", "US"));
     private static ResourceBundle resourceBundle;
 
     static {
@@ -27,10 +27,10 @@ public class LanguageManager {
 
     public static void setLocale(String languageCode) {
         Locale locale = switch (languageCode) {
-            case "JA" -> new Locale("ja", "JP");
-            case "RU" -> new Locale("ru", "RU");
-            case "IR" -> new Locale("fa", "IR");
-            default -> new Locale("en", "US");
+            case "JA" -> Locale.of("ja", "JP");
+            case "RU" -> Locale.of("ru", "RU");
+            case "IR" -> Locale.of("fa", "IR");
+            default -> Locale.of("en", "US");
         };
         setLocale(locale);
     }
