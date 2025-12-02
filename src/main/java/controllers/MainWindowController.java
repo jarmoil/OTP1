@@ -1,6 +1,7 @@
 package controllers;
 
 import controllers.login.LoginController;
+import exceptions.UILoadException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -194,7 +195,7 @@ public class MainWindowController {
                 MainWindowController controller = loader.getController();
                 controller.init(mainStage);
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new UILoadException("Failed to reload main window after logout", e);
             }
         } else {
             // Open login modal
