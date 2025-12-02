@@ -115,17 +115,11 @@ public class AnalyticsController {
     private void showSetDetails(FlashcardSet set) {
         try {
             List<Flashcard> flashcards = flashcardService.getFlashcardsBySetId(set.getSetsId());
-            List<Statistics> allStats = statisticsService.getAllStatistics();
-
-            // Get all statistics for this specific set
-            List<Statistics> setStats = allStats.stream()
-                    .filter(stat -> stat.getSetsId() == set.getSetsId())
-                    .toList();
+            statisticsService.getAllStatistics();
 
             Dialog<ButtonType> dialog = FlashcardAnalyticsDialogController.createFlashcardAnalyticsDialog(
                     LanguageManager.getString("analyticsController.flashcardAnalytics") + set.getDescription(),
-                    flashcards,
-                    setStats
+                    flashcards
             );
 
             dialog.showAndWait();

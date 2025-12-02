@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import models.Flashcard;
-import models.Statistics;
 import utils.LanguageManager;
 
 import java.util.List;
@@ -20,16 +19,16 @@ public class FlashcardAnalyticsDialogController {
         container.getChildren().clear();
 
         for (Flashcard flashcard : flashcards) {
-            double performanceRate = calculateFlashcardPerformance(flashcard);
+            calculateFlashcardPerformance(flashcard);
 
             FlashcardAnalyticsCardController cardController =
-                    FlashcardAnalyticsCardController.createFlashcardAnalyticsCard(flashcard, performanceRate);
+                    FlashcardAnalyticsCardController.createFlashcardAnalyticsCard(flashcard);
             container.getChildren().add(cardController.getRoot());
         }
     }
 
     // Create and return a dialog displaying flashcard analytics
-    public static Dialog<ButtonType> createFlashcardAnalyticsDialog(String title, List<Flashcard> flashcards, List<Statistics> setStats) {
+    public static Dialog<ButtonType> createFlashcardAnalyticsDialog(String title, List<Flashcard> flashcards) {
         try {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle(title);

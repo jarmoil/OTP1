@@ -142,7 +142,7 @@ public class FlashcardSetController {
     // Show dialog to create new flashcard
     @FXML
     private void handleCreateFlashcard() {
-        if (showFlashcardDialog(LanguageManager.getString("flashcardSetController.createNewFlashcard"), LanguageManager.getString("flashcardSetController.create"), null)) {
+        if (showFlashcardDialog(LanguageManager.getString("flashcardSetController.createNewFlashcard"), null)) {
             loadFlashcards();
         }
     }
@@ -165,7 +165,7 @@ public class FlashcardSetController {
 
     // Show dialog to edit flashcard
     private void handleUpdateFlashcard(Flashcard flashcard) {
-        if (showFlashcardDialog(LanguageManager.getString("flashcardSetController.updateFlashcard"), LanguageManager.getString("flashcardSetController.update"), flashcard)) {
+        if (showFlashcardDialog(LanguageManager.getString("flashcardSetController.updateFlashcard"), flashcard)) {
             loadFlashcards();
         }
     }
@@ -230,7 +230,7 @@ public class FlashcardSetController {
     }
 
     // Reusable dialog for creating/editing flashcards
-    private boolean showFlashcardDialog(String title, String buttonText, Flashcard existingFlashcard) {
+    private boolean showFlashcardDialog(String title, Flashcard existingFlashcard) {
         // Use factory method to create dialog with form fields
         Dialog<ButtonType> dialog = FlashcardDialogController.createFlashcardDialog(title, existingFlashcard);
         // Get controller to access form data
