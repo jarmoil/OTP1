@@ -6,13 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HashUtilTest {
 
-    // Just to get 100% coverage
-    @Test
-    void testConstructor() {
-        HashUtil hashUtil = new HashUtil();
-        assertNotNull(hashUtil);
-    }
-
     // Test successful password hashing
     @Test
     void testHashPassword() {

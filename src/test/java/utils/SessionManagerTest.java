@@ -14,13 +14,6 @@ class SessionManagerTest {
         SessionManager.clear();
     }
 
-    // Just to get 100% coverage
-    @Test
-    void testConstructor() {
-        SessionManager sessionManager = new SessionManager();
-        assertNotNull(sessionManager);
-    }
-
     // Test setting and getting current user
     @Test
     void testSetAndGetCurrentUser() {

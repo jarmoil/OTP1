@@ -20,6 +20,11 @@ public class LanguageManager {
         updateResourceBundle();
     }
 
+    private LanguageManager() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
+
     public static void setLocale(Locale locale) {
         currentLocale.set(locale);
         updateResourceBundle();
