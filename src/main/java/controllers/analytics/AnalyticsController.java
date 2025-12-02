@@ -1,5 +1,6 @@
 package controllers.analytics;
 
+import exceptions.DataOperationException;
 import factory.ServiceFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -70,7 +71,7 @@ public class AnalyticsController {
     }
 
     // Load overall statistics like average performance and total sets
-    private void loadOverviewStats() throws Exception {
+    private void loadOverviewStats() throws DataOperationException {
         List<Statistics> allStats = statisticsService.getAllStatistics();
         List<FlashcardSet> allSets = flashcardSetService.getAllSets();
 
@@ -83,7 +84,7 @@ public class AnalyticsController {
     }
 
     // Load analytics for each flashcard set
-    private void loadSetAnalytics() throws Exception {
+    private void loadSetAnalytics() throws DataOperationException {
         List<FlashcardSet> allSets = flashcardSetService.getAllSets();
         List<Statistics> allStats = statisticsService.getAllStatistics();
 
