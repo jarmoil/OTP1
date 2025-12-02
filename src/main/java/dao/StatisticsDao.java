@@ -1,6 +1,7 @@
 package dao;
 
 import database.ConnectDB;
+import exceptions.DataOperationException;
 import models.Statistics;
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,66 +16,76 @@ public class StatisticsDao implements IStatisticsDao {
 
     // Create or update user statistics for a flashcard set
     @Override
-    public boolean upsertStatistics(int userId, int setId, int correctPercentage) throws Exception {
+    public boolean upsertStatistics(int userId, int setId, int correctPercentage) throws DataOperationException {
         String checkSql = "SELECT stats_id FROM statistics WHERE user_id = ? AND sets_id = ?";
         String insertSql = "INSERT INTO statistics (user_id, sets_id, stats_correct_percentage) VALUES (?, ?, ?)";
         String updateSql = "UPDATE statistics SET stats_correct_percentage = ? WHERE user_id = ? AND sets_id = ?";
 
-        Connection conn = ConnectDB.getConnection();
-        boolean closeConn = conn != ConnectDB.gettestConn();
-
         try {
-            // Check if record exists
-            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
-                checkStmt.setInt(1, userId);
-                checkStmt.setInt(2, setId);
-                ResultSet rs = checkStmt.executeQuery();
+            Connection conn = ConnectDB.getConnection();
+            boolean closeConn = conn != ConnectDB.gettestConn();
 
-                if (rs.next()) {
-                    // Update existing record
-                    try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-                        updateStmt.setInt(1, correctPercentage);
-                        updateStmt.setInt(2, userId);
-                        updateStmt.setInt(3, setId);
-                        return updateStmt.executeUpdate() > 0;
-                    }
-                } else {
-                    // Insert new record
-                    try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
-                        insertStmt.setInt(1, userId);
-                        insertStmt.setInt(2, setId);
-                        insertStmt.setInt(3, correctPercentage);
-                        return insertStmt.executeUpdate() > 0;
+            try {
+                // Check if record exists
+                try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                    checkStmt.setInt(1, userId);
+                    checkStmt.setInt(2, setId);
+                    ResultSet rs = checkStmt.executeQuery();
+
+                    if (rs.next()) {
+                        // Update existing record
+                        try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                            updateStmt.setInt(1, correctPercentage);
+                            updateStmt.setInt(2, userId);
+                            updateStmt.setInt(3, setId);
+                            return updateStmt.executeUpdate() > 0;
+                        }
+                    } else {
+                        // Insert new record
+                        try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                            insertStmt.setInt(1, userId);
+                            insertStmt.setInt(2, setId);
+                            insertStmt.setInt(3, correctPercentage);
+                            return insertStmt.executeUpdate() > 0;
+                        }
                     }
                 }
+            } finally {
+                if (closeConn) conn.close();
             }
-        } finally {
-            if (closeConn) conn.close();
+
+        } catch (Exception e) {
+            throw new DataOperationException("Failed to upsert statistics for user ID: " + userId + " and set ID: " + setId, e);
         }
     }
 
     // Get all statistics from the database
     @Override
-    public List<Statistics> getAllStatistics() throws Exception {
+    public List<Statistics> getAllStatistics() throws DataOperationException {
         String sql = "SELECT * FROM statistics";
         List<Statistics> stats = new ArrayList<>();
 
-        Connection conn = ConnectDB.getConnection();
-        boolean closeConn = conn != ConnectDB.gettestConn();
+        try {
+            Connection conn = ConnectDB.getConnection();
+            boolean closeConn = conn != ConnectDB.gettestConn();
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql);
+                 ResultSet rs = stmt.executeQuery()) {
 
-            while (rs.next()) {
-                stats.add(new Statistics(
-                        rs.getInt(COL_STATS_ID),
-                        rs.getInt(COL_USER_ID),
-                        rs.getInt(COL_SETS_ID),
-                        rs.getInt(COL_STATS_CORRECT_PERCENTAGE)
-                ));
+                while (rs.next()) {
+                    stats.add(new Statistics(
+                            rs.getInt(COL_STATS_ID),
+                            rs.getInt(COL_USER_ID),
+                            rs.getInt(COL_SETS_ID),
+                            rs.getInt(COL_STATS_CORRECT_PERCENTAGE)
+                    ));
+                }
+            } finally {
+                if (closeConn) conn.close();
             }
-        } finally {
-            if (closeConn) conn.close();
+
+        } catch (Exception e) {
+            throw new DataOperationException("Failed to retrieve all statistics", e);
         }
 
         return stats;
@@ -82,54 +93,64 @@ public class StatisticsDao implements IStatisticsDao {
 
     // Get statistics for a specific user and set (one record)
     @Override
-    public Statistics getStatistics(int userId, int setId) throws Exception {
+    public Statistics getStatistics(int userId, int setId) throws DataOperationException {
         String sql = "SELECT * FROM statistics WHERE user_id = ? AND sets_id = ?";
 
-        Connection conn = ConnectDB.getConnection();
-        boolean closeConn = conn != ConnectDB.gettestConn();
+        try {
+            Connection conn = ConnectDB.getConnection();
+            boolean closeConn = conn != ConnectDB.gettestConn();
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            stmt.setInt(2, setId);
-            ResultSet rs = stmt.executeQuery();
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userId);
+                stmt.setInt(2, setId);
+                ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                return new Statistics(
-                        rs.getInt(COL_STATS_ID),
-                        rs.getInt(COL_USER_ID),
-                        rs.getInt(COL_SETS_ID),
-                        rs.getInt(COL_STATS_CORRECT_PERCENTAGE)
-                );
+                if (rs.next()) {
+                    return new Statistics(
+                            rs.getInt(COL_STATS_ID),
+                            rs.getInt(COL_USER_ID),
+                            rs.getInt(COL_SETS_ID),
+                            rs.getInt(COL_STATS_CORRECT_PERCENTAGE)
+                    );
+                }
+                return null;
+            } finally {
+                if (closeConn) conn.close();
             }
-            return null;
-        } finally {
-            if (closeConn) conn.close();
+
+        } catch (Exception e) {
+            throw new DataOperationException("Failed to retrieve statistics for user ID: " + userId + " and set ID: " + setId, e);
         }
     }
 
     // Get all statistics for a specific user (list of records)
     @Override
-    public List<Statistics> getStatisticsByUser(int userId) throws Exception {
+    public List<Statistics> getStatisticsByUser(int userId) throws DataOperationException {
         String sql = "SELECT * FROM statistics WHERE user_id = ?";
         List<Statistics> stats = new ArrayList<>();
 
-        Connection conn = ConnectDB.getConnection();
-        boolean closeConn = conn != ConnectDB.gettestConn();
+        try {
+            Connection conn = ConnectDB.getConnection();
+            boolean closeConn = conn != ConnectDB.gettestConn();
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            ResultSet rs = stmt.executeQuery();
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userId);
+                ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                stats.add(new Statistics(
-                        rs.getInt(COL_STATS_ID),
-                        rs.getInt(COL_USER_ID),
-                        rs.getInt(COL_SETS_ID),
-                        rs.getInt(COL_STATS_CORRECT_PERCENTAGE)
-                ));
+                while (rs.next()) {
+                    stats.add(new Statistics(
+                            rs.getInt(COL_STATS_ID),
+                            rs.getInt(COL_USER_ID),
+                            rs.getInt(COL_SETS_ID),
+                            rs.getInt(COL_STATS_CORRECT_PERCENTAGE)
+                    ));
+                }
+            } finally {
+                if (closeConn) conn.close();
             }
-        } finally {
-            if (closeConn) conn.close();
+
+        } catch (Exception e) {
+            throw new DataOperationException("Failed to retrieve statistics for user ID: " + userId, e);
         }
 
         return stats;

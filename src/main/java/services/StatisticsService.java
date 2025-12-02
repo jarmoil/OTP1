@@ -1,6 +1,7 @@
 package services;
 
 import dao.IStatisticsDao;
+import exceptions.DataOperationException;
 import models.Statistics;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class StatisticsService {
     }
 
     // Process quiz results by calculating user score and saving if it's a personal best
-    public boolean processQuizResults(int userId, int setId, int correctCount, int totalQuestions) throws Exception {
+    public boolean processQuizResults(int userId, int setId, int correctCount, int totalQuestions) throws DataOperationException {
         int userPercentage = Math.round((float) correctCount * 100 / totalQuestions);
 
         Statistics previousStats = statisticsDao.getStatistics(userId, setId);
@@ -22,15 +23,15 @@ public class StatisticsService {
         return true;
     }
 
-    public List<Statistics> getStatisticsByUser(int userId) throws Exception {
+    public List<Statistics> getStatisticsByUser(int userId) throws DataOperationException {
         return statisticsDao.getStatisticsByUser(userId);
     }
 
-    public Statistics getStatistics(int userId, int setId) throws Exception {
+    public Statistics getStatistics(int userId, int setId) throws DataOperationException {
         return statisticsDao.getStatistics(userId, setId);
     }
 
-    public List<Statistics> getAllStatistics() throws Exception {
+    public List<Statistics> getAllStatistics() throws DataOperationException {
         return statisticsDao.getAllStatistics();
     }
 }
