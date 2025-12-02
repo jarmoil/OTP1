@@ -1,6 +1,6 @@
 package utils.validation;
 
-public class FlashcardData {
+public class FlashcardData implements FlashcardQuestionData {
     private final String question;
     private final String answer;
     private final String choiceA;
@@ -15,10 +15,14 @@ public class FlashcardData {
         this.choiceC = choiceC;
     }
 
-    // Getters
+    @Override
     public String getQuestion() { return question; }
+    @Override
     public String getAnswer() { return answer; }
+    @Override
     public String getChoiceA() { return choiceA; }
+    @Override
     public String getChoiceB() { return choiceB; }
+    @Override
     public String getChoiceC() { return choiceC; }
 }
