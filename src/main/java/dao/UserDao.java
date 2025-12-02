@@ -36,20 +36,25 @@ public class UserDao implements IUserDao {
         return null;
     }
 
+    // Extracted method to handle user creation queries
+    private boolean queryUser(String username, String hashedPassword, String sql) throws SQLException {
+        Connection conn = ConnectDB.getConnection();
+        boolean closeConn = conn != ConnectDB.gettestConn();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.setString(2, hashedPassword);
+            return stmt.executeUpdate() > 0;
+        } finally {
+            if (closeConn) conn.close();
+        }
+    }
+
     // Create a new user with 'student' role
     @Override
     public boolean createUser(String username, String hashedPassword) throws DataOperationException {
         try {
             String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'student')";
-            Connection conn = ConnectDB.getConnection();
-            boolean closeConn = conn != ConnectDB.gettestConn();
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, username);
-                stmt.setString(2, hashedPassword);
-                return stmt.executeUpdate() > 0;
-            } finally {
-                if (closeConn) conn.close();
-            }
+            return queryUser(username, hashedPassword, sql);
 
         } catch (Exception e) {
             throw new DataOperationException("Failed to create user: " + username, e);
@@ -62,15 +67,7 @@ public class UserDao implements IUserDao {
         String sql = "INSERT INTO user_accounts (user_name, user_password, role) VALUES (?, ?, 'teacher')";
 
         try {
-            Connection conn = ConnectDB.getConnection();
-            boolean closeConn = conn != ConnectDB.gettestConn();
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, username);
-                stmt.setString(2, hashedPassword);
-                return stmt.executeUpdate() > 0;
-            } finally {
-                if (closeConn) conn.close();
-            }
+            return queryUser(username, hashedPassword, sql);
 
         } catch (Exception e) {
             throw new DataOperationException("Failed to create teacher: " + username, e);
