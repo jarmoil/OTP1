@@ -1,8 +1,11 @@
 package database;
 
+import exceptions.DatabaseConnectionException;
+
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectDB {
@@ -16,15 +19,15 @@ public class ConnectDB {
     static {
         try (InputStream input = ConnectDB.class.getClassLoader().getResourceAsStream("db.properties")) {
             if (input == null) {
-                throw new RuntimeException("Could not find db.properties in resources");
+                throw new DatabaseConnectionException("Could not find db.properties in resources");
             }
             props.load(input);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load database properties", e);
+            throw new DatabaseConnectionException("Failed to load database properties", e);
         }
     }
 
-    public static Connection getConnection() throws Exception {
+    public static Connection getConnection() throws SQLException {
         if (testConn != null) {
             return testConn;
         }
