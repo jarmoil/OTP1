@@ -1,5 +1,6 @@
 package controllers.analytics;
 
+import exceptions.UILoadException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -80,7 +81,7 @@ public class AnalyticsCardController {
 
             return controller;
         } catch (Exception e) {
-            throw new RuntimeException(LanguageManager.getString("analyticsCardController.failed") + e);
+            throw new UILoadException(LanguageManager.getString("analyticsCardController.failed"), e);
         }
     }
 

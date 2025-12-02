@@ -1,5 +1,6 @@
 package controllers.analytics;
 
+import exceptions.UILoadException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -57,7 +58,7 @@ public class FlashcardAnalyticsDialogController {
 
             return dialog;
         } catch (Exception e) {
-            throw new RuntimeException(LanguageManager.getString("flashcardAnalyticsDialogController.failed") + e);
+            throw new UILoadException(LanguageManager.getString("flashcardAnalyticsDialogController.failed"), e);
         }
     }
 

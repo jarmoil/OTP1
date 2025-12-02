@@ -1,5 +1,6 @@
 package controllers.flashcards;
 
+import exceptions.UILoadException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -84,7 +85,7 @@ public class FlashcardCardController {
 
             return controller;
         } catch (Exception e) {
-            throw new RuntimeException(LanguageManager.getString("flashcardCardController.failed") + e);
+            throw new UILoadException(LanguageManager.getString("flashcardCardController.failed"), e);
         }
     }
 

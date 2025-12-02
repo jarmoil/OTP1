@@ -1,5 +1,6 @@
 package controllers.stats;
 
+import exceptions.UILoadException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -43,7 +44,7 @@ public class StatCardController {
             controller.setStatistic(stat, set);
             return controller;
         } catch (Exception e) {
-            throw new RuntimeException(LanguageManager.getString("statCardController.failedLoad") + e);
+            throw new UILoadException(LanguageManager.getString("statCardController.failedLoad"), e);
         }
     }
 

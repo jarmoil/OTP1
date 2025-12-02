@@ -1,5 +1,6 @@
 package controllers.flashcards;
 
+import exceptions.UILoadException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -76,7 +77,7 @@ public class FlashcardDialogController {
 
             return dialog;
         } catch (Exception e) {
-            throw new RuntimeException(LanguageManager.getString("flashcardDialogController.failed") + e);
+            throw new UILoadException(LanguageManager.getString("flashcardDialogController.failed"), e);
         }
     }
 }

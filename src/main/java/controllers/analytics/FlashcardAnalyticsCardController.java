@@ -1,5 +1,6 @@
 package controllers.analytics;
 
+import exceptions.UILoadException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -76,7 +77,7 @@ public class FlashcardAnalyticsCardController {
 
             return controller;
         } catch (Exception e) {
-            throw new RuntimeException(LanguageManager.getString("flashcardAnalyticsCardController.failed") + e);
+            throw new UILoadException(LanguageManager.getString("flashcardAnalyticsCardController.failed"), e);
         }
     }
 
