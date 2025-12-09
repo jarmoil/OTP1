@@ -45,6 +45,11 @@ Agile
 ## Shade Plugin
 The project creates JAR file with all dependencies included using the Maven Shade Plugin. After `mvn clean install` there will be a file target/*.jar
 
+## Architecture
+Activity Diagram
+
+![Activity Diagram](documents/Diagrams/ActivityDiagram.jpg)
+
 ## Localization
 
 We used basic Resource bundles (MessagesBundle) and java locales to create localization for Russian and Japanese in addition to English.
